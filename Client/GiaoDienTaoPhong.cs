@@ -41,25 +41,33 @@ namespace Client
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int numberOfPlayers = Convert.ToInt32(comboBoxPlayers.SelectedItem); // Lấy số người chơi
+            // Lấy số lượng người chơi từ combobox
+            int playerCount = Convert.ToInt32(comboBoxPlayers.SelectedItem);
 
-            for (int i = 1; i <= numberOfPlayers; i++)
+            // Vòng lặp để nhập tên từng người chơi và hiển thị form tương ứng
+            for (int i = 1; i <= playerCount; i++)
             {
-                // Hiển thị hộp thoại để người chơi nhập tên
-                string playerName = Microsoft.VisualBasic.Interaction.InputBox($"Enter name for Player {i}:", "Player Name", "Player" + i);
+                // Hiển thị InputBox để nhập tên người chơi
+                string playerName = Microsoft.VisualBasic.Interaction.InputBox($"Enter name for Player {i}:", "Player Name", $"Player {i}");
 
+                // Kiểm tra xem tên có hợp lệ không
                 if (!string.IsNullOrWhiteSpace(playerName))
                 {
-                    // Lưu tên người chơi và chuyển tới form tiếp theo
-                    // Giả sử chúng ta lưu tên người chơi vào danh sách
+                    // Thêm tên người chơi vào danh sách
                     players.Add(playerName);
+
+                    // Tạo form GiaoDienNguoiChoi mới và truyền tên người chơi
+                    GiaoDienNguoiChoi gameForm = new GiaoDienNguoiChoi(playerName);
+
+                    // Hiển thị form (không khóa form hiện tại)
+                    gameForm.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Player name cannot be empty. Please enter a valid name.");
                 }
             }
 
-            // Chuyển tới GiaoDienNguoiChoi sau khi nhận tên
-            GiaoDienNguoiChoi gameForm = new GiaoDienNguoiChoi(players); // Truyền danh sách tên người chơi sang form khác
-            gameForm.Show();
-            this.Hide();
         }
 
         private void comboBoxPlayers_SelectedIndexChanged(object sender, EventArgs e)

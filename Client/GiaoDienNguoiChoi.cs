@@ -14,27 +14,14 @@ namespace Client
     {
         private List<string> players;
 
-        public GiaoDienNguoiChoi(List<string> playersList)
+        public GiaoDienNguoiChoi(string playerName)
         {
             InitializeComponent();
-            players = playersList;
 
-            // Hiển thị tên người chơi trong các Label hoặc ListBox
-            DisplayPlayers();
+            // Hiển thị tên người chơi trên label hoặc các thành phần giao diện khác
+            label5.Text = playerName;
         }
 
-        private void DisplayPlayers()
-        {
-            for (int i = 0; i < players.Count; i++)
-            {
-                // Ví dụ: Hiển thị tên của người chơi đầu tiên trên Label1
-                if (i == 0)
-                {
-                    label5.Text = players[i];
-                }
-                // Tương tự cho các Label khác
-            }
-        }
         public GiaoDienNguoiChoi()
         {
             InitializeComponent();
