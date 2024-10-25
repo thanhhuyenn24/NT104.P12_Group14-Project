@@ -12,6 +12,8 @@ namespace Client
 {
     public partial class GiaoDienTaoPhong : Form
     {
+        List<string> players = new List<string>();
+
         public GiaoDienTaoPhong()
         {
             InitializeComponent();
@@ -39,9 +41,30 @@ namespace Client
 
         private void button1_Click(object sender, EventArgs e)
         {
-            GiaoDienNguoiChoi NguoiChoiForm = new GiaoDienNguoiChoi();
+            int numberOfPlayers = Convert.ToInt32(comboBoxPlayers.SelectedItem); // Lấy số người chơi
 
-            NguoiChoiForm.Show();
+            for (int i = 1; i <= numberOfPlayers; i++)
+            {
+                // Hiển thị hộp thoại để người chơi nhập tên
+                string playerName = Microsoft.VisualBasic.Interaction.InputBox($"Enter name for Player {i}:", "Player Name", "Player" + i);
+
+                if (!string.IsNullOrWhiteSpace(playerName))
+                {
+                    // Lưu tên người chơi và chuyển tới form tiếp theo
+                    // Giả sử chúng ta lưu tên người chơi vào danh sách
+                    players.Add(playerName);
+                }
+            }
+
+            // Chuyển tới GiaoDienNguoiChoi sau khi nhận tên
+            GiaoDienNguoiChoi gameForm = new GiaoDienNguoiChoi(players); // Truyền danh sách tên người chơi sang form khác
+            gameForm.Show();
+            this.Hide();
+        }
+
+        private void comboBoxPlayers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
