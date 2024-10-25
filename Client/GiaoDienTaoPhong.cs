@@ -36,5 +36,12 @@ namespace Client
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GiaoDienNguoiChoi NguoiChoiForm = new GiaoDienNguoiChoi();
+
+            NguoiChoiForm.Show();
+        }
     }
 }

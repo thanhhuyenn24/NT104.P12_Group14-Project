@@ -32,5 +32,12 @@ namespace Client
             // Nếu bạn muốn form mới là modal (chặn tương tác với form hiện tại cho đến khi đóng)
             // bạn có thể sử dụng ShowDialog() thay cho Show().
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            GiaoDienNguoiChoi NguoiChoiForm = new GiaoDienNguoiChoi();
+
+            NguoiChoiForm.Show();
+        }
     }
 }

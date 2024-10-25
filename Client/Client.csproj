@@ -52,6 +52,12 @@
     <Compile Include="GiaoDienChinh.Designer.cs">
       <DependentUpon>GiaoDienChinh.cs</DependentUpon>
     </Compile>
+    <Compile Include="GiaoDienNguoiChoi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GiaoDienNguoiChoi.Designer.cs">
+      <DependentUpon>GiaoDienNguoiChoi.cs</DependentUpon>
+    </Compile>
     <Compile Include="GiaoDienTaoPhong.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +68,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GiaoDienChinh.resx">
       <DependentUpon>GiaoDienChinh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GiaoDienNguoiChoi.resx">
+      <DependentUpon>GiaoDienNguoiChoi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GiaoDienTaoPhong.resx">
       <DependentUpon>GiaoDienTaoPhong.cs</DependentUpon>
