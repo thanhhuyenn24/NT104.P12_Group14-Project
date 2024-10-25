@@ -34,7 +34,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.comboBoxPlayers = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBoxDrawTime = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
@@ -105,20 +105,20 @@
             this.comboBoxPlayers.TabIndex = 5;
             this.comboBoxPlayers.SelectedIndexChanged += new System.EventHandler(this.comboBoxPlayers_SelectedIndexChanged);
             // 
-            // comboBox2
+            // comboBoxDrawTime
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.comboBoxDrawTime.FormattingEnabled = true;
+            this.comboBoxDrawTime.Items.AddRange(new object[] {
             "50",
             "60",
             "70",
             "80",
             "90",
             "100"});
-            this.comboBox2.Location = new System.Drawing.Point(407, 135);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 24);
-            this.comboBox2.TabIndex = 6;
+            this.comboBoxDrawTime.Location = new System.Drawing.Point(407, 135);
+            this.comboBoxDrawTime.Name = "comboBoxDrawTime";
+            this.comboBoxDrawTime.Size = new System.Drawing.Size(121, 24);
+            this.comboBoxDrawTime.TabIndex = 6;
             // 
             // comboBox3
             // 
@@ -155,7 +155,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.comboBox4);
             this.Controls.Add(this.comboBox3);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.comboBoxDrawTime);
             this.Controls.Add(this.comboBoxPlayers);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
@@ -177,7 +177,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox comboBoxPlayers;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboBoxDrawTime;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.ComboBox comboBox4;
     }

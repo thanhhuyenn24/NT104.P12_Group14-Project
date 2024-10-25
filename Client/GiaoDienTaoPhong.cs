@@ -43,6 +43,7 @@ namespace Client
         {
             // Lấy số lượng người chơi từ combobox
             int playerCount = Convert.ToInt32(comboBoxPlayers.SelectedItem);
+            int drawTime = Convert.ToInt32(comboBoxDrawTime.SelectedItem);
 
             // Vòng lặp để nhập tên từng người chơi và hiển thị form tương ứng
             for (int i = 1; i <= playerCount; i++)
@@ -57,7 +58,7 @@ namespace Client
                     players.Add(playerName);
 
                     // Tạo form GiaoDienNguoiChoi mới và truyền tên người chơi
-                    GiaoDienNguoiChoi gameForm = new GiaoDienNguoiChoi(playerName);
+                    GiaoDienNguoiChoi gameForm = new GiaoDienNguoiChoi(playerName, drawTime);
 
                     // Hiển thị form (không khóa form hiện tại)
                     gameForm.Show();

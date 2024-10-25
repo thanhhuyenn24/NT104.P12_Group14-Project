@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.Chart = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelTimer = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -56,14 +56,14 @@
             this.Chart.TabIndex = 0;
             this.Chart.SelectedIndexChanged += new System.EventHandler(this.Chart_SelectedIndexChanged);
             // 
-            // label1
+            // labelTimer
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(148, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 16);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Timer";
+            this.labelTimer.AutoSize = true;
+            this.labelTimer.Location = new System.Drawing.Point(148, 21);
+            this.labelTimer.Name = "labelTimer";
+            this.labelTimer.Size = new System.Drawing.Size(42, 16);
+            this.labelTimer.TabIndex = 1;
+            this.labelTimer.Text = "Timer";
             // 
             // label2
             // 
@@ -209,7 +209,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelTimer);
             this.Controls.Add(this.Chart);
             this.Name = "GiaoDienNguoiChoi";
             this.Text = "GiaoDienNguoiChoi";
@@ -222,7 +222,7 @@
         #endregion
 
         private System.Windows.Forms.ListBox Chart;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelTimer;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox1;

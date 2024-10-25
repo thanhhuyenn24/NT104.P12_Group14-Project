@@ -35,7 +35,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(301, 272);
+            this.button2.Location = new System.Drawing.Point(501, 323);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(159, 37);
             this.button2.TabIndex = 1;
@@ -45,7 +45,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(340, 181);
+            this.button1.Location = new System.Drawing.Point(543, 243);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 42);
             this.button1.TabIndex = 2;
@@ -55,9 +55,9 @@
             // 
             // username
             // 
-            this.username.Location = new System.Drawing.Point(262, 108);
+            this.username.Location = new System.Drawing.Point(501, 181);
             this.username.Name = "username";
-            this.username.Size = new System.Drawing.Size(239, 22);
+            this.username.Size = new System.Drawing.Size(159, 22);
             this.username.TabIndex = 3;
             // 
             // GiaoDienChinh
