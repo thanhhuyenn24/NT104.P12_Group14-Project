@@ -10,13 +10,17 @@ using System.Windows.Forms;
 
 namespace Client
 {
+
     public partial class GiaoDienTaoPhong : Form
     {
+        public static GiaoDienTaoPhong Instance { get; private set; }
+
         List<string> players = new List<string>();
 
         public GiaoDienTaoPhong()
         {
             InitializeComponent();
+            Instance = this; // Gán Instance trong constructor
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -45,33 +49,36 @@ namespace Client
             int playerCount = Convert.ToInt32(comboBoxPlayers.SelectedItem);
             int drawTime = Convert.ToInt32(comboBoxDrawTime.SelectedItem);
 
-            // Vòng lặp để nhập tên từng người chơi và hiển thị form tương ứng
+            // Nhập tên cho mỗi người chơi
             for (int i = 1; i <= playerCount; i++)
             {
-                // Hiển thị InputBox để nhập tên người chơi
                 string playerName = Microsoft.VisualBasic.Interaction.InputBox($"Enter name for Player {i}:", "Player Name", $"Player {i}");
-
-                // Kiểm tra xem tên có hợp lệ không
                 if (!string.IsNullOrWhiteSpace(playerName))
                 {
-                    // Thêm tên người chơi vào danh sách
                     players.Add(playerName);
-
-                    // Tạo form GiaoDienNguoiChoi mới và truyền tên người chơi
-                    GiaoDienNguoiChoi gameForm = new GiaoDienNguoiChoi(playerName, drawTime);
-
-                    // Hiển thị form (không khóa form hiện tại)
-                    gameForm.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Player name cannot be empty. Please enter a valid name.");
                 }
             }
 
+            // Chọn ngẫu nhiên một người làm Người Vẽ
+            Random random = new Random();
+            int drawerIndex = random.Next(0, players.Count);
+            string drawer = players[drawerIndex];
+
+            // Khởi tạo các Form GiaoDienNguoiChoi cho từng người chơi
+            for (int i = 0; i < players.Count; i++)
+            {
+                string role = (i == drawerIndex) ? "Drawer" : "Guesser"; // Phân công vai trò
+                GiaoDienNguoiChoi gameForm = new GiaoDienNguoiChoi(players[i], role); // Truyền tên và vai trò vào Form
+                gameForm.Show();
+            }
         }
 
         private void comboBoxPlayers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxWordCount_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

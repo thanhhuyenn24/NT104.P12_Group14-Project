@@ -7,47 +7,104 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Server; // Thay 'ServerNamespace' bằng namespace thực tế của WordData
+
 
 namespace Client
 {
     public partial class GiaoDienNguoiChoi : Form
     {
         private List<string> players;
-        int drawTime;
+        private int drawTime;
+        private string playerName;
+        private string role;
+        private static Timer sharedTimer; // Sử dụng Timer chia sẻ để đồng bộ hóa
+        private GiaoDienTaoPhong taoPhongForm; // Tham chiếu đến GiaoDienTaoPhong
 
-        public GiaoDienNguoiChoi(string playerName, int drawTime)
+        public GiaoDienNguoiChoi(string playerName, string role, int drawTime, GiaoDienTaoPhong taoPhongForm)
         {
             InitializeComponent();
-
-            // Hiển thị tên người chơi trên label hoặc các thành phần giao diện khác
             label5.Text = playerName;
-
+            this.playerName = playerName;
+            this.role = role;
             this.drawTime = drawTime;
-            labelTimer.Text = drawTime.ToString();
-            StartCountdown(); // Bắt đầu đếm ngược khi form mở
+
+            if (role == "Drawer")
+            {
+                DisplayWordSelection(); // Người Vẽ hiển thị hộp chọn từ
+            }
+            else
+            {
+                StartCountdown(); // Người Đoán chỉ bắt đầu đếm ngược
+            }
+
+            this.taoPhongForm = taoPhongForm;
+        }
+
+        private void DisplayWordSelection()
+        {
+            int wordCount = Convert.ToInt32(GiaoDienTaoPhong.Instance.comboBoxWordCount.SelectedItem);
+            List<string> randomWords = WordData.GetRandomWords(wordCount); // Lấy từ ngẫu nhiên từ Server
+            string selectedWord = ShowWordSelectionDialog(randomWords);
+
+            if (!string.IsNullOrEmpty(selectedWord))
+            {
+                StartCountdown(); // Bắt đầu đếm ngược sau khi chọn từ
+                BroadcastWord(selectedWord); // Truyền từ cho người Đoán
+            }
+        }
+
+        private void BroadcastWord(string selectedWord)
+        {
+            foreach (var form in Application.OpenForms.OfType<GiaoDienNguoiChoi>())
+            {
+                if (form.role == "Guesser")
+                {
+                    form.ReceiveWord(selectedWord);
+                }
+            }
+        }
+
+        public void ReceiveWord(string word)
+        {
+            // Cập nhật giao diện hoặc hiển thị gợi ý nếu cần
+        }
+
+        private string ShowWordSelectionDialog(List<string> words)
+        {
+            string wordSelection = string.Join("\n", words);
+            DialogResult result = MessageBox.Show(wordSelection + "\n\nChoose and Begin",
+                                                  "Choose word",
+                                                  MessageBoxButtons.OK);
+
+            return result == DialogResult.OK ? words[0] : null; // Cập nhật phần chọn từ
         }
 
         private Timer timer;
 
         private void StartCountdown()
         {
-            timer = new Timer();
-            timer.Interval = 1000; // Mỗi giây
-            timer.Tick += Timer_Tick; // Gắn sự kiện Tick
-            timer.Start(); // Bắt đầu đếm ngược
+            if (sharedTimer == null)
+            {
+                sharedTimer = new Timer();
+                sharedTimer.Interval = 1000;
+                sharedTimer.Tick += Timer_Tick;
+            }
+
+            sharedTimer.Start();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (drawTime > 0)
             {
-                drawTime--; // Giảm thời gian
-                labelTimer.Text = drawTime.ToString(); // Cập nhật trên Label
+                drawTime--;
+                labelTimer.Text = drawTime.ToString();
             }
             else
             {
-                timer.Stop(); // Dừng Timer khi đếm ngược hoàn thành
-                MessageBox.Show("No time!"); // Thông báo hết giờ
+                sharedTimer.Stop();
+                MessageBox.Show("Hết giờ!");
             }
         }
 

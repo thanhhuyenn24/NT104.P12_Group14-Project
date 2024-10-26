@@ -13,5 +13,11 @@ namespace Server
         "apple", "car", "tree", "house", "dog", "cat", "sun", "ball", "book", "plane"
         // Thêm các từ khác
     };
+
+        public static List<string> GetRandomWords(int count)
+        {
+            Random random = new Random();
+            return wordList.OrderBy(x => random.Next()).Take(count).ToList(); // Trả về một danh sách từ ngẫu nhiên
+        }
     }
 }

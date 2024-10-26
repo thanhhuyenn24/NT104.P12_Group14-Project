@@ -36,7 +36,7 @@
             this.comboBoxPlayers = new System.Windows.Forms.ComboBox();
             this.comboBoxDrawTime = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.comboBoxWordCount = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -133,27 +133,28 @@
             this.comboBox3.Size = new System.Drawing.Size(121, 24);
             this.comboBox3.TabIndex = 7;
             // 
-            // comboBox4
+            // comboBoxWordCount
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Items.AddRange(new object[] {
+            this.comboBoxWordCount.FormattingEnabled = true;
+            this.comboBoxWordCount.Items.AddRange(new object[] {
             "2",
             "3",
             "4",
             "5",
             "6",
             "7"});
-            this.comboBox4.Location = new System.Drawing.Point(407, 266);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(121, 24);
-            this.comboBox4.TabIndex = 8;
+            this.comboBoxWordCount.Location = new System.Drawing.Point(407, 266);
+            this.comboBoxWordCount.Name = "comboBoxWordCount";
+            this.comboBoxWordCount.Size = new System.Drawing.Size(121, 24);
+            this.comboBoxWordCount.TabIndex = 8;
+            this.comboBoxWordCount.SelectedIndexChanged += new System.EventHandler(this.comboBoxWordCount_SelectedIndexChanged);
             // 
             // GiaoDienTaoPhong
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.comboBox4);
+            this.Controls.Add(this.comboBoxWordCount);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.comboBoxDrawTime);
             this.Controls.Add(this.comboBoxPlayers);
@@ -179,6 +180,6 @@
         private System.Windows.Forms.ComboBox comboBoxPlayers;
         private System.Windows.Forms.ComboBox comboBoxDrawTime;
         private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox4;
+        public System.Windows.Forms.ComboBox comboBoxWordCount;
     }
 }
