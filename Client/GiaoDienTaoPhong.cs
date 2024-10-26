@@ -68,7 +68,7 @@ namespace Client
             for (int i = 0; i < players.Count; i++)
             {
                 string role = (i == drawerIndex) ? "Drawer" : "Guesser"; // Phân công vai trò
-                GiaoDienNguoiChoi gameForm = new GiaoDienNguoiChoi(players[i], role); // Truyền tên và vai trò vào Form
+                GiaoDienNguoiChoi gameForm = new GiaoDienNguoiChoi(players[i], role, drawTime, this); // Truyền tên và vai trò vào Form
                 gameForm.Show();
             }
         }
