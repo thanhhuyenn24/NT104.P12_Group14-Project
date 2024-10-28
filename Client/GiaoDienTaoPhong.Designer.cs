@@ -1,4 +1,6 @@
-﻿namespace Client
+﻿using System;
+
+namespace Client
 {
     partial class GiaoDienTaoPhong
     {
@@ -167,6 +169,7 @@
             this.btnLeave.TabIndex = 10;
             this.btnLeave.Text = "Leave";
             this.btnLeave.UseVisualStyleBackColor = true;
+            this.btnLeave.Click += new System.EventHandler(this.btnLeave_Click);
             // 
             // btnOK
             // 
@@ -202,6 +205,7 @@
             this.PerformLayout();
 
         }
+
 
         #endregion
 

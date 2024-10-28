@@ -116,6 +116,19 @@
     <EmbeddedResource Include="WordSelectionForm.resx">
       <DependentUpon>WordSelectionForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\Client.Properties.Resources.datasource" />
+    <None Include="Properties\DataSources\Client.Properties.Settings.datasource" />
+    <None Include="Properties\DataSources\Client_Socket.datasource" />
+    <None Include="Properties\DataSources\GiaoDienChinh.datasource" />
+    <None Include="Properties\DataSources\GiaoDienNguoiChoi.datasource" />
+    <None Include="Properties\DataSources\GiaoDienTaoPhong.datasource" />
+    <None Include="Properties\DataSources\OtherPlayers.datasource" />
+    <None Include="Properties\DataSources\Player.datasource" />
+    <None Include="Properties\DataSources\Program.datasource" />
+    <None Include="Properties\DataSources\Server.Player.datasource" />
+    <None Include="Properties\DataSources\Server.ServerForm.datasource" />
+    <None Include="Properties\DataSources\Server.WordData.datasource" />
+    <None Include="Properties\DataSources\WordSelectionForm.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
