@@ -2,6 +2,8 @@
 {
     partial class GiaoDienNguoiChoi
     {
+        private const int V = 0;
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -28,33 +30,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Chart = new System.Windows.Forms.ListBox();
+            this.Character = new System.Windows.Forms.ListBox();
             this.labelTimer = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.btn_undo = new System.Windows.Forms.Button();
+            this.btn_clear = new System.Windows.Forms.Button();
+            this.tbx_send = new System.Windows.Forms.TextBox();
+            this.btn_send = new System.Windows.Forms.Button();
+            this.Chat = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pic = new System.Windows.Forms.PictureBox();
+            this.pic_color = new System.Windows.Forms.PictureBox();
+            this.btn_color = new System.Windows.Forms.Button();
+            this.btn_eraser = new System.Windows.Forms.Button();
+            this.btn_pen = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_color)).BeginInit();
             this.SuspendLayout();
             // 
-            // Chart
+            // Character
             // 
-            this.Chart.FormattingEnabled = true;
-            this.Chart.ItemHeight = 16;
-            this.Chart.Location = new System.Drawing.Point(12, 59);
-            this.Chart.Name = "Chart";
-            this.Chart.Size = new System.Drawing.Size(120, 356);
-            this.Chart.TabIndex = 0;
-            this.Chart.SelectedIndexChanged += new System.EventHandler(this.Chart_SelectedIndexChanged);
+            this.Character.FormattingEnabled = true;
+            this.Character.ItemHeight = 16;
+            this.Character.Location = new System.Drawing.Point(12, 59);
+            this.Character.Name = "Character";
+            this.Character.Size = new System.Drawing.Size(120, 324);
+            this.Character.TabIndex = 0;
             // 
             // labelTimer
             // 
@@ -84,102 +86,51 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Word to Draw";
             // 
-            // pictureBox1
+            // btn_undo
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(138, 59);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(495, 322);
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
+            this.btn_undo.Location = new System.Drawing.Point(487, 398);
+            this.btn_undo.Name = "btn_undo";
+            this.btn_undo.Size = new System.Drawing.Size(75, 23);
+            this.btn_undo.TabIndex = 9;
+            this.btn_undo.Text = "Undo";
+            this.btn_undo.UseVisualStyleBackColor = true;
+            this.btn_undo.Click += new System.EventHandler(this.btn_undo_Click);
             // 
-            // label4
+            // btn_clear
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(150, 405);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(46, 16);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Colors";
+            this.btn_clear.Location = new System.Drawing.Point(487, 427);
+            this.btn_clear.Name = "btn_clear";
+            this.btn_clear.Size = new System.Drawing.Size(75, 23);
+            this.btn_clear.TabIndex = 10;
+            this.btn_clear.Text = "Clear";
+            this.btn_clear.UseVisualStyleBackColor = true;
+            this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
             // 
-            // comboBox1
+            // tbx_send
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Black",
-            "White",
-            "Red",
-            "Blue",
-            "Green",
-            "Pink",
-            "Brown",
-            "Yellow",
-            "Orange"});
-            this.comboBox1.Location = new System.Drawing.Point(202, 402);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
-            this.comboBox1.TabIndex = 6;
+            this.tbx_send.Location = new System.Drawing.Point(640, 330);
+            this.tbx_send.Name = "tbx_send";
+            this.tbx_send.Size = new System.Drawing.Size(148, 22);
+            this.tbx_send.TabIndex = 11;
             // 
-            // button1
+            // btn_send
             // 
-            this.button1.Location = new System.Drawing.Point(338, 402);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Pen";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_send.Location = new System.Drawing.Point(677, 358);
+            this.btn_send.Name = "btn_send";
+            this.btn_send.Size = new System.Drawing.Size(75, 23);
+            this.btn_send.TabIndex = 12;
+            this.btn_send.Text = "Send";
+            this.btn_send.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // Chat
             // 
-            this.button2.Location = new System.Drawing.Point(420, 402);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Eraser";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(502, 402);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 9;
-            this.button3.Text = "Undo";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(583, 402);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 10;
-            this.button4.Text = "Clear";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(640, 330);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(148, 22);
-            this.textBox1.TabIndex = 11;
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(677, 358);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 12;
-            this.button5.Text = "Send";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // listBox2
-            // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 16;
-            this.listBox2.Location = new System.Drawing.Point(640, 59);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(148, 260);
-            this.listBox2.TabIndex = 14;
-            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
+            this.Chat.FormattingEnabled = true;
+            this.Chat.ItemHeight = 16;
+            this.Chat.Location = new System.Drawing.Point(640, 59);
+            this.Chat.Name = "Chat";
+            this.Chat.Size = new System.Drawing.Size(148, 260);
+            this.Chat.TabIndex = 14;
+            this.Chat.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -191,29 +142,95 @@
             this.label5.Text = "UserName";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
+            // pic
+            // 
+            this.pic.BackColor = System.Drawing.Color.White;
+            this.pic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pic.Location = new System.Drawing.Point(138, 59);
+            this.pic.Name = "pic";
+            this.pic.Size = new System.Drawing.Size(496, 324);
+            this.pic.TabIndex = 19;
+            this.pic.TabStop = false;
+            this.pic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_MouseDown);
+            this.pic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pic_MouseMove);
+            this.pic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pic_MouseUp);
+            // 
+            // pic_color
+            // 
+            this.pic_color.BackColor = System.Drawing.Color.Black;
+            this.pic_color.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pic_color.Location = new System.Drawing.Point(213, 398);
+            this.pic_color.Name = "pic_color";
+            this.pic_color.Size = new System.Drawing.Size(55, 52);
+            this.pic_color.TabIndex = 18;
+            this.pic_color.TabStop = false;
+            // 
+            // btn_color
+            // 
+            this.btn_color.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btn_color.Image = global::Client.Properties.Resources.icons8_paint_24;
+            this.btn_color.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btn_color.Location = new System.Drawing.Point(274, 398);
+            this.btn_color.Name = "btn_color";
+            this.btn_color.Size = new System.Drawing.Size(60, 52);
+            this.btn_color.TabIndex = 17;
+            this.btn_color.Text = "Color";
+            this.btn_color.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btn_color.UseVisualStyleBackColor = true;
+            this.btn_color.Click += new System.EventHandler(this.btn_color_Click);
+            // 
+            // btn_eraser
+            // 
+            this.btn_eraser.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btn_eraser.Image = global::Client.Properties.Resources.icons8_eraser_tool_24;
+            this.btn_eraser.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btn_eraser.Location = new System.Drawing.Point(406, 398);
+            this.btn_eraser.Name = "btn_eraser";
+            this.btn_eraser.Size = new System.Drawing.Size(60, 52);
+            this.btn_eraser.TabIndex = 8;
+            this.btn_eraser.Text = "Eraser";
+            this.btn_eraser.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btn_eraser.UseVisualStyleBackColor = true;
+            this.btn_eraser.Click += new System.EventHandler(this.btn_eraser_Click);
+            // 
+            // btn_pen
+            // 
+            this.btn_pen.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.btn_pen.Image = global::Client.Properties.Resources.icons8_sign_up_24;
+            this.btn_pen.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btn_pen.Location = new System.Drawing.Point(340, 398);
+            this.btn_pen.Name = "btn_pen";
+            this.btn_pen.Size = new System.Drawing.Size(60, 52);
+            this.btn_pen.TabIndex = 7;
+            this.btn_pen.Text = "Pen";
+            this.btn_pen.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btn_pen.UseVisualStyleBackColor = true;
+            this.btn_pen.Click += new System.EventHandler(this.btn_pen_Click);
+            // 
             // GiaoDienNguoiChoi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 462);
+            this.Controls.Add(this.pic);
+            this.Controls.Add(this.pic_color);
+            this.Controls.Add(this.btn_color);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.listBox2);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.Chat);
+            this.Controls.Add(this.btn_send);
+            this.Controls.Add(this.tbx_send);
+            this.Controls.Add(this.btn_clear);
+            this.Controls.Add(this.btn_undo);
+            this.Controls.Add(this.btn_eraser);
+            this.Controls.Add(this.btn_pen);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.labelTimer);
-            this.Controls.Add(this.Chart);
+            this.Controls.Add(this.Character);
             this.Name = "GiaoDienNguoiChoi";
             this.Text = "GiaoDienNguoiChoi";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_color)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -221,20 +238,20 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox Chart;
+        private System.Windows.Forms.ListBox Character;
         private System.Windows.Forms.Label labelTimer;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Button btn_pen;
+        private System.Windows.Forms.Button btn_eraser;
+        private System.Windows.Forms.Button btn_undo;
+        private System.Windows.Forms.Button btn_clear;
+        private System.Windows.Forms.TextBox tbx_send;
+        private System.Windows.Forms.Button btn_send;
+        private System.Windows.Forms.ListBox Chat;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btn_color;
+        private System.Windows.Forms.PictureBox pic_color;
+        private System.Windows.Forms.PictureBox pic;
     }
 }
