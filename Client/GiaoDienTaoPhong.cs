@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Sockets;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +50,28 @@ namespace Client
         private void button1_Click(object sender, EventArgs e)
         {
         }
+
+        private void btnLeave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Gửi thông điệp ngắt kết nối đến server
+                Client_Socket.datatype = "DISCONNECT";
+                Client_Socket.SendMessage(Player.name); // Gửi tên người chơi để server biết ai đang ngắt kết nối
+
+                // Ngắt kết nối socket
+                Client_Socket.clientSocket.Shutdown(SocketShutdown.Both);
+                Client_Socket.clientSocket.Close();
+
+                // Đóng form sảnh chờ
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi ngắt kết nối: " + ex.Message);
+            }
+        }
+
 
         /*private void label1_Click(object sender, EventArgs e)
         {

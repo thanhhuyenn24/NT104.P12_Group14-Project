@@ -55,7 +55,7 @@ namespace Server
             }
 
         }
-        public static void AnalyzingMess(string mess, Player p)
+        public void AnalyzingMess(string mess, Player p)
         {
             string[] arrPayload = mess.Split(';');
 
@@ -63,6 +63,7 @@ namespace Server
             {
                 case "CONNECT":
                     {
+                        // Xử lý kết nối
                         string playerName = arrPayload[1].Trim();
 
                         // Kiểm tra tên đã tồn tại
@@ -98,8 +99,27 @@ namespace Server
                         }
                     }
                     break;
+
+                case "DISCONNECT":
+                    {
+                        // Xử lý ngắt kết nối
+                        connectedPlayers.Remove(p); // Loại bỏ player khỏi danh sách
+                        UpdateRichTextBox($"{p.name} has disconnected."); // Cập nhật log cho server
+
+                        // Thông báo cho tất cả người chơi còn lại
+                        foreach (var player in connectedPlayers)
+                        {
+                            byte[] buffer = Encoding.UTF8.GetBytes($"LOBBYINFO;{p.name} has left the game.");
+                            player.playerSocket.Send(buffer);
+                        }
+
+                        // Đóng socket của player
+                        p.playerSocket.Close();
+                    }
+                    break;
             }
         }
+
         private void UpdateRichTextBox(string message)
         {
             if (InvokeRequired)
