@@ -44,14 +44,25 @@ namespace Client
         private void DisplayWordSelection()
         {
             int wordCount = Convert.ToInt32(GiaoDienTaoPhong.Instance.comboBoxWordCount.SelectedItem);
-            List<string> randomWords = WordData.GetRandomWords(wordCount); // Lấy từ ngẫu nhiên từ Server
-            string selectedWord = ShowWordSelectionDialog(randomWords);
+            List<string> randomWords = WordData.GetRandomWords(wordCount);
 
-            if (!string.IsNullOrEmpty(selectedWord))
+            using (var wordSelectionForm = new WordSelectionForm(randomWords))
             {
-                StartCountdown(); // Bắt đầu đếm ngược sau khi chọn từ
-                BroadcastWord(selectedWord); // Truyền từ cho người Đoán
+                // Đăng ký sự kiện WordSelected
+                wordSelectionForm.WordSelected += selectedWord =>
+                {
+                    StartCountdown();
+                    BroadcastWord(selectedWord); // Gửi từ đã chọn tới Guessers
+                };
+
+                wordSelectionForm.ShowDialog();
             }
+        }
+
+
+        public void ReceiveStartSignal()
+        {
+            StartCountdown();
         }
 
         private void BroadcastWord(string selectedWord)
@@ -60,7 +71,8 @@ namespace Client
             {
                 if (form.role == "Guesser")
                 {
-                    form.ReceiveWord(selectedWord);
+                    form.ReceiveWord(selectedWord); // Truyền từ
+                    form.ReceiveStartSignal(); // Bắt đầu đếm ngược cho Người Đoán
                 }
             }
         }
@@ -91,23 +103,30 @@ namespace Client
                 sharedTimer.Tick += Timer_Tick;
             }
 
+            drawTime = Convert.ToInt32(GiaoDienTaoPhong.Instance.comboBoxDrawTime.SelectedItem); // Lấy số giây từ ComboBox Drawtime
+
             sharedTimer.Start();
         }
+
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (drawTime > 0)
             {
                 drawTime--;
-                labelTimer.Text = drawTime.ToString();
+
+                // Cập nhật labelTimer trên tất cả các Form người chơi
+                foreach (var form in Application.OpenForms.OfType<GiaoDienNguoiChoi>())
+                {
+                    form.labelTimer.Text = drawTime.ToString();
+                }
             }
             else
             {
                 sharedTimer.Stop();
-                MessageBox.Show("Hết giờ!");
+                MessageBox.Show("No time!");
             }
         }
-
 
         public GiaoDienNguoiChoi()
         {

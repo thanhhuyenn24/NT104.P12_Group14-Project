@@ -178,7 +178,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox comboBoxPlayers;
-        private System.Windows.Forms.ComboBox comboBoxDrawTime;
+        public System.Windows.Forms.ComboBox comboBoxDrawTime;
         private System.Windows.Forms.ComboBox comboBox3;
         public System.Windows.Forms.ComboBox comboBoxWordCount;
     }
