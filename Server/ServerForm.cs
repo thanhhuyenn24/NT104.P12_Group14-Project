@@ -37,6 +37,8 @@ namespace Server
             Player player = new Player();
             player.playerSocket = client;
             connectedPlayers.Add(player);
+            // Gọi hàm thiết lập turn tại đây
+            SetUpPlayerTurn(); // Thiết lập turn sau khi thêm người chơi
             byte[] buffer = new byte[4096];
 
             while (player.playerSocket.Connected)
@@ -75,23 +77,33 @@ namespace Server
 
                         p.name = playerName;
 
-                        // Gửi thông tin người chơi hiện tại cho người mới
-                        foreach (var player in connectedPlayers)
-                        {
-                            if (player.name != null)
-                            {
-                                byte[] buffer = Encoding.UTF8.GetBytes($"LOBBYINFO;{player.name}");
-                                p.playerSocket.Send(buffer);
-                                Thread.Sleep(100);
-                            }
-                        }
 
                         // Thông báo cho các người chơi khác về người chơi mới
                         foreach (var player in connectedPlayers)
                         {
-                            if (player.playerSocket != p.playerSocket && player.name != null)
+                                string makemsg = "LOBBYINFO;" + p.name + ";" + p.turn;
+                                byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
+                                player.playerSocket.Send(buffer);
+                                Thread.Sleep(100);
+                        
+                        }
+                    }
+                    break;
+                case "UPDATE_SETTINGS":
+                    {
+                        string players = arrPayload[1];
+                        string drawTime = arrPayload[2];
+                        string rounds = arrPayload[3];
+                        string wordCount = arrPayload[4];
+
+                        string updateMessage = "UPDATE_SETTINGS;" + players + ";" + drawTime + ";" + rounds + ";" + wordCount;
+
+                        // Gửi thông báo cập nhật đến tất cả các client
+                        foreach (var player in connectedPlayers)
+                        {
+                            if (player.playerSocket.Connected)
                             {
-                                byte[] buffer = Encoding.UTF8.GetBytes($"LOBBYINFO;{p.name}");
+                                byte[] buffer = Encoding.UTF8.GetBytes(updateMessage);
                                 player.playerSocket.Send(buffer);
                                 Thread.Sleep(100);
                             }
@@ -124,6 +136,16 @@ namespace Server
                 }
             });
             serverlisten.Start();
+        }
+
+        private static void SetUpPlayerTurn()
+        {
+            int i = 1;
+            foreach (var player in connectedPlayers)
+            {
+                player.turn = i;
+                i++;
+            }
         }
     }
 }

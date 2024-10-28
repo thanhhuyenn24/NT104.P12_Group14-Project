@@ -33,6 +33,9 @@ namespace Client
             CheckForIllegalCrossThreadCalls = false;
             lobby = this;
             comboBoxPlayers.SelectedIndex = 0;
+            comboBoxDrawTime.SelectedIndex = 0;
+            comboBoxRounds.SelectedIndex = 0;
+            comboBoxWordCount.SelectedIndex = 0;
         }
 
         public void Disable_Enable_Start(bool check)
@@ -45,10 +48,35 @@ namespace Client
             connectedPlayer++;
             Status.Text += name + " has joined the game!\n";
         }
-
+        public void Enable_All()
+        {
+            comboBoxPlayers.Enabled = true;
+            comboBoxDrawTime.Enabled = true;
+            comboBoxRounds.Enabled = true;
+            comboBoxWordCount.Enabled = true;
+            btnOK.Enabled = true;
+        }
         private void button1_Click(object sender, EventArgs e)
         {
         }
+
+        public void UpdateSettings(string players, string drawTime, string rounds, string wordCount)
+        {
+            comboBoxPlayers.Text = players;
+            comboBoxDrawTime.Text = drawTime;
+            comboBoxRounds.Text = rounds;
+            comboBoxWordCount.Text = wordCount;
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            Client_Socket.datatype = "UPDATE_SETTINGS";
+            string settings = comboBoxPlayers.Text+";"+comboBoxDrawTime.Text+";"+comboBoxRounds.Text+";"+comboBoxWordCount.Text;
+
+            // Gửi thông tin cài đặt tới server
+            Client_Socket.SendMessage(settings);
+        }
+
 
         /*private void label1_Click(object sender, EventArgs e)
         {

@@ -35,10 +35,11 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.comboBoxPlayers = new System.Windows.Forms.ComboBox();
             this.comboBoxDrawTime = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.comboBoxRounds = new System.Windows.Forms.ComboBox();
             this.comboBoxWordCount = new System.Windows.Forms.ComboBox();
             this.Status = new System.Windows.Forms.RichTextBox();
             this.btnLeave = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -79,9 +80,10 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(149, 320);
+            this.btnStart.Enabled = false;
+            this.btnStart.Location = new System.Drawing.Point(221, 320);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(216, 51);
+            this.btnStart.Size = new System.Drawing.Size(169, 51);
             this.btnStart.TabIndex = 4;
             this.btnStart.Text = "Start!";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -89,6 +91,7 @@
             // 
             // comboBoxPlayers
             // 
+            this.comboBoxPlayers.Enabled = false;
             this.comboBoxPlayers.FormattingEnabled = true;
             this.comboBoxPlayers.Items.AddRange(new object[] {
             "2",
@@ -104,6 +107,7 @@
             // 
             // comboBoxDrawTime
             // 
+            this.comboBoxDrawTime.Enabled = false;
             this.comboBoxDrawTime.FormattingEnabled = true;
             this.comboBoxDrawTime.Items.AddRange(new object[] {
             "50",
@@ -117,21 +121,23 @@
             this.comboBoxDrawTime.Size = new System.Drawing.Size(121, 24);
             this.comboBoxDrawTime.TabIndex = 6;
             // 
-            // comboBox3
+            // comboBoxRounds
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
+            this.comboBoxRounds.Enabled = false;
+            this.comboBoxRounds.FormattingEnabled = true;
+            this.comboBoxRounds.Items.AddRange(new object[] {
             "2",
             "3",
             "4",
             "5"});
-            this.comboBox3.Location = new System.Drawing.Point(269, 177);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 24);
-            this.comboBox3.TabIndex = 7;
+            this.comboBoxRounds.Location = new System.Drawing.Point(269, 177);
+            this.comboBoxRounds.Name = "comboBoxRounds";
+            this.comboBoxRounds.Size = new System.Drawing.Size(121, 24);
+            this.comboBoxRounds.TabIndex = 7;
             // 
             // comboBoxWordCount
             // 
+            this.comboBoxWordCount.Enabled = false;
             this.comboBoxWordCount.FormattingEnabled = true;
             this.comboBoxWordCount.Items.AddRange(new object[] {
             "2",
@@ -162,15 +168,27 @@
             this.btnLeave.Text = "Leave";
             this.btnLeave.UseVisualStyleBackColor = true;
             // 
+            // btnOK
+            // 
+            this.btnOK.Enabled = false;
+            this.btnOK.Location = new System.Drawing.Point(107, 320);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(108, 51);
+            this.btnOK.TabIndex = 11;
+            this.btnOK.Text = "OK";
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
             // GiaoDienTaoPhong
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnLeave);
             this.Controls.Add(this.Status);
             this.Controls.Add(this.comboBoxWordCount);
-            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.comboBoxRounds);
             this.Controls.Add(this.comboBoxDrawTime);
             this.Controls.Add(this.comboBoxPlayers);
             this.Controls.Add(this.btnStart);
@@ -194,9 +212,10 @@
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.ComboBox comboBoxPlayers;
         public System.Windows.Forms.ComboBox comboBoxDrawTime;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox comboBoxRounds;
         public System.Windows.Forms.ComboBox comboBoxWordCount;
         private System.Windows.Forms.RichTextBox Status;
         private System.Windows.Forms.Button btnLeave;
+        private System.Windows.Forms.Button btnOK;
     }
 }

@@ -106,6 +106,7 @@ namespace Client
                 }
             }
         }
+        //public static GiaoDienTaoPhong Lobby;
         public static GiaoDienNguoiChoi GamePlay;
         //public static Winner WinnerForm;
         public static List<OtherPlayers> otherPlayers;
@@ -116,136 +117,37 @@ namespace Client
             {
                 case "LOBBYINFO":
                     {
-                        GiaoDienChinh.lobby.DisplayConnectedPlayer(Payload[1]);
+                        string playerName = Payload[1];
 
-                        //Kiem tra dieu kien khi da du nguoi moi duoc an nut start tro choi
+                            GiaoDienChinh.lobby.DisplayConnectedPlayer(playerName);
+
+
+                        // Kiểm tra điều kiện kích hoạt nút Start
                         if (GiaoDienChinh.lobby.connectedPlayer == GiaoDienTaoPhong.lobby.getPlayers())
                             GiaoDienChinh.lobby.Disable_Enable_Start(true);
                         else
                             GiaoDienChinh.lobby.Disable_Enable_Start(false);
-                    }
-                    break;
-                /*case "LOAD_QA":
-                    {
-                        GamePlay = new GiaoDienNguoiChoi();
-                        GiaoDienChinh.lobby.Invoke((MethodInvoker)delegate ()
-                        {
-                            GamePlay.question = Payload[1];
-                            GamePlay.answer = Payload[2];
-                            GamePlay.round = Playerround.ToString();
-                            GamePlay.Show();
-                        }
-                        );
-                    }
-                    break;
-                case "INGAME":
-                    {
-                        Player.turn = int.Parse(Payload[2]);
-                        Player.score = int.Parse(Payload[3]);
-                        otherPlayers = new List<OtherPlayers>();
-                        GiaoDienChinh.lobby.Invoke((MethodInvoker)delegate ()
-                        {
-                            GamePlay.Text = Payload[1];
-                            Login_view.lobby.Hide();
-                        }
-                        );
-                    }
-                    break;
-                case "OTHERINFO":
-                    {
-                        OtherPlayers otherplayer = new OtherPlayers();
-                        otherplayer.name = Payload[1];
-                        otherplayer.turn = Payload[2];
-                        otherplayer.score = Payload[3];
-                        otherPlayers.Add(otherplayer);
-                    }
-                    break;
-                case "SETUP":
-                    {
-                        GamePlay.Invoke((MethodInvoker)delegate ()
-                        {
-                            GamePlay.InGameDisplay();
-                        }
-                        );
-                    }
-                    break;
-                case "TURN":
-                    {
-                        if (Payload[1] == Player.name)
-                        {
-                            GamePlay.Invoke((MethodInvoker)delegate ()
-                            {
-                                GamePlay.Allow_Playing();
-                                GamePlay.Turn_Notify(Payload[1]);
-                            }
-                            );
-                        }
-                        else
-                        {
-                            GamePlay.Invoke((MethodInvoker)delegate ()
-                            {
-                                GamePlay.Turn_Notify(Payload[1]);
-                            }
-                            );
-                        }
 
+                        if (int.Parse(Payload[2]) == 1)
+                        {
+                            GiaoDienChinh.lobby.Invoke((MethodInvoker)delegate
+                            {
+                                GiaoDienChinh.lobby.Enable_All();
+                            });
+                        }
                     }
                     break;
-                case "CR": //ANOTHER PLAYER CHOOSE RIGHT ANS
+                case "UPDATE_SETTINGS":
                     {
-                        GamePlay.Invoke((MethodInvoker)delegate ()
+                        GiaoDienTaoPhong.lobby.Invoke((MethodInvoker)delegate
                         {
-                            GamePlay.Game_Update(Payload[1]);
-                        }
-                        );
+                            GiaoDienTaoPhong.lobby.UpdateSettings(
+                                Payload[1], Payload[2], Payload[3], Payload[4]
+                            );
+                        });
                     }
                     break;
-                case "CW": //ANOTHER PLAYER CHOOSE WRONG ANS
-                    {
-                        GamePlay.Invoke((MethodInvoker)delegate ()
-                        {
-                            GamePlay.Game_Update(Payload[1]);
-                        }
-                       );
-                    }
-                    break;
-                case "SCORE_UPDATE": //UPDATE ANOTHER PLAYER'S SCORE
-                    {
-                        GamePlay.Invoke((MethodInvoker)delegate ()
-                        {
-                            GamePlay.Score_Update(Payload[1], Payload[2]);
-                        }
-                       );
-                    }
-                    break;
-                case "NEW_ROUND":
-                    {
-                        Playerround = int.Parse(Payload[1]);
-                        GamePlay.Invoke((MethodInvoker)delegate ()
-                        {
-                            GamePlay.Close();
-                        }
-                        );
-                    }
-                    break;
-                case "ENDGAME":
-                    {
-                        GamePlay.Invoke((MethodInvoker)delegate ()
-                        {
-                            GamePlay.Close();
-                        }
-                        );
-                        WinnerForm = new Winner();
-                        GiaoDienChinh.lobby.Invoke((MethodInvoker)delegate ()
-                        {
-                            WinnerForm.Show();
-                            WinnerForm.UpdateWinner(Payload[1]);
-                        }
-                        );
-                    }
-                    break;*/
-                default:
-                    break;
+
             }
 
         }
