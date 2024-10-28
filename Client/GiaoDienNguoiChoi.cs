@@ -41,6 +41,16 @@ namespace Client
                 StartCountdown(); // Người Đoán chỉ bắt đầu đếm ngược
             }
 
+            if (role == "Guesser")
+            {
+                pic_color.Visible = false;
+                btn_color.Visible = false;
+                btn_pen.Visible = false;
+                btn_eraser.Visible = false;
+                btn_undo.Visible = false;
+                btn_clear.Visible = false;
+            }
+
             this.taoPhongForm = taoPhongForm;
 
         }
@@ -277,8 +287,8 @@ namespace Client
                 ResetCanvas();
             }
         }
-        //_______________________________________________________________________________________________________
 
+        //_______________________________________________________________________________________________________
 
         //HÀM + EVENT ĐỂ VẼ______________________________________________________________________________________
         private void pic_MouseDown(object sender, MouseEventArgs e)
@@ -340,6 +350,7 @@ namespace Client
             pic_color.BackColor = cd.Color;
             p.Color = cd.Color;
         }
+
         //_______________________________________________________________________________________________________
 
         private void label2_Click(object sender, EventArgs e)
