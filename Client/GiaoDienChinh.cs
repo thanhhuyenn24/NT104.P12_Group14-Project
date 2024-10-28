@@ -4,40 +4,95 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Client
 {
     public partial class GiaoDienChinh : Form
     {
+        public static GiaoDienTaoPhong lobby;
         public GiaoDienChinh()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        void lobby_FormClosed(object sender, EventArgs e)
         {
-
+            Client_Socket.datatype = "DISCONNECT";
+            Client_Socket.SendMessage(Player.name);
+            Client_Socket.clientSocket.Shutdown(System.Net.Sockets.SocketShutdown.Both);
+            Client_Socket.clientSocket.Close();
+            this.Show();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnPlay_Click(object sender, EventArgs e)
         {
-            GiaoDienTaoPhong taoPhongForm = new GiaoDienTaoPhong();
+            try
+            {
 
-            // Hiển thị form mới
-            taoPhongForm.Show();  // Sử dụng Show() để mở form không khóa form hiện tại
+                if (string.IsNullOrEmpty(username.Text))
+                {
+                    MessageBox.Show("Vui lòng nhập tên người chơi!");
+                    return;
+                }
 
-            // Nếu bạn muốn form mới là modal (chặn tương tác với form hiện tại cho đến khi đóng)
-            // bạn có thể sử dụng ShowDialog() thay cho Show().
+                // Khởi tạo form sảnh chờ trước
+                lobby = new GiaoDienTaoPhong();
+
+                // Thiết lập kết nối
+                IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 11000);
+                Client_Socket.Connect(serverEP);
+
+                // Gửi thông tin kết nối
+                Client_Socket.datatype = "CONNECT";
+                Player.name = username.Text;
+                Client_Socket.SendMessage(username.Text);
+
+                this.Hide();
+                lobby.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi kết nối: " + ex.Message);
+            }
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void btnCreate_Click(object sender, EventArgs e)
         {
-            GiaoDienNguoiChoi NguoiChoiForm = new GiaoDienNguoiChoi();
+            try
+            {
 
-            NguoiChoiForm.Show();
+                if (string.IsNullOrEmpty(username.Text))
+                {
+                    MessageBox.Show("Vui lòng nhập tên người chơi!");
+                    return;
+                }
+
+                // Khởi tạo form sảnh chờ trước
+                lobby = new GiaoDienTaoPhong();
+
+                // Thiết lập kết nối
+                IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 11000);
+                Client_Socket.Connect(serverEP);
+
+                // Gửi thông tin kết nối
+                Client_Socket.datatype = "CONNECT";
+                Player.name = username.Text;
+                Client_Socket.SendMessage(username.Text);
+
+                this.Hide();
+                lobby.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi kết nối: " + ex.Message);
+            }
         }
     }
 }

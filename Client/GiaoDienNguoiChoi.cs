@@ -24,7 +24,7 @@ namespace Client
         private Stack<Bitmap> undoStack;    // Thêm stack để lưu lịch sử các thao tác
         private const int MAX_UNDO_LEVELS = 20; // Giới hạn số lượng undo để tránh tốn bộ nhớ
         //
-        public GiaoDienNguoiChoi(string playerName, string role, int drawTime, GiaoDienTaoPhong taoPhongForm)
+        /*public GiaoDienNguoiChoi(string playerName, string role, int drawTime, GiaoDienTaoPhong taoPhongForm)
         {
             InitializeComponent();
             label5.Text = playerName;
@@ -140,7 +140,7 @@ namespace Client
                 sharedTimer.Stop();
                 MessageBox.Show("No time!");
             }
-        }
+        }*/
 
         public GiaoDienNguoiChoi()
         {
@@ -167,7 +167,7 @@ namespace Client
                 MessageBox.Show("Lỗi khởi tạo: " + ex.Message);
             }
         }
-
+        #region DRAW
         //Khai báo phần vẽ 
         Bitmap bm;
         Graphics g;
@@ -180,8 +180,69 @@ namespace Client
         ColorDialog cd=new ColorDialog();
         Color new_color;
 
+        //HÀM + EVENT ĐỂ VẼ
+        private void pic_MouseDown(object sender, MouseEventArgs e)
+        {
+            paint = true;
+            py = e.Location;
+        }
+        private void pic_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (paint)
+            {
+                if (index == 2)
+                {
+                    px = e.Location;
+                    g.DrawLine(erase, px, py);
+                    py = px;
+                }
+            }
+            if (paint)
+            {
+                if (index == 1)
+                {
+                    px = e.Location;
+                    g.DrawLine(p, px, py);
+                    py = px;
+                }
+            }
+            pic.Refresh();
+        }
 
-        //CAC HAM CHO UNDO________________________________________________________________________________________
+        private void pic_MouseUp(object sender, MouseEventArgs e)
+        {
+            paint = false;
+            SaveState(); // Lưu trạng thái sau khi vẽ xong
+        }
+
+        private void btn_pen_Click(object sender, EventArgs e)
+        {
+            index = 1;
+        }
+
+        private void btn_eraser_Click(object sender, EventArgs e)
+        {
+            index = 2;
+        }
+
+        private void btn_clear_Click(object sender, EventArgs e)
+        {
+            SaveState(); // Lưu trạng thái trước khi xóa
+            g.Clear(Color.White);
+            pic.Image = bm;
+            index = 0;
+        }
+
+        private void btn_color_Click(object sender, EventArgs e)
+        {
+            cd.ShowDialog();
+            new_color = cd.Color;
+            pic_color.BackColor = cd.Color;
+            p.Color = cd.Color;
+        }
+        #endregion
+
+        #region UNDO
         // Hàm sao chép bitmap
         private Bitmap CloneBitmap(Bitmap sourceBitmap)
         {
@@ -287,71 +348,7 @@ namespace Client
                 ResetCanvas();
             }
         }
-
-        //_______________________________________________________________________________________________________
-
-        //HÀM + EVENT ĐỂ VẼ______________________________________________________________________________________
-        private void pic_MouseDown(object sender, MouseEventArgs e)
-        {
-            paint = true;
-            py = e.Location;
-        }
-        private void pic_MouseMove(object sender, MouseEventArgs e)
-        {
-            if(paint)
-            {
-                if(index==2)
-                {
-                    px = e.Location;
-                    g.DrawLine(erase,px,py);
-                    py=px;
-                }
-            }
-            if (paint)
-            {
-                if (index == 1)
-                {
-                    px = e.Location;
-                    g.DrawLine(p, px, py);
-                    py = px;
-                }
-            }
-            pic.Refresh();
-        }
-
-        private void pic_MouseUp(object sender, MouseEventArgs e)
-        {
-            paint = false;
-            SaveState(); // Lưu trạng thái sau khi vẽ xong
-        }
-
-        private void btn_pen_Click(object sender, EventArgs e)
-        {
-            index = 1;
-        }
-
-        private void btn_eraser_Click(object sender, EventArgs e)
-        {
-            index = 2;
-        }
-
-        private void btn_clear_Click(object sender, EventArgs e)
-        {
-            SaveState(); // Lưu trạng thái trước khi xóa
-            g.Clear(Color.White);
-            pic.Image = bm;
-            index = 0;
-        }
-
-        private void btn_color_Click(object sender, EventArgs e)
-        {
-            cd.ShowDialog();
-            new_color = cd.Color;
-            pic_color.BackColor = cd.Color;
-            p.Color = cd.Color;
-        }
-
-        //_______________________________________________________________________________________________________
+        #endregion
 
         private void label2_Click(object sender, EventArgs e)
         {

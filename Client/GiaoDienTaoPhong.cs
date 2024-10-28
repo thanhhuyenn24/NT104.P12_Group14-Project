@@ -4,26 +4,53 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Client
 {
 
     public partial class GiaoDienTaoPhong : Form
     {
+        public static GiaoDienTaoPhong lobby;
+        public int connectedPlayer = 0;
         public static GiaoDienTaoPhong Instance { get; private set; }
 
-        List<string> players = new List<string>();
+        List<Player> players = new List<Player>();
+
+        public int getPlayers()
+        {
+            return int.Parse(this.comboBoxPlayers.Text);
+        }
 
         public GiaoDienTaoPhong()
         {
             InitializeComponent();
-            Instance = this; // Gán Instance trong constructor
+            //Khoa kiem tra luong de khong bi Cross-thread
+            CheckForIllegalCrossThreadCalls = false;
+            lobby = this;
+            comboBoxPlayers.SelectedIndex = 0;
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        public void Disable_Enable_Start(bool check)
+        {
+            if (check == true)
+                btnStart.Enabled = true;
+        }
+        public void DisplayConnectedPlayer(string name)
+        {
+            connectedPlayer++;
+            Status.Text += name + " has joined the game!\n";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+        }
+
+        /*private void label1_Click(object sender, EventArgs e)
         {
 
         }
@@ -81,6 +108,6 @@ namespace Client
         private void comboBoxWordCount_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-        }
+        }*/
     }
 }

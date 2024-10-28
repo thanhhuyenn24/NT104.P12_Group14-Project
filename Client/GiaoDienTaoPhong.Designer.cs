@@ -32,62 +32,60 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnStart = new System.Windows.Forms.Button();
             this.comboBoxPlayers = new System.Windows.Forms.ComboBox();
             this.comboBoxDrawTime = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.comboBoxWordCount = new System.Windows.Forms.ComboBox();
+            this.Status = new System.Windows.Forms.RichTextBox();
+            this.btnLeave = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(242, 77);
+            this.label1.Location = new System.Drawing.Point(104, 54);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "Players";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(242, 143);
+            this.label2.Location = new System.Drawing.Point(104, 120);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 16);
             this.label2.TabIndex = 1;
             this.label2.Text = "Drawtime";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(242, 208);
+            this.label3.Location = new System.Drawing.Point(104, 185);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 16);
             this.label3.TabIndex = 2;
             this.label3.Text = "Rounds";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(242, 274);
+            this.label4.Location = new System.Drawing.Point(104, 251);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(77, 16);
             this.label4.TabIndex = 3;
             this.label4.Text = "Word Count";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
-            // button1
+            // btnStart
             // 
-            this.button1.Location = new System.Drawing.Point(287, 343);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(216, 51);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Start!";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnStart.Location = new System.Drawing.Point(149, 320);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(216, 51);
+            this.btnStart.TabIndex = 4;
+            this.btnStart.Text = "Start!";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.button1_Click);
             // 
             // comboBoxPlayers
             // 
@@ -99,11 +97,10 @@
             "5",
             "6",
             "7"});
-            this.comboBoxPlayers.Location = new System.Drawing.Point(407, 77);
+            this.comboBoxPlayers.Location = new System.Drawing.Point(269, 54);
             this.comboBoxPlayers.Name = "comboBoxPlayers";
             this.comboBoxPlayers.Size = new System.Drawing.Size(121, 24);
             this.comboBoxPlayers.TabIndex = 5;
-            this.comboBoxPlayers.SelectedIndexChanged += new System.EventHandler(this.comboBoxPlayers_SelectedIndexChanged);
             // 
             // comboBoxDrawTime
             // 
@@ -115,7 +112,7 @@
             "80",
             "90",
             "100"});
-            this.comboBoxDrawTime.Location = new System.Drawing.Point(407, 135);
+            this.comboBoxDrawTime.Location = new System.Drawing.Point(269, 112);
             this.comboBoxDrawTime.Name = "comboBoxDrawTime";
             this.comboBoxDrawTime.Size = new System.Drawing.Size(121, 24);
             this.comboBoxDrawTime.TabIndex = 6;
@@ -128,7 +125,7 @@
             "3",
             "4",
             "5"});
-            this.comboBox3.Location = new System.Drawing.Point(407, 200);
+            this.comboBox3.Location = new System.Drawing.Point(269, 177);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(121, 24);
             this.comboBox3.TabIndex = 7;
@@ -143,22 +140,40 @@
             "5",
             "6",
             "7"});
-            this.comboBoxWordCount.Location = new System.Drawing.Point(407, 266);
+            this.comboBoxWordCount.Location = new System.Drawing.Point(269, 243);
             this.comboBoxWordCount.Name = "comboBoxWordCount";
             this.comboBoxWordCount.Size = new System.Drawing.Size(121, 24);
             this.comboBoxWordCount.TabIndex = 8;
-            this.comboBoxWordCount.SelectedIndexChanged += new System.EventHandler(this.comboBoxWordCount_SelectedIndexChanged);
+            // 
+            // Status
+            // 
+            this.Status.Location = new System.Drawing.Point(440, 54);
+            this.Status.Name = "Status";
+            this.Status.Size = new System.Drawing.Size(265, 317);
+            this.Status.TabIndex = 9;
+            this.Status.Text = "";
+            // 
+            // btnLeave
+            // 
+            this.btnLeave.Location = new System.Drawing.Point(675, 391);
+            this.btnLeave.Name = "btnLeave";
+            this.btnLeave.Size = new System.Drawing.Size(92, 34);
+            this.btnLeave.TabIndex = 10;
+            this.btnLeave.Text = "Leave";
+            this.btnLeave.UseVisualStyleBackColor = true;
             // 
             // GiaoDienTaoPhong
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnLeave);
+            this.Controls.Add(this.Status);
             this.Controls.Add(this.comboBoxWordCount);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.comboBoxDrawTime);
             this.Controls.Add(this.comboBoxPlayers);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnStart);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -176,10 +191,12 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.ComboBox comboBoxPlayers;
         public System.Windows.Forms.ComboBox comboBoxDrawTime;
         private System.Windows.Forms.ComboBox comboBox3;
         public System.Windows.Forms.ComboBox comboBoxWordCount;
+        private System.Windows.Forms.RichTextBox Status;
+        private System.Windows.Forms.Button btnLeave;
     }
 }
