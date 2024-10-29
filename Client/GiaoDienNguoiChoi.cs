@@ -145,7 +145,7 @@ namespace Client
         public GiaoDienNguoiChoi()
         {
             InitializeComponent();
-           
+
             //Cài đặt cho phần vẽ
             bm = new Bitmap(pic.Width, pic.Height);
             g = Graphics.FromImage(bm);
@@ -174,10 +174,10 @@ namespace Client
         bool paint = false;
         Point px, py;
         Pen p = new Pen(Color.Black, 1);
-        Pen erase=new Pen(Color.White, 20);
+        Pen erase = new Pen(Color.White, 20);
         int index;
 
-        ColorDialog cd=new ColorDialog();
+        ColorDialog cd = new ColorDialog();
         Color new_color;
 
         //HÀM + EVENT ĐỂ VẼ

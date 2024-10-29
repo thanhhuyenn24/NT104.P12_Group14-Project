@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,6 +22,11 @@ namespace Server
         private static Thread clientThread;
         private static Thread serverlisten;
         private static List<Player> connectedPlayers = new List<Player>();
+        public static int maxPlayers = 2;
+        public static string players = "2";
+        public static string drawTime = "50";
+        public static string rounds = "2";
+        public static string wordCount = "2";
         public ServerForm()
         {
             InitializeComponent();
@@ -37,6 +43,12 @@ namespace Server
             Player player = new Player();
             player.playerSocket = client;
             connectedPlayers.Add(player);
+            // Gọi hàm thiết lập turn tại đây
+            SetUpPlayerTurn(); // Thiết lập turn sau khi thêm người chơi
+
+            // Gửi thông tin cài đặt hiện tại cho client mới
+            if (connectedPlayers.Count!=1) SendCurrentSettingsToClient(player);
+
             byte[] buffer = new byte[4096];
 
             while (player.playerSocket.Connected)
@@ -63,7 +75,6 @@ namespace Server
             {
                 case "CONNECT":
                     {
-                        // Xử lý kết nối
                         string playerName = arrPayload[1].Trim();
 
                         // Kiểm tra tên đã tồn tại
@@ -76,50 +87,67 @@ namespace Server
 
                         p.name = playerName;
 
-                        // Gửi thông tin người chơi hiện tại cho người mới
-                        foreach (var player in connectedPlayers)
+                        // Kiểm tra nếu phòng đã đầy
+                        if (connectedPlayers.Count > maxPlayers)
                         {
-                            if (player.name != null)
-                            {
-                                byte[] buffer = Encoding.UTF8.GetBytes($"LOBBYINFO;{player.name}");
-                                p.playerSocket.Send(buffer);
-                                Thread.Sleep(100);
-                            }
+                            byte[] fullRoomBuffer = Encoding.UTF8.GetBytes("DISCONNECT;Room is full");
+
+                            // Gửi thông điệp "DISCONNECT" cho client hiện tại vì phòng đã đầy
+                            p.playerSocket.Send(fullRoomBuffer);
+
+                            return; // Kết thúc xử lý cho client này
                         }
 
                         // Thông báo cho các người chơi khác về người chơi mới
                         foreach (var player in connectedPlayers)
                         {
-                            if (player.playerSocket != p.playerSocket && player.name != null)
+                            string makemsg = "LOBBYINFO;" + p.name + ";" + p.turn + ";" + connectedPlayers.Count;
+                            byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
+                            player.playerSocket.Send(buffer);
+                            Thread.Sleep(100);
+
+                        }
+                    }
+                    break;
+                case "DISCONNECT":
+                    {
+                        // Xử lý ngắt kết nối
+                        connectedPlayers.Remove(p); // Loại bỏ player khỏi danh sách
+                        richTextBox1.Text +=($"{p.name} has disconnected.\n"); // Cập nhật log cho server
+                        // Thông báo cho tất cả người chơi còn lại
+                        foreach (var player in connectedPlayers)
+                        {
+                            byte[] buffer = Encoding.UTF8.GetBytes($"DISCONNECT;{p.name} has left the game.\n");
+                            player.playerSocket.Send(buffer);
+                        }
+                        // Đóng socket của player
+                        p.playerSocket.Close();
+                    }
+                    break;
+                case "UPDATE_SETTINGS":
+                    {
+                        maxPlayers = int.Parse(arrPayload[1]);
+                        players = arrPayload[1];
+                        drawTime = arrPayload[2];
+                        rounds = arrPayload[3];
+                        wordCount = arrPayload[4];
+
+                        string updateMessage = "UPDATE_SETTINGS;" + players + ";" + drawTime + ";" + rounds + ";" + wordCount + ";" + connectedPlayers.Count;
+
+                        // Gửi thông báo cập nhật đến tất cả các client
+                        foreach (var player in connectedPlayers)
+                        {
+                            if (player.playerSocket.Connected)
                             {
-                                byte[] buffer = Encoding.UTF8.GetBytes($"LOBBYINFO;{p.name}");
+                                byte[] buffer = Encoding.UTF8.GetBytes(updateMessage);
                                 player.playerSocket.Send(buffer);
                                 Thread.Sleep(100);
                             }
                         }
                     }
                     break;
-
-                case "DISCONNECT":
-                    {
-                        // Xử lý ngắt kết nối
-                        connectedPlayers.Remove(p); // Loại bỏ player khỏi danh sách
-                        UpdateRichTextBox($"{p.name} has disconnected."); // Cập nhật log cho server
-
-                        // Thông báo cho tất cả người chơi còn lại
-                        foreach (var player in connectedPlayers)
-                        {
-                            byte[] buffer = Encoding.UTF8.GetBytes($"LOBBYINFO;{p.name} has left the game.");
-                            player.playerSocket.Send(buffer);
-                        }
-
-                        // Đóng socket của player
-                        p.playerSocket.Close();
-                    }
-                    break;
             }
         }
-
         private void UpdateRichTextBox(string message)
         {
             if (InvokeRequired)
@@ -144,6 +172,23 @@ namespace Server
                 }
             });
             serverlisten.Start();
+        }
+
+        private static void SetUpPlayerTurn()
+        {
+            int i = 1;
+            foreach (var player in connectedPlayers)
+            {
+                player.turn = i;
+                i++;
+            }
+        }
+        private void SendCurrentSettingsToClient(Player player)
+        {
+            // Gửi thông tin cài đặt hiện tại cho client mới
+            string settingsMessage = "UPDATE_SETTINGS;" + players + ";" + drawTime + ";" + rounds + ";" + wordCount + ";" + connectedPlayers.Count;
+            byte[] buffer = Encoding.UTF8.GetBytes(settingsMessage);
+            player.playerSocket.Send(buffer);
         }
     }
 }

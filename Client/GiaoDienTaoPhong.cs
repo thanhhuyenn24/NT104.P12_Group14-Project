@@ -34,21 +34,48 @@ namespace Client
             CheckForIllegalCrossThreadCalls = false;
             lobby = this;
             comboBoxPlayers.SelectedIndex = 0;
+            comboBoxDrawTime.SelectedIndex = 0;
+            comboBoxRounds.SelectedIndex = 0;
+            comboBoxWordCount.SelectedIndex = 0;
         }
 
         public void Disable_Enable_Start(bool check)
         {
             if (check == true)
                 btnStart.Enabled = true;
+            else btnStart.Enabled = false;
         }
-        public void DisplayConnectedPlayer(string name)
+        public void Enable_All()
         {
-            connectedPlayer++;
-            Status.Text += name + " has joined the game!\n";
+            comboBoxPlayers.Enabled = true;
+            comboBoxDrawTime.Enabled = true;
+            comboBoxRounds.Enabled = true;
+            comboBoxWordCount.Enabled = true;
+            btnOK.Enabled = true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void UpdateSettings(string players, string drawTime, string rounds, string wordCount)
         {
+            comboBoxPlayers.Text = players;
+            comboBoxDrawTime.Text = drawTime;
+            comboBoxRounds.Text = rounds;
+            comboBoxWordCount.Text = wordCount;
+        }
+        public void UpdatePlayerCount(int playerCount)
+        {
+            Status.Text = $"Số lượng người chơi đã vào: {playerCount}\n";
+        }
+        public void UpdateDisconnect(string sentence)
+        {
+            Status.Text += $"{sentence}";
+        }
+        private void btnOK_Click_1(object sender, EventArgs e)
+        {
+            Client_Socket.datatype = "UPDATE_SETTINGS";
+            string settings = comboBoxPlayers.Text + ";" + comboBoxDrawTime.Text + ";" + comboBoxRounds.Text + ";" + comboBoxWordCount.Text;
+
+            // Gửi thông tin cài đặt tới server
+            Client_Socket.SendMessage(settings);
         }
 
         private void btnLeave_Click(object sender, EventArgs e)
@@ -58,20 +85,17 @@ namespace Client
                 // Gửi thông điệp ngắt kết nối đến server
                 Client_Socket.datatype = "DISCONNECT";
                 Client_Socket.SendMessage(Player.name); // Gửi tên người chơi để server biết ai đang ngắt kết nối
-
-                // Ngắt kết nối socket
+                                                        // Ngắt kết nối socket
                 Client_Socket.clientSocket.Shutdown(SocketShutdown.Both);
                 Client_Socket.clientSocket.Close();
-
                 // Đóng form sảnh chờ
-                this.Close();
+                GiaoDienChinh.lobby.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi khi ngắt kết nối: " + ex.Message);
             }
         }
-
 
         /*private void label1_Click(object sender, EventArgs e)
         {

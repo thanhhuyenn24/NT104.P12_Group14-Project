@@ -41,21 +41,20 @@ namespace Client
                     MessageBox.Show("Vui lòng nhập tên người chơi!");
                     return;
                 }
+                    // Khởi tạo form sảnh chờ trước
+                    lobby = new GiaoDienTaoPhong();
 
-                // Khởi tạo form sảnh chờ trước
-                lobby = new GiaoDienTaoPhong();
+                    // Thiết lập kết nối
+                    IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 11000);
+                    Client_Socket.Connect(serverEP);
 
-                // Thiết lập kết nối
-                IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 11000);
-                Client_Socket.Connect(serverEP);
+                    // Gửi thông tin kết nối
+                    Client_Socket.datatype = "CONNECT";
+                    Player.name = username.Text;
+                    Client_Socket.SendMessage(username.Text);
 
-                // Gửi thông tin kết nối
-                Client_Socket.datatype = "CONNECT";
-                Player.name = username.Text;
-                Client_Socket.SendMessage(username.Text);
-
-                this.Hide();
-                lobby.ShowDialog();
+                    this.Hide();
+                    lobby.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -73,21 +72,20 @@ namespace Client
                     MessageBox.Show("Vui lòng nhập tên người chơi!");
                     return;
                 }
+                    // Khởi tạo form sảnh chờ trước
+                    lobby = new GiaoDienTaoPhong();
 
-                // Khởi tạo form sảnh chờ trước
-                lobby = new GiaoDienTaoPhong();
+                    // Thiết lập kết nối
+                    IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 11000);
+                    Client_Socket.Connect(serverEP);
 
-                // Thiết lập kết nối
-                IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 11000);
-                Client_Socket.Connect(serverEP);
+                    // Gửi thông tin kết nối
+                    Client_Socket.datatype = "CONNECT";
+                    Player.name = username.Text;
+                    Client_Socket.SendMessage(username.Text);
 
-                // Gửi thông tin kết nối
-                Client_Socket.datatype = "CONNECT";
-                Player.name = username.Text;
-                Client_Socket.SendMessage(username.Text);
-
-                this.Hide();
-                lobby.ShowDialog();
+                    this.Hide();
+                    lobby.ShowDialog();
             }
             catch (Exception ex)
             {

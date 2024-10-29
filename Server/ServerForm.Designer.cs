@@ -79,7 +79,7 @@
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        public System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button btnLoadWords;
         private System.Windows.Forms.Label Serverlb;
     }
