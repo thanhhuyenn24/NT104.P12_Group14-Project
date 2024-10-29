@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -11,6 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Server
 {
@@ -22,6 +25,12 @@ namespace Server
         private static Thread clientThread;
         private static Thread serverlisten;
         private static List<Player> connectedPlayers = new List<Player>();
+        private static List<string> UsedWords = new List<string>();
+
+        private static int currentturn = 1;
+        private static int currentround = 1;
+        private static string word;
+        private static string wordPath;
         public static int maxPlayers = 2;
         public static string players = "2";
         public static string drawTime = "50";
@@ -90,11 +99,9 @@ namespace Server
                         // Kiểm tra nếu phòng đã đầy
                         if (connectedPlayers.Count > maxPlayers)
                         {
-                            byte[] fullRoomBuffer = Encoding.UTF8.GetBytes("DISCONNECT;Room is full");
-
-                            // Gửi thông điệp "DISCONNECT" cho client hiện tại vì phòng đã đầy
-                            p.playerSocket.Send(fullRoomBuffer);
-
+                            // Xử lý ngắt kết nối
+                            connectedPlayers.Remove(p); // Loại bỏ player khỏi danh sách
+                            richTextBox1.Text += ($"{p.name} has disconnected.\n"); // Cập nhật log cho server
                             return; // Kết thúc xử lý cho client này
                         }
 
@@ -148,11 +155,64 @@ namespace Server
                     break;
                 case "START":
                     {
-                        // Gửi thông báo đến tất cả các client để họ vào GiaoDienNguoiChoi
+                        try
+                        {
+                            RandomWords();
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Vui lòng chọn file gói câu hỏi trước khi bắt đầu trò chơi !", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
                         foreach (var player in connectedPlayers)
                         {
-                            byte[] buffer = Encoding.UTF8.GetBytes("INGAME");
+                            string makemsg = "LOAD_WORD;" + word;
+                            byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
                             player.playerSocket.Send(buffer);
+                            Thread.Sleep(100);
+                        }
+                        SetUpPlayerTurn();
+                        connectedPlayers.Sort((x, y) => x.turn.CompareTo(y.turn));
+                        foreach (var player in connectedPlayers)
+                        {
+                            string makemsg = "INGAME;" + player.name + ";" + player.turn + ";" + player.score;
+                            byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
+                            player.playerSocket.Send(buffer);
+                            Thread.Sleep(100);
+                        }
+
+
+                        foreach (var player in connectedPlayers)
+                        {
+                            foreach (var player_ in connectedPlayers)
+                            {
+                                if (player.name != player_.name)
+                                {
+                                    string makemsg = "OTHERINFO;" + player_.name + ";" + player_.turn + ";" + player.score;
+                                    byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
+                                    player.playerSocket.Send(buffer);
+                                    Console.WriteLine("Sendback: " + makemsg);
+                                    Thread.Sleep(100);
+                                }
+                            }
+                        }
+
+                        foreach (var player in connectedPlayers)
+                        {
+                            string makemsg = "SETUP;" + player.name;
+                            byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
+                            player.playerSocket.Send(buffer);
+                            Console.WriteLine("Sendback: " + makemsg);
+                            Thread.Sleep(100);
+                        }
+
+                        foreach (var player in connectedPlayers)
+                        {
+                            string makemsg_ = "TURN;" + connectedPlayers[currentturn - 1].name;
+                            byte[] buffer_ = Encoding.UTF8.GetBytes(makemsg_);
+                            player.playerSocket.Send(buffer_);
+                            Console.WriteLine("Sendback: " + makemsg_);
+                            Thread.Sleep(100);
                         }
                     }
                     break;
@@ -208,5 +268,51 @@ namespace Server
             if (clientThread != null)
                 clientThread.Abort();
         }
+
+        #region JSON
+        public static void RandomWords()
+        {
+            // Đọc nội dung từ tệp JSON
+            string jsonText = File.ReadAllText(wordPath);
+
+            // Phân tích nội dung JSON
+            JObject json = JObject.Parse(jsonText);
+
+            // Lấy ra mảng các từ
+            JArray wordsArray = (JArray)json["words"];
+
+            // Chọn ngẫu nhiên một từ từ mảng
+            Random random = new Random();
+            int randomIndex = random.Next(0, wordsArray.Count);
+            string word = (string)wordsArray[randomIndex]["word"];
+
+            // Kiểm tra từ đã được sử dụng hay chưa
+            while (UsedWords.Contains(word))
+            {
+                randomIndex = random.Next(0, wordsArray.Count);
+                word = (string)wordsArray[randomIndex]["word"];
+            }
+
+            // Thêm từ vào danh sách đã sử dụng
+            UsedWords.Add(word);
+        }
+
+        private void btnLoadWords_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Đường dẫn của file được chọn
+                MessageBox.Show("Nạp từ thành công !", "Thông báo", MessageBoxButtons.OK);
+                wordPath = openFileDialog.FileName;
+
+            }
+        }
+
+        #endregion
+
     }
 }

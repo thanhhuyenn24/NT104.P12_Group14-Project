@@ -14,12 +14,15 @@ namespace Client
 {
     public partial class GiaoDienNguoiChoi : Form
     {
-        private List<string> players;
+        /*private List<string> players;
         private int drawTime;
         private string playerName;
         private string role;
         private static Timer sharedTimer; // Sử dụng Timer chia sẻ để đồng bộ hóa
-        private GiaoDienTaoPhong taoPhongForm; // Tham chiếu đến GiaoDienTaoPhong
+        private GiaoDienTaoPhong taoPhongForm; // Tham chiếu đến GiaoDienTaoPhong*/
+        public string round { get; set; }
+        public string word { get; set; }
+        private int score = 0;
         //UNDO
         private Stack<Bitmap> undoStack;    // Thêm stack để lưu lịch sử các thao tác
         private const int MAX_UNDO_LEVELS = 20; // Giới hạn số lượng undo để tránh tốn bộ nhớ
@@ -350,19 +353,48 @@ namespace Client
         }
         #endregion
 
-        private void label2_Click(object sender, EventArgs e)
+        public void InGameDisplay()
         {
 
-        }
+            lb1.Text = Player.name;
+            label5.Text = Player.name;
+            tb1.Text = Player.score.ToString();
 
-        private void label5_Click(object sender, EventArgs e)
-        {
+            // Sắp xếp danh sách người chơi theo thứ tự turn
+            Client_Socket.otherPlayers.Sort((x, y) => x.turn.CompareTo(y.turn));
 
-        }
+            int playerCount = Client_Socket.otherPlayers.Count;
+            MessageBox.Show(playerCount.ToString());
 
-        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            for (int i = 0; i < playerCount; i++)
+            {
+                var player = Client_Socket.otherPlayers[i];
 
+                if (i == 0)
+                {
+                    panel2.Visible = true;
+                    lb2.Text = player.name;
+                    tb2.Text = player.score;
+                }
+                else if (i == 1)
+                {
+                    panel3.Visible = true;
+                    lb3.Text = player.name;
+                    tb3.Text = player.score;
+                }
+                else if (i == 2)
+                {
+                    panel4.Visible = true;
+                    lb4.Text = player.name;
+                    tb4.Text = player.score;
+                }
+                else if (i == 3)
+                {
+                    panel5.Visible = true;
+                    lb5.Text = player.name;
+                    tb5.Text = player.score;
+                }
+            }
         }
 
     }

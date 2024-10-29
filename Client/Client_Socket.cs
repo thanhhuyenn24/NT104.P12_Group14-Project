@@ -178,14 +178,45 @@ namespace Client
                         });
                     }
                     break;
-                case "INGAME":
+                case "LOAD_WORD":
                     {
-                        // Chuyển sang GiaoDienNguoiChoi
-                        GiaoDienNguoiChoi GamePlay = new GiaoDienNguoiChoi();
+                        GamePlay = new GiaoDienNguoiChoi();
                         GiaoDienChinh.lobby.Invoke((MethodInvoker)delegate ()
                         {
+                            GamePlay.word = Payload[1];
+                            GamePlay.round = Playerround.ToString();
                             GamePlay.Show();
+                        }
+                        );
+                    }
+                    break;
+                case "INGAME":
+                    {
+                        Player.turn = int.Parse(Payload[2]);
+                        Player.score = int.Parse(Payload[3]);
+                        otherPlayers = new List<OtherPlayers>();
+                        GiaoDienChinh.lobby.Invoke((MethodInvoker)delegate ()
+                        {
+                            GamePlay.Text = Payload[1];
                             GiaoDienChinh.lobby.Hide();
+                        }
+                        );
+                    }
+                    break;
+                case "OTHERINFO":
+                    {
+                        OtherPlayers otherplayer = new OtherPlayers();
+                        otherplayer.name = Payload[1];
+                        otherplayer.turn = Payload[2];
+                        otherplayer.score = Payload[3];
+                        otherPlayers.Add(otherplayer);
+                    }
+                    break;
+                case "SETUP":
+                    {
+                        GamePlay.Invoke((MethodInvoker)delegate ()
+                        {
+                            GamePlay.InGameDisplay();
                         }
                         );
                     }

@@ -50,6 +50,7 @@
             this.btnLoadWords.TabIndex = 1;
             this.btnLoadWords.Text = "Load Words";
             this.btnLoadWords.UseVisualStyleBackColor = true;
+            this.btnLoadWords.Click += new System.EventHandler(this.btnLoadWords_Click);
             // 
             // Serverlb
             // 

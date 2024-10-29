@@ -30,7 +30,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Character = new System.Windows.Forms.ListBox();
             this.labelTimer = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -45,18 +44,29 @@
             this.btn_color = new System.Windows.Forms.Button();
             this.btn_eraser = new System.Windows.Forms.Button();
             this.btn_pen = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lb1 = new System.Windows.Forms.Label();
+            this.tb1 = new System.Windows.Forms.TextBox();
+            this.tb2 = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.lb2 = new System.Windows.Forms.Label();
+            this.tb3 = new System.Windows.Forms.TextBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.lb3 = new System.Windows.Forms.Label();
+            this.tb4 = new System.Windows.Forms.TextBox();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.lb4 = new System.Windows.Forms.Label();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.lb5 = new System.Windows.Forms.Label();
+            this.tb5 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_color)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // Character
-            // 
-            this.Character.FormattingEnabled = true;
-            this.Character.ItemHeight = 16;
-            this.Character.Location = new System.Drawing.Point(12, 59);
-            this.Character.Name = "Character";
-            this.Character.Size = new System.Drawing.Size(120, 324);
-            this.Character.TabIndex = 0;
             // 
             // labelTimer
             // 
@@ -75,7 +85,6 @@
             this.label2.Size = new System.Drawing.Size(47, 16);
             this.label2.TabIndex = 2;
             this.label2.Text = "Round";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -130,7 +139,6 @@
             this.Chat.Name = "Chat";
             this.Chat.Size = new System.Drawing.Size(148, 260);
             this.Chat.TabIndex = 14;
-            this.Chat.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -140,7 +148,6 @@
             this.label5.Size = new System.Drawing.Size(73, 16);
             this.label5.TabIndex = 15;
             this.label5.Text = "UserName";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // pic
             // 
@@ -207,11 +214,160 @@
             this.btn_pen.UseVisualStyleBackColor = true;
             this.btn_pen.Click += new System.EventHandler(this.btn_pen_Click);
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.LemonChiffon;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.lb1);
+            this.panel1.Controls.Add(this.tb1);
+            this.panel1.Location = new System.Drawing.Point(16, 60);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(116, 59);
+            this.panel1.TabIndex = 20;
+            // 
+            // lb1
+            // 
+            this.lb1.AutoSize = true;
+            this.lb1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lb1.Location = new System.Drawing.Point(5, 4);
+            this.lb1.Name = "lb1";
+            this.lb1.Size = new System.Drawing.Size(53, 20);
+            this.lb1.TabIndex = 1;
+            this.lb1.Text = "label1";
+            // 
+            // tb1
+            // 
+            this.tb1.Location = new System.Drawing.Point(8, 29);
+            this.tb1.Name = "tb1";
+            this.tb1.Size = new System.Drawing.Size(100, 22);
+            this.tb1.TabIndex = 0;
+            // 
+            // tb2
+            // 
+            this.tb2.Location = new System.Drawing.Point(8, 29);
+            this.tb2.Name = "tb2";
+            this.tb2.Size = new System.Drawing.Size(100, 22);
+            this.tb2.TabIndex = 0;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.LemonChiffon;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.lb2);
+            this.panel2.Controls.Add(this.tb2);
+            this.panel2.Location = new System.Drawing.Point(16, 125);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(116, 59);
+            this.panel2.TabIndex = 21;
+            this.panel2.Visible = false;
+            // 
+            // lb2
+            // 
+            this.lb2.AutoSize = true;
+            this.lb2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lb2.Location = new System.Drawing.Point(5, 4);
+            this.lb2.Name = "lb2";
+            this.lb2.Size = new System.Drawing.Size(53, 20);
+            this.lb2.TabIndex = 1;
+            this.lb2.Text = "label4";
+            // 
+            // tb3
+            // 
+            this.tb3.Location = new System.Drawing.Point(8, 29);
+            this.tb3.Name = "tb3";
+            this.tb3.Size = new System.Drawing.Size(100, 22);
+            this.tb3.TabIndex = 0;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.LemonChiffon;
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.lb3);
+            this.panel3.Controls.Add(this.tb3);
+            this.panel3.Location = new System.Drawing.Point(16, 189);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(116, 59);
+            this.panel3.TabIndex = 21;
+            this.panel3.Visible = false;
+            // 
+            // lb3
+            // 
+            this.lb3.AutoSize = true;
+            this.lb3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lb3.Location = new System.Drawing.Point(5, 4);
+            this.lb3.Name = "lb3";
+            this.lb3.Size = new System.Drawing.Size(53, 20);
+            this.lb3.TabIndex = 1;
+            this.lb3.Text = "label6";
+            // 
+            // tb4
+            // 
+            this.tb4.Location = new System.Drawing.Point(8, 29);
+            this.tb4.Name = "tb4";
+            this.tb4.Size = new System.Drawing.Size(100, 22);
+            this.tb4.TabIndex = 0;
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.LemonChiffon;
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.lb4);
+            this.panel4.Controls.Add(this.tb4);
+            this.panel4.Location = new System.Drawing.Point(16, 253);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(116, 59);
+            this.panel4.TabIndex = 21;
+            this.panel4.Visible = false;
+            // 
+            // lb4
+            // 
+            this.lb4.AutoSize = true;
+            this.lb4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lb4.Location = new System.Drawing.Point(5, 4);
+            this.lb4.Name = "lb4";
+            this.lb4.Size = new System.Drawing.Size(53, 20);
+            this.lb4.TabIndex = 1;
+            this.lb4.Text = "label7";
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.LemonChiffon;
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.lb5);
+            this.panel5.Controls.Add(this.tb5);
+            this.panel5.Location = new System.Drawing.Point(16, 318);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(116, 59);
+            this.panel5.TabIndex = 22;
+            this.panel5.Visible = false;
+            // 
+            // lb5
+            // 
+            this.lb5.AutoSize = true;
+            this.lb5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lb5.Location = new System.Drawing.Point(5, 4);
+            this.lb5.Name = "lb5";
+            this.lb5.Size = new System.Drawing.Size(53, 20);
+            this.lb5.TabIndex = 1;
+            this.lb5.Text = "label8";
+            // 
+            // tb5
+            // 
+            this.tb5.Location = new System.Drawing.Point(8, 29);
+            this.tb5.Name = "tb5";
+            this.tb5.Size = new System.Drawing.Size(100, 22);
+            this.tb5.TabIndex = 0;
+            // 
             // GiaoDienNguoiChoi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 462);
+            this.Controls.Add(this.panel5);
+            this.Controls.Add(this.panel4);
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.pic);
             this.Controls.Add(this.pic_color);
             this.Controls.Add(this.btn_color);
@@ -226,19 +382,26 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.labelTimer);
-            this.Controls.Add(this.Character);
             this.Name = "GiaoDienNguoiChoi";
             this.Text = "Game_TAMSAOTHATBAN";
             ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_color)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox Character;
         private System.Windows.Forms.Label labelTimer;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -253,5 +416,20 @@
         private System.Windows.Forms.Button btn_color;
         private System.Windows.Forms.PictureBox pic_color;
         private System.Windows.Forms.PictureBox pic;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lb1;
+        private System.Windows.Forms.TextBox tb1;
+        private System.Windows.Forms.TextBox tb2;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label lb2;
+        private System.Windows.Forms.TextBox tb3;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label lb3;
+        private System.Windows.Forms.TextBox tb4;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label lb4;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Label lb5;
+        private System.Windows.Forms.TextBox tb5;
     }
 }
