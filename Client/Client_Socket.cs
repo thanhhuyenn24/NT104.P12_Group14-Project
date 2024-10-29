@@ -178,7 +178,18 @@ namespace Client
                         });
                     }
                     break;
-
+                case "INGAME":
+                    {
+                        // Chuyển sang GiaoDienNguoiChoi
+                        GiaoDienNguoiChoi GamePlay = new GiaoDienNguoiChoi();
+                        GiaoDienChinh.lobby.Invoke((MethodInvoker)delegate ()
+                        {
+                            GamePlay.Show();
+                            GiaoDienChinh.lobby.Hide();
+                        }
+                        );
+                    }
+                    break;
             }
 
         }

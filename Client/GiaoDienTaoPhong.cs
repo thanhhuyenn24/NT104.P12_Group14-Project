@@ -97,6 +97,12 @@ namespace Client
             }
         }
 
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            Client_Socket.datatype = "START";
+            Client_Socket.SendMessage(" "); // Gửi thông điệp khởi động game
+        }
+
         /*private void label1_Click(object sender, EventArgs e)
         {
 

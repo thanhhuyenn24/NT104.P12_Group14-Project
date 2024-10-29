@@ -146,6 +146,16 @@ namespace Server
                         }
                     }
                     break;
+                case "START":
+                    {
+                        // Gửi thông báo đến tất cả các client để họ vào GiaoDienNguoiChoi
+                        foreach (var player in connectedPlayers)
+                        {
+                            byte[] buffer = Encoding.UTF8.GetBytes("INGAME");
+                            player.playerSocket.Send(buffer);
+                        }
+                    }
+                    break;
             }
         }
         private void UpdateRichTextBox(string message)
