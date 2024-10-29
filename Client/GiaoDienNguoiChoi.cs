@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using Server; // Thay 'ServerNamespace' bằng namespace thực tế của WordData
 
 
@@ -14,137 +17,14 @@ namespace Client
 {
     public partial class GiaoDienNguoiChoi : Form
     {
-        /*private List<string> players;
-        private int drawTime;
-        private string playerName;
-        private string role;
-        private static Timer sharedTimer; // Sử dụng Timer chia sẻ để đồng bộ hóa
-        private GiaoDienTaoPhong taoPhongForm; // Tham chiếu đến GiaoDienTaoPhong*/
+        
         public string round { get; set; }
         public string word { get; set; }
         private int score = 0;
         //UNDO
         private Stack<Bitmap> undoStack;    // Thêm stack để lưu lịch sử các thao tác
         private const int MAX_UNDO_LEVELS = 20; // Giới hạn số lượng undo để tránh tốn bộ nhớ
-        //
-        /*public GiaoDienNguoiChoi(string playerName, string role, int drawTime, GiaoDienTaoPhong taoPhongForm)
-        {
-            InitializeComponent();
-            label5.Text = playerName;
-            this.playerName = playerName;
-            this.role = role;
-            this.drawTime = drawTime;
-
-            if (role == "Drawer")
-            {
-                DisplayWordSelection(); // Người Vẽ hiển thị hộp chọn từ
-            }
-            else
-            {
-                StartCountdown(); // Người Đoán chỉ bắt đầu đếm ngược
-            }
-
-            if (role == "Guesser")
-            {
-                pic_color.Visible = false;
-                btn_color.Visible = false;
-                btn_pen.Visible = false;
-                btn_eraser.Visible = false;
-                btn_undo.Visible = false;
-                btn_clear.Visible = false;
-            }
-
-            this.taoPhongForm = taoPhongForm;
-
-        }
-
-        private void DisplayWordSelection()
-        {
-            int wordCount = Convert.ToInt32(GiaoDienTaoPhong.Instance.comboBoxWordCount.SelectedItem);
-            List<string> randomWords = WordData.GetRandomWords(wordCount);
-
-            using (var wordSelectionForm = new WordSelectionForm(randomWords))
-            {
-                // Đăng ký sự kiện WordSelected
-                wordSelectionForm.WordSelected += selectedWord =>
-                {
-                    StartCountdown();
-                    BroadcastWord(selectedWord); // Gửi từ đã chọn tới Guessers
-                };
-
-                wordSelectionForm.ShowDialog();
-            }
-        }
-
-
-        public void ReceiveStartSignal()
-        {
-            StartCountdown();
-        }
-
-        private void BroadcastWord(string selectedWord)
-        {
-            foreach (var form in Application.OpenForms.OfType<GiaoDienNguoiChoi>())
-            {
-                if (form.role == "Guesser")
-                {
-                    form.ReceiveWord(selectedWord); // Truyền từ
-                    form.ReceiveStartSignal(); // Bắt đầu đếm ngược cho Người Đoán
-                }
-            }
-        }
-
-        public void ReceiveWord(string word)
-        {
-            // Cập nhật giao diện hoặc hiển thị gợi ý nếu cần
-        }
-
-        private string ShowWordSelectionDialog(List<string> words)
-        {
-            string wordSelection = string.Join("\n", words);
-            DialogResult result = MessageBox.Show(wordSelection + "\n\nChoose and Begin",
-                                                  "Choose word",
-                                                  MessageBoxButtons.OK);
-
-            return result == DialogResult.OK ? words[0] : null; // Cập nhật phần chọn từ
-        }
-
-        private Timer timer;
-
-        private void StartCountdown()
-        {
-            if (sharedTimer == null)
-            {
-                sharedTimer = new Timer();
-                sharedTimer.Interval = 1000;
-                sharedTimer.Tick += Timer_Tick;
-            }
-
-            drawTime = Convert.ToInt32(GiaoDienTaoPhong.Instance.comboBoxDrawTime.SelectedItem); // Lấy số giây từ ComboBox Drawtime
-
-            sharedTimer.Start();
-        }
-
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            if (drawTime > 0)
-            {
-                drawTime--;
-
-                // Cập nhật labelTimer trên tất cả các Form người chơi
-                foreach (var form in Application.OpenForms.OfType<GiaoDienNguoiChoi>())
-                {
-                    form.labelTimer.Text = drawTime.ToString();
-                }
-            }
-            else
-            {
-                sharedTimer.Stop();
-                MessageBox.Show("No time!");
-            }
-        }*/
-
+        
         public GiaoDienNguoiChoi()
         {
             InitializeComponent();
@@ -216,6 +96,17 @@ namespace Client
         {
             paint = false;
             SaveState(); // Lưu trạng thái sau khi vẽ xong
+
+            Client_Socket.datatype = "PIC_CHANGE";
+
+            // Chuyển đổi Bitmap thành mảng byte
+            byte[] imageBytes = BitmapToBytes(bm);
+
+            // Chuyển đổi mảng byte thành chuỗi Base64
+            string base64Image = Convert.ToBase64String(imageBytes);
+
+            // Gửi chuỗi Base64 đến server
+            Client_Socket.SendMessage(base64Image);
         }
 
         private void btn_pen_Click(object sender, EventArgs e)
@@ -234,6 +125,16 @@ namespace Client
             g.Clear(Color.White);
             pic.Image = bm;
             index = 0;
+            Client_Socket.datatype = "PIC_CHANGE";
+
+            // Chuyển đổi Bitmap thành mảng byte
+            byte[] imageBytes = BitmapToBytes(bm);
+
+            // Chuyển đổi mảng byte thành chuỗi Base64
+            string base64Image = Convert.ToBase64String(imageBytes);
+
+            // Gửi chuỗi Base64 đến server
+            Client_Socket.SendMessage(base64Image);
         }
 
         private void btn_color_Click(object sender, EventArgs e)
@@ -244,7 +145,24 @@ namespace Client
             p.Color = cd.Color;
         }
         #endregion
+        // Serial hóa Bitmap thành mảng byte
+        public byte[] BitmapToBytes(Bitmap bitmap)
+        {
+            using (var ms = new MemoryStream())
+            {
+                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                return ms.ToArray();
+            }
+        }
 
+        // Giải mã mảng byte thành Bitmap
+        public Bitmap BytesToBitmap(byte[] bytes)
+        {
+            using (var ms = new MemoryStream(bytes))
+            {
+                return new Bitmap(ms);
+            }
+        }
         #region UNDO
         // Hàm sao chép bitmap
         private Bitmap CloneBitmap(Bitmap sourceBitmap)
@@ -345,6 +263,16 @@ namespace Client
                         ResetCanvas();
                     }
                 }
+                Client_Socket.datatype = "PIC_CHANGE";
+
+                // Chuyển đổi Bitmap thành mảng byte
+                byte[] imageBytes = BitmapToBytes(bm);
+
+                // Chuyển đổi mảng byte thành chuỗi Base64
+                string base64Image = Convert.ToBase64String(imageBytes);
+
+                // Gửi chuỗi Base64 đến server
+                Client_Socket.SendMessage(base64Image);
             }
             catch (Exception ex)
             {
@@ -353,18 +281,39 @@ namespace Client
         }
         #endregion
 
+        public void Game_Update(string Character) //UPDATE UI 
+        { 
+            /*if (count_showed == answer.Length)
+            {
+                //Gui totalScore cua player hien tai cho Server khi vong choi ket thuc
+                Player.totalScore += int.Parse(tbScore.Text);
+                Client_Socket.datatype = "TOTAL_SCORE";
+                Client_Socket.SendMessage(Player.name + ";" + Player.totalScore.ToString());
+            }*/
+        }
+
+        //Cap nhat diem cua nguoi choi khac khi co thay doi
+        public void Score_Update(string Name, string Score)
+        {
+            foreach (Control control in Controls)
+            {
+                if (control is TextBox && control.Tag != null && control.Tag.ToString() == Name)
+                    control.Text = Score;
+            }
+        }
         public void InGameDisplay()
         {
 
             lb1.Text = Player.name;
             label5.Text = Player.name;
             tb1.Text = Player.score.ToString();
+            tb1.Tag = Player.name;
 
             // Sắp xếp danh sách người chơi theo thứ tự turn
             Client_Socket.otherPlayers.Sort((x, y) => x.turn.CompareTo(y.turn));
 
             int playerCount = Client_Socket.otherPlayers.Count;
-            MessageBox.Show(playerCount.ToString());
+            //MessageBox.Show(playerCount.ToString());
 
             for (int i = 0; i < playerCount; i++)
             {
@@ -375,27 +324,53 @@ namespace Client
                     panel2.Visible = true;
                     lb2.Text = player.name;
                     tb2.Text = player.score;
+                    tb2.Tag = player.name;
                 }
                 else if (i == 1)
                 {
                     panel3.Visible = true;
                     lb3.Text = player.name;
                     tb3.Text = player.score;
+                    tb3.Tag = player.name;
                 }
                 else if (i == 2)
                 {
                     panel4.Visible = true;
                     lb4.Text = player.name;
                     tb4.Text = player.score;
+                    tb4.Tag = player.name;
                 }
                 else if (i == 3)
                 {
                     panel5.Visible = true;
                     lb5.Text = player.name;
                     tb5.Text = player.score;
+                    tb5.Tag = player.name;
                 }
             }
         }
 
+        public void Turn_Notify(string Name)
+        {
+            Thread.Sleep(1500);
+            if (Player.name == Name)
+            {
+                tbCmt.Text = "Your turn \r\n";
+            }
+            else
+                tbCmt.Text = Name + "'s turn";
+        }
+
+        public void Allow_Playing()
+        {
+            pic.Enabled = true;
+            btn_clear.Enabled = true;
+            btn_color.Enabled = true;
+            btn_eraser.Enabled = true;
+            btn_pen.Enabled = true;
+            btn_undo.Enabled = true;
+            btn_send.Enabled = false;
+
+        }
     }
 }

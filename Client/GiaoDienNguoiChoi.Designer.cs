@@ -59,6 +59,7 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.lb5 = new System.Windows.Forms.Label();
             this.tb5 = new System.Windows.Forms.TextBox();
+            this.tbCmt = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_color)).BeginInit();
             this.panel1.SuspendLayout();
@@ -97,6 +98,7 @@
             // 
             // btn_undo
             // 
+            this.btn_undo.Enabled = false;
             this.btn_undo.Location = new System.Drawing.Point(487, 398);
             this.btn_undo.Name = "btn_undo";
             this.btn_undo.Size = new System.Drawing.Size(75, 23);
@@ -107,6 +109,7 @@
             // 
             // btn_clear
             // 
+            this.btn_clear.Enabled = false;
             this.btn_clear.Location = new System.Drawing.Point(487, 427);
             this.btn_clear.Name = "btn_clear";
             this.btn_clear.Size = new System.Drawing.Size(75, 23);
@@ -153,6 +156,7 @@
             // 
             this.pic.BackColor = System.Drawing.Color.White;
             this.pic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pic.Enabled = false;
             this.pic.Location = new System.Drawing.Point(138, 59);
             this.pic.Name = "pic";
             this.pic.Size = new System.Drawing.Size(496, 324);
@@ -174,6 +178,7 @@
             // 
             // btn_color
             // 
+            this.btn_color.Enabled = false;
             this.btn_color.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.btn_color.Image = global::Client.Properties.Resources.icons8_paint_24;
             this.btn_color.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -188,6 +193,7 @@
             // 
             // btn_eraser
             // 
+            this.btn_eraser.Enabled = false;
             this.btn_eraser.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.btn_eraser.Image = global::Client.Properties.Resources.icons8_eraser_tool_24;
             this.btn_eraser.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -202,6 +208,7 @@
             // 
             // btn_pen
             // 
+            this.btn_pen.Enabled = false;
             this.btn_pen.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.btn_pen.Image = global::Client.Properties.Resources.icons8_sign_up_24;
             this.btn_pen.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -358,11 +365,20 @@
             this.tb5.Size = new System.Drawing.Size(100, 22);
             this.tb5.TabIndex = 0;
             // 
+            // tbCmt
+            // 
+            this.tbCmt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.tbCmt.Location = new System.Drawing.Point(640, 13);
+            this.tbCmt.Name = "tbCmt";
+            this.tbCmt.Size = new System.Drawing.Size(148, 28);
+            this.tbCmt.TabIndex = 23;
+            // 
             // GiaoDienNguoiChoi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 462);
+            this.Controls.Add(this.tbCmt);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
@@ -406,16 +422,16 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btn_pen;
-        private System.Windows.Forms.Button btn_eraser;
-        private System.Windows.Forms.Button btn_undo;
-        private System.Windows.Forms.Button btn_clear;
-        private System.Windows.Forms.TextBox tbx_send;
-        private System.Windows.Forms.Button btn_send;
+        public System.Windows.Forms.Button btn_eraser;
+        public System.Windows.Forms.Button btn_undo;
+        public System.Windows.Forms.Button btn_clear;
+        public System.Windows.Forms.TextBox tbx_send;
+        public System.Windows.Forms.Button btn_send;
         private System.Windows.Forms.ListBox Chat;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btn_color;
+        public System.Windows.Forms.Button btn_color;
         private System.Windows.Forms.PictureBox pic_color;
-        private System.Windows.Forms.PictureBox pic;
+        public System.Windows.Forms.PictureBox pic;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lb1;
         private System.Windows.Forms.TextBox tb1;
@@ -431,5 +447,6 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label lb5;
         private System.Windows.Forms.TextBox tb5;
+        private System.Windows.Forms.TextBox tbCmt;
     }
 }

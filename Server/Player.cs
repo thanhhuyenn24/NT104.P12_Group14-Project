@@ -11,7 +11,7 @@ namespace Server
     {
         public string name { get; set; }
         public int score { get; set; }
-        public int totalscore { get; set; }
+        //public int totalscore { get; set; }
         public int turn { get; set; }
         public Socket playerSocket { get; set; }
     }

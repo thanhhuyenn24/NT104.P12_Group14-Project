@@ -8,6 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Drawing;
+using System.IO;
 
 namespace Client
 {
@@ -220,6 +222,95 @@ namespace Client
                         }
                         );
                     }
+                    break;
+                case "TURN":
+                    {
+                        if (Payload[1] == Player.name)
+                        {
+                            GamePlay.Invoke((MethodInvoker)delegate ()
+                            {
+                                GamePlay.Allow_Playing();
+                                GamePlay.Turn_Notify(Payload[1]);
+                            }
+                            );
+                        }
+                        else
+                        {
+                            GamePlay.Invoke((MethodInvoker)delegate ()
+                            {
+                                GamePlay.Turn_Notify(Payload[1]);
+                            }
+                            );
+                        }
+
+                    }
+                    break;
+                case "PIC_UPDATE":
+                    {
+                        byte[] imageBytes = Convert.FromBase64String(Payload[1]);
+                        Bitmap newBitmap;
+                        using (var ms = new MemoryStream(imageBytes))
+                        {
+                            newBitmap = new Bitmap(ms);
+                        }
+                        GamePlay.pic.Image = newBitmap;
+                        GamePlay.pic.Refresh();
+                    }
+                    break;
+                case "GR": //ANOTHER PLAYER CHOOSE RIGHT ANS
+                    {
+                        GamePlay.Invoke((MethodInvoker)delegate ()
+                        {
+                            GamePlay.Game_Update(Payload[1]);
+                        }
+                        );
+                    }
+                    break;
+                case "GW": //ANOTHER PLAYER CHOOSE WRONG ANS
+                    {
+                        GamePlay.Invoke((MethodInvoker)delegate ()
+                        {
+                            GamePlay.Game_Update(Payload[1]);
+                        }
+                       );
+                    }
+                    break;
+                case "SCORE_UPDATE": //UPDATE ANOTHER PLAYER'S SCORE
+                    {
+                        GamePlay.Invoke((MethodInvoker)delegate ()
+                        {
+                            GamePlay.Score_Update(Payload[1], Payload[2]);
+                        }
+                       );
+                    }
+                    break;
+                case "NEW_ROUND":
+                    {
+                        Playerround = int.Parse(Payload[1]);
+                        GamePlay.Invoke((MethodInvoker)delegate ()
+                        {
+                            GamePlay.Close();
+                        }
+                        );
+                    }
+                    break;
+                case "ENDGAME":
+                    {
+                        GamePlay.Invoke((MethodInvoker)delegate ()
+                        {
+                            GamePlay.Close();
+                        }
+                        );
+                        /*WinnerForm = new Winner();
+                        Login_view.lobby.Invoke((MethodInvoker)delegate ()
+                        {
+                            WinnerForm.Show();
+                            WinnerForm.UpdateWinner(Payload[1]);
+                        }
+                        );*/
+                    }
+                    break;
+                default:
                     break;
             }
 
