@@ -228,7 +228,7 @@
             this.Controls.Add(this.labelTimer);
             this.Controls.Add(this.Character);
             this.Name = "GiaoDienNguoiChoi";
-            this.Text = "GiaoDienNguoiChoi";
+            this.Text = "Game_TAMSAOTHATBAN";
             ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_color)).EndInit();
             this.ResumeLayout(false);

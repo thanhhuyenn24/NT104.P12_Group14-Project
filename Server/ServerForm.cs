@@ -190,5 +190,13 @@ namespace Server
             byte[] buffer = Encoding.UTF8.GetBytes(settingsMessage);
             player.playerSocket.Send(buffer);
         }
+
+        private void ServerForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            serverSocket.Close();
+            serverlisten.Abort();
+            if (clientThread != null)
+                clientThread.Abort();
+        }
     }
 }

@@ -69,7 +69,7 @@
             this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.btnCreate);
             this.Name = "GiaoDienChinh";
-            this.Text = "Form1";
+            this.Text = "LOGIN";
             this.ResumeLayout(false);
             this.PerformLayout();
 

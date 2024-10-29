@@ -197,7 +197,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "GiaoDienTaoPhong";
-            this.Text = "GiaoDienTaoPhong";
+            this.Text = "LOBBY";
             this.ResumeLayout(false);
             this.PerformLayout();
 

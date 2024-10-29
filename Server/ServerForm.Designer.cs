@@ -71,6 +71,7 @@
             this.Controls.Add(this.richTextBox1);
             this.Name = "ServerForm";
             this.Text = "ServerForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ServerForm_FormClosing);
             this.Load += new System.EventHandler(this.ServerForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
