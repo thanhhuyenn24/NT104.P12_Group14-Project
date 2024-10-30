@@ -93,11 +93,11 @@
             // btn_undo
             // 
             this.btn_undo.Enabled = false;
-            this.btn_undo.Location = new System.Drawing.Point(487, 424);
+            this.btn_undo.Location = new System.Drawing.Point(487, 412);
             this.btn_undo.Name = "btn_undo";
             this.btn_undo.Size = new System.Drawing.Size(75, 23);
             this.btn_undo.TabIndex = 9;
-            this.btn_undo.Text = "Undo";
+            this.btn_undo.Text = "  ";
             this.btn_undo.UseVisualStyleBackColor = true;
             this.btn_undo.Click += new System.EventHandler(this.btn_undo_Click);
             // 
@@ -108,7 +108,7 @@
             this.btn_clear.Name = "btn_clear";
             this.btn_clear.Size = new System.Drawing.Size(75, 23);
             this.btn_clear.TabIndex = 10;
-            this.btn_clear.Text = "Clear";
+            this.btn_clear.Text = "  ";
             this.btn_clear.UseVisualStyleBackColor = true;
             this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
             // 
@@ -121,11 +121,11 @@
             // 
             // btn_send
             // 
-            this.btn_send.Location = new System.Drawing.Point(677, 384);
+            this.btn_send.Location = new System.Drawing.Point(674, 384);
             this.btn_send.Name = "btn_send";
-            this.btn_send.Size = new System.Drawing.Size(75, 23);
+            this.btn_send.Size = new System.Drawing.Size(75, 34);
             this.btn_send.TabIndex = 12;
-            this.btn_send.Text = "Send";
+            this.btn_send.Text = "  ";
             this.btn_send.UseVisualStyleBackColor = true;
             this.btn_send.Click += new System.EventHandler(this.btn_send_Click);
             // 
@@ -136,7 +136,7 @@
             this.pic.Enabled = false;
             this.pic.Location = new System.Drawing.Point(138, 85);
             this.pic.Name = "pic";
-            this.pic.Size = new System.Drawing.Size(496, 324);
+            this.pic.Size = new System.Drawing.Size(496, 311);
             this.pic.TabIndex = 19;
             this.pic.TabStop = false;
             this.pic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_MouseDown);
@@ -391,7 +391,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(800, 505);
+            this.ClientSize = new System.Drawing.Size(800, 495);
             this.Controls.Add(this.status);
             this.Controls.Add(this.pnlWORD);
             this.Controls.Add(this.tbCmt);

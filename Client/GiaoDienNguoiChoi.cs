@@ -31,6 +31,25 @@ namespace Client
         {
             InitializeComponent();
 
+            btn_undo.FlatStyle = FlatStyle.Flat;
+            btn_undo.BackColor = Color.Transparent;
+            btn_undo.FlatAppearance.BorderSize = 0;
+            btn_undo.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btn_undo.FlatAppearance.MouseDownBackColor = Color.Transparent;
+
+            btn_clear.FlatStyle = FlatStyle.Flat;
+            btn_clear.BackColor = Color.Transparent;
+            btn_clear.FlatAppearance.BorderSize = 0;
+            btn_clear.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btn_clear.FlatAppearance.MouseDownBackColor = Color.Transparent;
+
+            btn_send.FlatStyle = FlatStyle.Flat;
+            btn_send.BackColor = Color.Transparent;
+            btn_send.FlatAppearance.BorderSize = 0;
+            btn_send.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btn_send.FlatAppearance.MouseDownBackColor = Color.Transparent;
+
+
             //Cài đặt cho phần vẽ
             bm = new Bitmap(pic.Width, pic.Height);
             g = Graphics.FromImage(bm);
