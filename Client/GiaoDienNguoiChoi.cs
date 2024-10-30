@@ -362,7 +362,8 @@ namespace Client
             btn_pen.Enabled = true;
             btn_undo.Enabled = true;
             btn_send.Enabled = false;
-
+            pnlWORD.Visible = true;
+            WORD.Text = word;
         }
         public void NotAllowPlaying()
         {
@@ -373,6 +374,7 @@ namespace Client
             btn_pen.Enabled=false;
             btn_undo.Enabled=false;
             btn_send.Enabled = true;
+            pnlWORD.Visible=false;
         }
 
         public void Clear_pic()

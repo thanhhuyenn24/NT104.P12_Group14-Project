@@ -36,7 +36,6 @@ namespace Client
             comboBoxPlayers.SelectedIndex = 0;
             comboBoxDrawTime.SelectedIndex = 0;
             comboBoxRounds.SelectedIndex = 0;
-            comboBoxWordCount.SelectedIndex = 0;
         }
 
         public void Disable_Enable_Start(bool check)
@@ -50,16 +49,14 @@ namespace Client
             comboBoxPlayers.Enabled = true;
             comboBoxDrawTime.Enabled = true;
             comboBoxRounds.Enabled = true;
-            comboBoxWordCount.Enabled = true;
             btnOK.Enabled = true;
         }
 
-        public void UpdateSettings(string players, string drawTime, string rounds, string wordCount)
+        public void UpdateSettings(string players, string drawTime, string rounds)
         {
             comboBoxPlayers.Text = players;
             comboBoxDrawTime.Text = drawTime;
             comboBoxRounds.Text = rounds;
-            comboBoxWordCount.Text = wordCount;
         }
         public void UpdatePlayerCount(int playerCount)
         {
@@ -72,7 +69,7 @@ namespace Client
         private void btnOK_Click_1(object sender, EventArgs e)
         {
             Client_Socket.datatype = "UPDATE_SETTINGS";
-            string settings = comboBoxPlayers.Text + ";" + comboBoxDrawTime.Text + ";" + comboBoxRounds.Text + ";" + comboBoxWordCount.Text;
+            string settings = comboBoxPlayers.Text + ";" + comboBoxDrawTime.Text + ";" + comboBoxRounds.Text;
 
             // Gửi thông tin cài đặt tới server
             Client_Socket.SendMessage(settings);

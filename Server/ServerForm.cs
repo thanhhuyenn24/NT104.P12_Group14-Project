@@ -37,7 +37,6 @@ namespace Server
         public static string players = "2";
         public static string drawTime = "50";
         public static string rounds = "2";
-        public static string wordCount = "2";
         private Timer turnTimer;
         private int timeLeft;
         private readonly object timerLock = new object();
@@ -57,6 +56,7 @@ namespace Server
             serverSocket.Listen(3);
             richTextBox1.Text += "Chờ đợi kết nối từ người chơi ... \r\n";
         }
+        #region TIMER
         private void InitializeTimer()
         {
             // Tạo timer trong UI thread
@@ -90,12 +90,16 @@ namespace Server
                         Thread.Sleep(100);
                     }
                     currentturn++;
-                    if (currentturn > 3)
+                    if (currentturn > maxPlayers)
                         currentturn = 1;
+                    word = RandomWords();
                     foreach (var player in connectedPlayers)
                     {
-                        byte[] buffer = Encoding.UTF8.GetBytes("TURN;" + connectedPlayers[currentturn - 1].name);
+                        string makemsg = "TURN;" + connectedPlayers[currentturn - 1].name + ";" + word;
+                        byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
                         player.playerSocket.Send(buffer);
+                        Console.WriteLine("Sendback: " + makemsg);
+                        Thread.Sleep(100);
                     }
                     Reset_Timer();
                 }
@@ -175,7 +179,7 @@ namespace Server
                 turnTimer.Stop();
             }
         }
-
+        #endregion
         public void recvfromClientsocket(Socket client)
         {
 
@@ -267,9 +271,8 @@ namespace Server
                         players = arrPayload[1];
                         drawTime = arrPayload[2];
                         rounds = arrPayload[3];
-                        wordCount = arrPayload[4];
 
-                        string updateMessage = "UPDATE_SETTINGS;" + players + ";" + drawTime + ";" + rounds + ";" + wordCount + ";" + connectedPlayers.Count;
+                        string updateMessage = "UPDATE_SETTINGS;" + players + ";" + drawTime + ";" + rounds + ";" + connectedPlayers.Count;
 
                         // Gửi thông báo cập nhật đến tất cả các client
                         foreach (var player in connectedPlayers)
@@ -287,20 +290,14 @@ namespace Server
                     {
                         try
                         {
-                            RandomWords();
+                            word = RandomWords();
                         }
                         catch (Exception)
                         {
                             MessageBox.Show("Vui lòng chọn file gói từ trước khi bắt đầu trò chơi !", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-                        foreach (var player in connectedPlayers)
-                        {
-                            string makemsg = "LOAD_WORD;" + word;
-                            byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
-                            player.playerSocket.Send(buffer);
-                            Thread.Sleep(100);
-                        }
+
                         SetUpPlayerTurn();
                         connectedPlayers.Sort((x, y) => x.turn.CompareTo(y.turn));
                         foreach (var player in connectedPlayers)
@@ -338,7 +335,7 @@ namespace Server
                         Reset_Timer();
                         foreach (var player in connectedPlayers)
                         {
-                            string makemsg_ = "TURN;" + connectedPlayers[currentturn - 1].name;
+                            string makemsg_ = "TURN;" + connectedPlayers[currentturn - 1].name + ";" + word;
                             byte[] buffer_ = Encoding.UTF8.GetBytes(makemsg_);
                             player.playerSocket.Send(buffer_);
                         }
@@ -378,8 +375,8 @@ namespace Server
                         {
                             byte[] buffer = Encoding.UTF8.GetBytes("CW;" + arrPayload[1]); //CW + character
                             player.playerSocket.Send(buffer);
-                            Thread.Sleep(100);
-                            buffer = Encoding.UTF8.GetBytes("TURN;" + connectedPlayers[currentturn - 1].name);
+                            Thread.Sleep(100); 
+                            buffer = Encoding.UTF8.GetBytes("TURN;" + connectedPlayers[currentturn - 1].name + ";" + word);
                             player.playerSocket.Send(buffer);
                         }
                     }
@@ -438,7 +435,7 @@ namespace Server
         private void SendCurrentSettingsToClient(Player player)
         {
             // Gửi thông tin cài đặt hiện tại cho client mới
-            string settingsMessage = "UPDATE_SETTINGS;" + players + ";" + drawTime + ";" + rounds + ";" + wordCount + ";" + connectedPlayers.Count;
+            string settingsMessage = "UPDATE_SETTINGS;" + players + ";" + drawTime + ";" + rounds + ";" + connectedPlayers.Count;
             byte[] buffer = Encoding.UTF8.GetBytes(settingsMessage);
             player.playerSocket.Send(buffer);
         }
@@ -452,7 +449,7 @@ namespace Server
         }
 
         #region JSON
-        public static void RandomWords()
+        public static string RandomWords()
         {
             // Đọc nội dung từ tệp JSON
             string jsonText = File.ReadAllText(wordPath);
@@ -477,6 +474,7 @@ namespace Server
 
             // Thêm từ vào danh sách đã sử dụng
             UsedWords.Add(word);
+            return word;
         }
 
         private void btnLoadWords_Click(object sender, EventArgs e)

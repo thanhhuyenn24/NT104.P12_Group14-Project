@@ -169,10 +169,10 @@ namespace Client
                         GiaoDienTaoPhong.lobby.Invoke((MethodInvoker)delegate
                         {
                             GiaoDienTaoPhong.lobby.UpdateSettings(
-                                Payload[1], Payload[2], Payload[3], Payload[4]
+                                Payload[1], Payload[2], Payload[3]
                             );
 
-                            int currentPlayers = int.Parse(Payload[5]);  // Số lượng người chơi hiện tại từ server
+                            int currentPlayers = int.Parse(Payload[4]);  // Số lượng người chơi hiện tại từ server
 
                             // Kiểm tra điều kiện kích hoạt nút Start
                             if (currentPlayers == GiaoDienChinh.lobby.getPlayers())
@@ -182,26 +182,18 @@ namespace Client
                         });
                     }
                     break;
-                case "LOAD_WORD":
-                    {
-                        GamePlay = new GiaoDienNguoiChoi();
-                        GiaoDienChinh.lobby.Invoke((MethodInvoker)delegate ()
-                        {
-                            GamePlay.word = Payload[1];
-                            GamePlay.round = Playerround.ToString();
-                            GamePlay.Show();
-                        }
-                        );
-                    }
-                    break;
+
                 case "INGAME":
                     {
+                        GamePlay = new GiaoDienNguoiChoi();
                         Player.turn = int.Parse(Payload[2]);
                         Player.score = int.Parse(Payload[3]);
                         otherPlayers = new List<OtherPlayers>();
                         GiaoDienChinh.lobby.Invoke((MethodInvoker)delegate ()
                         {
                             GamePlay.Text = Payload[1];
+                            GamePlay.round = Playerround.ToString();
+                            GamePlay.Show();
                             GiaoDienChinh.lobby.Hide();
                         }
                         );
@@ -232,6 +224,7 @@ namespace Client
                     break;
                 case "TURN":
                     {
+                        GamePlay.word = Payload[2];
                         if (Payload[1] == Player.name)
                         {
                             GamePlay.Invoke((MethodInvoker)delegate ()
