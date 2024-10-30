@@ -262,29 +262,36 @@ namespace Client
                         GamePlay.Clear_pic();
                     }
                     break;
-                case "GR": //ANOTHER PLAYER CHOOSE RIGHT ANS
+                case "GR":
                     {
-                        GamePlay.Invoke((MethodInvoker)delegate ()
+                        GamePlay.GR();
+                        if (Payload[1]==Player.name)
                         {
-                            GamePlay.Game_Update(Payload[1]);
-                        }
+                            Player.score += 200;
+                            GamePlay.Invoke((MethodInvoker)delegate ()
+                            {
+                                GamePlay.Score_Update(Player.name, Player.score.ToString());
+                            }
                         );
-                    }
-                    break;
-                case "GW": //ANOTHER PLAYER CHOOSE WRONG ANS
-                    {
-                        GamePlay.Invoke((MethodInvoker)delegate ()
-                        {
-                            GamePlay.Game_Update(Payload[1]);
                         }
-                       );
+                        if (Payload[2]==Player.name)
+                        {
+                            Player.score += 100;
+                            GamePlay.Invoke((MethodInvoker)delegate ()
+                            {
+                                GamePlay.Score_Update(Player.name, Player.score.ToString());
+                            }
+                        );
+                        }
+                        GamePlay.Game_Update_RIGHT(Payload[1]);
+                        MessageBox.Show(Player.score.ToString());
                     }
                     break;
-                case "SCORE_UPDATE": //UPDATE ANOTHER PLAYER'S SCORE
+                case "GW":
                     {
                         GamePlay.Invoke((MethodInvoker)delegate ()
                         {
-                            GamePlay.Score_Update(Payload[1], Payload[2]);
+                            GamePlay.Game_Update_WRONG(Payload[1], Payload[2]);
                         }
                        );
                     }

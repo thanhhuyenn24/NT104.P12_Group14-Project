@@ -86,9 +86,7 @@
             "2",
             "3",
             "4",
-            "5",
-            "6",
-            "7"});
+            "5"});
             this.comboBoxPlayers.Location = new System.Drawing.Point(269, 54);
             this.comboBoxPlayers.Name = "comboBoxPlayers";
             this.comboBoxPlayers.Size = new System.Drawing.Size(121, 24);
@@ -99,6 +97,7 @@
             this.comboBoxDrawTime.Enabled = false;
             this.comboBoxDrawTime.FormattingEnabled = true;
             this.comboBoxDrawTime.Items.AddRange(new object[] {
+            "30",
             "50",
             "60",
             "70",
@@ -115,10 +114,10 @@
             this.comboBoxRounds.Enabled = false;
             this.comboBoxRounds.FormattingEnabled = true;
             this.comboBoxRounds.Items.AddRange(new object[] {
+            "1",
             "2",
             "3",
-            "4",
-            "5"});
+            "4"});
             this.comboBoxRounds.Location = new System.Drawing.Point(269, 177);
             this.comboBoxRounds.Name = "comboBoxRounds";
             this.comboBoxRounds.Size = new System.Drawing.Size(121, 24);
@@ -128,6 +127,7 @@
             // 
             this.Status.Location = new System.Drawing.Point(440, 54);
             this.Status.Name = "Status";
+            this.Status.ReadOnly = true;
             this.Status.Size = new System.Drawing.Size(265, 282);
             this.Status.TabIndex = 9;
             this.Status.Text = "";

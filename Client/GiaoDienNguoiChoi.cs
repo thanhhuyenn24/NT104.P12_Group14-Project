@@ -273,17 +273,16 @@ namespace Client
         }
         #endregion
 
-        public void Game_Update(string Character) //UPDATE UI 
-        { 
-            /*if (count_showed == answer.Length)
-            {
-                //Gui totalScore cua player hien tai cho Server khi vong choi ket thuc
-                Player.totalScore += int.Parse(tbScore.Text);
-                Client_Socket.datatype = "TOTAL_SCORE";
-                Client_Socket.SendMessage(Player.name + ";" + Player.totalScore.ToString());
-            }*/
+        public void Game_Update_RIGHT(string name) //UPDATE UI 
+        {
+                status.Text += name + " guessed right!\n";
+ 
         }
+        public void Game_Update_WRONG(string name, string w) //UPDATE UI 
+        {
+            status.Text += name + ": " + w + "\n";
 
+        }
         //Cap nhat diem cua nguoi choi khac khi co thay doi
         public void Score_Update(string Name, string Score)
         {
@@ -375,6 +374,24 @@ namespace Client
             btn_undo.Enabled=false;
             btn_send.Enabled = true;
             pnlWORD.Visible=false;
+        }
+        public void GR()
+        {
+            btn_send.Enabled=false;
+        }
+        private void btn_send_Click(object sender, EventArgs e)
+        {
+            if (tbx_send.Text == word)
+            {
+                Client_Socket.datatype = "GUESS_RIGHT";
+                Client_Socket.SendMessage(Player.name);
+            }
+            else
+            {
+                Client_Socket.datatype = "GUESS_WRONG";
+                string msg = Player.name + ";" + tbx_send.Text;
+                Client_Socket.SendMessage(msg);
+            }
         }
 
         public void Clear_pic()

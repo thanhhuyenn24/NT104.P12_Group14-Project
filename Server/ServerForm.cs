@@ -347,7 +347,7 @@ namespace Server
                         {
                             if (player.playerSocket != p.playerSocket)
                             {
-                                byte[] buffer = Encoding.UTF8.GetBytes("PIC_UPDATE;" + arrPayload[1]); //CR + character
+                                byte[] buffer = Encoding.UTF8.GetBytes("PIC_UPDATE;" + arrPayload[1]); //string<-bitmap
                                 player.playerSocket.Send(buffer);
                             }
                         }
@@ -358,36 +358,16 @@ namespace Server
                     {
                         foreach (var player in connectedPlayers)
                         {
-                            if (player.playerSocket != p.playerSocket)
-                            {
-                                byte[] buffer = Encoding.UTF8.GetBytes("CR;" + arrPayload[1]); //CR + character
-                                player.playerSocket.Send(buffer);
-                            }
+                            byte[] buffer = Encoding.UTF8.GetBytes("GR;" + arrPayload[1] + ";" + connectedPlayers[currentturn-1].name); //name + score + nguoi ve
+                            player.playerSocket.Send(buffer);
                         }
                     }
                     break;
                 case "GUESS_WRONG":
                     {
-                        currentturn++;
-                        if (currentturn > 3)
-                            currentturn = 1;
                         foreach (var player in connectedPlayers)
                         {
-                            byte[] buffer = Encoding.UTF8.GetBytes("CW;" + arrPayload[1]); //CW + character
-                            player.playerSocket.Send(buffer);
-                            Thread.Sleep(100); 
-                            buffer = Encoding.UTF8.GetBytes("TURN;" + connectedPlayers[currentturn - 1].name + ";" + word);
-                            player.playerSocket.Send(buffer);
-                        }
-                    }
-                    break;
-
-                case "SCORE_CHANGED":
-                    {
-                        foreach (var player in connectedPlayers)
-                        {
-                            // Update Name + Score
-                            byte[] buffer = Encoding.UTF8.GetBytes("SCORE_UPDATE;" + arrPayload[1] + ";" + arrPayload[2]);
+                            byte[] buffer = Encoding.UTF8.GetBytes("GW;" + arrPayload[1] + ";" + arrPayload[2]); //name + word
                             player.playerSocket.Send(buffer);
                         }
                     }

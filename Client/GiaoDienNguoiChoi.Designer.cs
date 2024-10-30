@@ -36,7 +36,6 @@
             this.btn_clear = new System.Windows.Forms.Button();
             this.tbx_send = new System.Windows.Forms.TextBox();
             this.btn_send = new System.Windows.Forms.Button();
-            this.Chat = new System.Windows.Forms.ListBox();
             this.pic = new System.Windows.Forms.PictureBox();
             this.pic_color = new System.Windows.Forms.PictureBox();
             this.btn_color = new System.Windows.Forms.Button();
@@ -60,6 +59,7 @@
             this.tbCmt = new System.Windows.Forms.TextBox();
             this.pnlWORD = new System.Windows.Forms.Panel();
             this.WORD = new System.Windows.Forms.Label();
+            this.status = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_color)).BeginInit();
             this.panel1.SuspendLayout();
@@ -83,7 +83,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(135, 39);
+            this.label2.Location = new System.Drawing.Point(637, 19);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(47, 16);
             this.label2.TabIndex = 2;
@@ -126,15 +126,7 @@
             this.btn_send.TabIndex = 12;
             this.btn_send.Text = "Send";
             this.btn_send.UseVisualStyleBackColor = true;
-            // 
-            // Chat
-            // 
-            this.Chat.FormattingEnabled = true;
-            this.Chat.ItemHeight = 16;
-            this.Chat.Location = new System.Drawing.Point(640, 85);
-            this.Chat.Name = "Chat";
-            this.Chat.Size = new System.Drawing.Size(148, 260);
-            this.Chat.TabIndex = 14;
+            this.btn_send.Click += new System.EventHandler(this.btn_send_Click);
             // 
             // pic
             // 
@@ -230,6 +222,7 @@
             // 
             this.tb1.Location = new System.Drawing.Point(8, 29);
             this.tb1.Name = "tb1";
+            this.tb1.ReadOnly = true;
             this.tb1.Size = new System.Drawing.Size(100, 22);
             this.tb1.TabIndex = 0;
             // 
@@ -237,6 +230,7 @@
             // 
             this.tb2.Location = new System.Drawing.Point(8, 29);
             this.tb2.Name = "tb2";
+            this.tb2.ReadOnly = true;
             this.tb2.Size = new System.Drawing.Size(100, 22);
             this.tb2.TabIndex = 0;
             // 
@@ -266,6 +260,7 @@
             // 
             this.tb3.Location = new System.Drawing.Point(8, 29);
             this.tb3.Name = "tb3";
+            this.tb3.ReadOnly = true;
             this.tb3.Size = new System.Drawing.Size(100, 22);
             this.tb3.TabIndex = 0;
             // 
@@ -295,6 +290,7 @@
             // 
             this.tb4.Location = new System.Drawing.Point(8, 29);
             this.tb4.Name = "tb4";
+            this.tb4.ReadOnly = true;
             this.tb4.Size = new System.Drawing.Size(100, 22);
             this.tb4.TabIndex = 0;
             // 
@@ -346,6 +342,7 @@
             // 
             this.tb5.Location = new System.Drawing.Point(8, 29);
             this.tb5.Name = "tb5";
+            this.tb5.ReadOnly = true;
             this.tb5.Size = new System.Drawing.Size(100, 22);
             this.tb5.TabIndex = 0;
             // 
@@ -354,6 +351,7 @@
             this.tbCmt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.tbCmt.Location = new System.Drawing.Point(640, 39);
             this.tbCmt.Name = "tbCmt";
+            this.tbCmt.ReadOnly = true;
             this.tbCmt.Size = new System.Drawing.Size(148, 28);
             this.tbCmt.TabIndex = 23;
             // 
@@ -362,7 +360,7 @@
             this.pnlWORD.BackColor = System.Drawing.Color.LemonChiffon;
             this.pnlWORD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pnlWORD.Controls.Add(this.WORD);
-            this.pnlWORD.Location = new System.Drawing.Point(226, 19);
+            this.pnlWORD.Location = new System.Drawing.Point(213, 19);
             this.pnlWORD.Name = "pnlWORD";
             this.pnlWORD.Size = new System.Drawing.Size(336, 48);
             this.pnlWORD.TabIndex = 24;
@@ -378,11 +376,22 @@
             this.WORD.TabIndex = 0;
             this.WORD.Text = "WORD";
             // 
+            // status
+            // 
+            this.status.BackColor = System.Drawing.SystemColors.Window;
+            this.status.Location = new System.Drawing.Point(640, 85);
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            this.status.Size = new System.Drawing.Size(148, 265);
+            this.status.TabIndex = 1;
+            this.status.Text = "";
+            // 
             // GiaoDienNguoiChoi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 505);
+            this.Controls.Add(this.status);
             this.Controls.Add(this.pnlWORD);
             this.Controls.Add(this.tbCmt);
             this.Controls.Add(this.panel5);
@@ -393,7 +402,6 @@
             this.Controls.Add(this.pic);
             this.Controls.Add(this.pic_color);
             this.Controls.Add(this.btn_color);
-            this.Controls.Add(this.Chat);
             this.Controls.Add(this.btn_send);
             this.Controls.Add(this.tbx_send);
             this.Controls.Add(this.btn_clear);
@@ -432,7 +440,6 @@
         public System.Windows.Forms.Button btn_clear;
         public System.Windows.Forms.TextBox tbx_send;
         public System.Windows.Forms.Button btn_send;
-        private System.Windows.Forms.ListBox Chat;
         public System.Windows.Forms.Button btn_color;
         private System.Windows.Forms.PictureBox pic_color;
         public System.Windows.Forms.PictureBox pic;
@@ -454,5 +461,6 @@
         private System.Windows.Forms.TextBox tbCmt;
         private System.Windows.Forms.Panel pnlWORD;
         private System.Windows.Forms.Label WORD;
+        private System.Windows.Forms.RichTextBox status;
     }
 }

@@ -10,8 +10,7 @@ namespace Client
     {
         public static string name { get; set; }
         public static int turn { get; set; }
-        public static int score { get; set; } //Diem trong 1 vong
-        //public static int totalScore { get; set; } //Diem trong ca 3 vong
+        public static int score { get; set; } = 0;
         public Player() { }
         public Player(string Name, int Turn, int Score)
         {
