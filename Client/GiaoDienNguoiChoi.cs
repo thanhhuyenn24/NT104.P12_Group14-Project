@@ -288,8 +288,20 @@ namespace Client
         {
             foreach (Control control in Controls)
             {
-                if (control is TextBox && control.Tag != null && control.Tag.ToString() == Name)
-                    control.Text = Score;
+                // If the control is a panel, search its child controls
+                if (control is Panel panel)
+                {
+                    foreach (Control panelControl in panel.Controls)
+                    {
+                        if (panelControl is TextBox textBox &&
+                            textBox.Tag != null &&
+                            textBox.Tag.ToString() == Name)
+                        {
+                            textBox.Text = Score;
+                            return;
+                        }
+                    }
+                }
             }
         }
         public void InGameDisplay()
@@ -377,7 +389,7 @@ namespace Client
         }
         public void GR()
         {
-            btn_send.Enabled=false;
+            btn_send.Enabled = false;
         }
         private void btn_send_Click(object sender, EventArgs e)
         {

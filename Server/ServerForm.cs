@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 using Timer = System.Windows.Forms.Timer;
 
 namespace Server
@@ -81,12 +82,26 @@ namespace Server
                 else
                 {
                     StopTimer();
+                    
                     foreach (var player in connectedPlayers)
                     {
                         string makemsg = "CLEAR_PIC;";
                         byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
                         player.playerSocket.Send(buffer);
                         Console.WriteLine("Sendback: " + makemsg);
+                        Thread.Sleep(100);
+                    }
+                    string makemsg_ = "TIME_OUT;";
+                    makemsg_ += connectedPlayers.Count();
+                    foreach (var player in connectedPlayers)
+                    {
+                        makemsg_ += ";" + player.name + ";" + player.score.ToString();
+                    }
+                    foreach (var player in connectedPlayers)
+                    {
+                        byte[] buffer = Encoding.UTF8.GetBytes(makemsg_);
+                        player.playerSocket.Send(buffer);
+                        Console.WriteLine("Sendback: " + makemsg_);
                         Thread.Sleep(100);
                     }
                     currentturn++;
@@ -356,10 +371,22 @@ namespace Server
 
                 case "GUESS_RIGHT":
                     {
+                        
                         foreach (var player in connectedPlayers)
                         {
-                            byte[] buffer = Encoding.UTF8.GetBytes("GR;" + arrPayload[1] + ";" + connectedPlayers[currentturn-1].name); //name + score + nguoi ve
+                            byte[] buffer = Encoding.UTF8.GetBytes("GR;" + arrPayload[1] + ";" + connectedPlayers[currentturn-1].name); //name + name nguoi ve
                             player.playerSocket.Send(buffer);
+                        }
+                    }
+                    break;
+                case "UPDATE":
+                    {
+                        foreach (var player in connectedPlayers)
+                        {
+                            if (player.name == arrPayload[1])
+                            {
+                                player.score = int.Parse(arrPayload[2]);
+                            }
                         }
                     }
                     break;

@@ -264,27 +264,49 @@ namespace Client
                     break;
                 case "GR":
                     {
-                        GamePlay.GR();
                         if (Payload[1]==Player.name)
                         {
                             Player.score += 200;
-                            GamePlay.Invoke((MethodInvoker)delegate ()
-                            {
-                                GamePlay.Score_Update(Player.name, Player.score.ToString());
-                            }
-                        );
                         }
                         if (Payload[2]==Player.name)
                         {
                             Player.score += 100;
+                        }
+                        GamePlay.Invoke((MethodInvoker)delegate ()
+                        {
+                            GamePlay.Game_Update_RIGHT(Payload[1]);
+                        }
+                        );
+                        if (Payload[1] == Player.name)
+                        {
                             GamePlay.Invoke((MethodInvoker)delegate ()
                             {
-                                GamePlay.Score_Update(Player.name, Player.score.ToString());
+                                GamePlay.GR();
                             }
                         );
                         }
-                        GamePlay.Game_Update_RIGHT(Payload[1]);
-                        MessageBox.Show(Player.score.ToString());
+                        datatype = "UPDATE";
+                        msg = Player.name + ";" +Player.score.ToString();
+                        SendMessage(msg);
+                        
+                    }
+                    break;
+                case "TIME_OUT":
+                    {
+                        for (int i = 2; i < int.Parse(Payload[1])*2+2;)
+                        {
+                            GamePlay.Score_Update(Payload[i], Payload[i+1]);
+                            i += 2;
+                        }
+                    }
+                    break;
+                case "UPDATE":
+                    {
+                        for (int i = 2; i < int.Parse(Payload[1]) * 2 + 2;)
+                        {
+                            GamePlay.Score_Update(Payload[i], Payload[i + 1]);
+                            i += 2;
+                        }
                     }
                     break;
                 case "GW":
