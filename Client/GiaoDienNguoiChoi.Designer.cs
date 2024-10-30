@@ -38,7 +38,6 @@
             this.tbx_send = new System.Windows.Forms.TextBox();
             this.btn_send = new System.Windows.Forms.Button();
             this.Chat = new System.Windows.Forms.ListBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.pic = new System.Windows.Forms.PictureBox();
             this.pic_color = new System.Windows.Forms.PictureBox();
             this.btn_color = new System.Windows.Forms.Button();
@@ -72,16 +71,17 @@
             // labelTimer
             // 
             this.labelTimer.AutoSize = true;
-            this.labelTimer.Location = new System.Drawing.Point(148, 21);
+            this.labelTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.labelTimer.Location = new System.Drawing.Point(31, 13);
             this.labelTimer.Name = "labelTimer";
-            this.labelTimer.Size = new System.Drawing.Size(42, 16);
+            this.labelTimer.Size = new System.Drawing.Size(77, 29);
             this.labelTimer.TabIndex = 1;
             this.labelTimer.Text = "Timer";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(276, 21);
+            this.label2.Location = new System.Drawing.Point(135, 21);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(47, 16);
             this.label2.TabIndex = 2;
@@ -90,7 +90,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(489, 20);
+            this.label3.Location = new System.Drawing.Point(337, 21);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 16);
             this.label3.TabIndex = 3;
@@ -142,15 +142,6 @@
             this.Chat.Name = "Chat";
             this.Chat.Size = new System.Drawing.Size(148, 260);
             this.Chat.TabIndex = 14;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 20);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(73, 16);
-            this.label5.TabIndex = 15;
-            this.label5.Text = "UserName";
             // 
             // pic
             // 
@@ -387,7 +378,6 @@
             this.Controls.Add(this.pic);
             this.Controls.Add(this.pic_color);
             this.Controls.Add(this.btn_color);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.Chat);
             this.Controls.Add(this.btn_send);
             this.Controls.Add(this.tbx_send);
@@ -418,7 +408,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label labelTimer;
+        public System.Windows.Forms.Label labelTimer;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btn_pen;
@@ -428,7 +418,6 @@
         public System.Windows.Forms.TextBox tbx_send;
         public System.Windows.Forms.Button btn_send;
         private System.Windows.Forms.ListBox Chat;
-        private System.Windows.Forms.Label label5;
         public System.Windows.Forms.Button btn_color;
         private System.Windows.Forms.PictureBox pic_color;
         public System.Windows.Forms.PictureBox pic;

@@ -31,6 +31,7 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.btnLoadWords = new System.Windows.Forms.Button();
             this.Serverlb = new System.Windows.Forms.Label();
+            this.lbTime = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // richTextBox1
@@ -62,11 +63,22 @@
             this.Serverlb.TabIndex = 2;
             this.Serverlb.Text = "SERVER";
             // 
+            // lbTime
+            // 
+            this.lbTime.AutoSize = true;
+            this.lbTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lbTime.Location = new System.Drawing.Point(295, 39);
+            this.lbTime.Name = "lbTime";
+            this.lbTime.Size = new System.Drawing.Size(50, 22);
+            this.lbTime.TabIndex = 3;
+            this.lbTime.Text = "Time";
+            // 
             // ServerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(654, 450);
+            this.Controls.Add(this.lbTime);
             this.Controls.Add(this.Serverlb);
             this.Controls.Add(this.btnLoadWords);
             this.Controls.Add(this.richTextBox1);
@@ -84,5 +96,6 @@
         public System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button btnLoadWords;
         private System.Windows.Forms.Label Serverlb;
+        private System.Windows.Forms.Label lbTime;
     }
 }

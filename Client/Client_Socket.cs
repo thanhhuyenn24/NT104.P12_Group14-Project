@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
 
+
 namespace Client
 {
     public class Client_Socket
@@ -112,6 +113,7 @@ namespace Client
         public static GiaoDienNguoiChoi GamePlay;
         //public static Winner WinnerForm;
         public static List<OtherPlayers> otherPlayers;
+
         public static void AnalyzingReturnMessage(string msg)
         {
             string[] Payload = msg.Split(';');
@@ -223,6 +225,11 @@ namespace Client
                         );
                     }
                     break;
+                case "TIME_CHANGE":
+                    {
+                        GamePlay.labelTimer.Text = Payload[1];
+                    }
+                    break;
                 case "TURN":
                     {
                         if (Payload[1] == Player.name)
@@ -238,11 +245,11 @@ namespace Client
                         {
                             GamePlay.Invoke((MethodInvoker)delegate ()
                             {
+                                GamePlay.NotAllowPlaying();
                                 GamePlay.Turn_Notify(Payload[1]);
                             }
                             );
                         }
-
                     }
                     break;
                 case "PIC_UPDATE":
@@ -255,6 +262,11 @@ namespace Client
                         }
                         GamePlay.pic.Image = newBitmap;
                         GamePlay.pic.Refresh();
+                    }
+                    break;
+                case "CLEAR_PIC":
+                    {
+                        GamePlay.Clear_pic();
                     }
                     break;
                 case "GR": //ANOTHER PLAYER CHOOSE RIGHT ANS

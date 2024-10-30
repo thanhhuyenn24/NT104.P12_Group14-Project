@@ -10,14 +10,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using Server; // Thay 'ServerNamespace' bằng namespace thực tế của WordData
+using Server;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
+using Timer = System.Windows.Forms.Timer; // Thay 'ServerNamespace' bằng namespace thực tế của WordData
 
 
 namespace Client
 {
     public partial class GiaoDienNguoiChoi : Form
     {
-        
+        private int timeLeft = 20;
         public string round { get; set; }
         public string word { get; set; }
         private int score = 0;
@@ -122,9 +124,7 @@ namespace Client
         private void btn_clear_Click(object sender, EventArgs e)
         {
             SaveState(); // Lưu trạng thái trước khi xóa
-            g.Clear(Color.White);
-            pic.Image = bm;
-            index = 0;
+            Clear_pic();
             Client_Socket.datatype = "PIC_CHANGE";
 
             // Chuyển đổi Bitmap thành mảng byte
@@ -155,14 +155,6 @@ namespace Client
             }
         }
 
-        // Giải mã mảng byte thành Bitmap
-        public Bitmap BytesToBitmap(byte[] bytes)
-        {
-            using (var ms = new MemoryStream(bytes))
-            {
-                return new Bitmap(ms);
-            }
-        }
         #region UNDO
         // Hàm sao chép bitmap
         private Bitmap CloneBitmap(Bitmap sourceBitmap)
@@ -305,7 +297,6 @@ namespace Client
         {
 
             lb1.Text = Player.name;
-            label5.Text = Player.name;
             tb1.Text = Player.score.ToString();
             tb1.Tag = Player.name;
 
@@ -361,6 +352,7 @@ namespace Client
                 tbCmt.Text = Name + "'s turn";
         }
 
+
         public void Allow_Playing()
         {
             pic.Enabled = true;
@@ -371,6 +363,23 @@ namespace Client
             btn_undo.Enabled = true;
             btn_send.Enabled = false;
 
+        }
+        public void NotAllowPlaying()
+        {
+            pic.Enabled=false;
+            btn_clear.Enabled=false;
+            btn_color.Enabled=false;
+            btn_eraser.Enabled=false;
+            btn_pen.Enabled=false;
+            btn_undo.Enabled=false;
+            btn_send.Enabled = true;
+        }
+
+        public void Clear_pic()
+        {
+            g.Clear(Color.White);
+            pic.Image = bm;
+            index = 0;
         }
     }
 }

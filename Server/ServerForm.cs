@@ -15,6 +15,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
+using Timer = System.Windows.Forms.Timer;
 
 namespace Server
 {
@@ -27,7 +29,6 @@ namespace Server
         private static Thread serverlisten;
         private static List<Player> connectedPlayers = new List<Player>();
         private static List<string> UsedWords = new List<string>();
-
         private static int currentturn = 1;
         private static int currentround = 1;
         private static string word;
@@ -37,9 +38,18 @@ namespace Server
         public static string drawTime = "50";
         public static string rounds = "2";
         public static string wordCount = "2";
+        private Timer turnTimer;
+        private int timeLeft;
+        private readonly object timerLock = new object();
+        private bool isTimerRunning = false;
         public ServerForm()
         {
             InitializeComponent();
+            InitializeServer();
+            InitializeTimer();
+        }
+        private void InitializeServer()
+        {
             IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPEndPoint serverEP = new IPEndPoint(ipAddress, 11000);
@@ -47,6 +57,125 @@ namespace Server
             serverSocket.Listen(3);
             richTextBox1.Text += "Chờ đợi kết nối từ người chơi ... \r\n";
         }
+        private void InitializeTimer()
+        {
+            // Tạo timer trong UI thread
+            turnTimer = new Timer();
+            turnTimer.Interval = 1000; // 1 giây
+            turnTimer.Tick += new EventHandler(TurnTimer_Tick);
+        }
+
+        private void TurnTimer_Tick(object sender, EventArgs e)
+        {
+            // Đảm bảo chỉ có một thread được cập nhật timer tại một thời điểm
+            lock (timerLock)
+            {
+                if (!isTimerRunning) return;
+
+                if (timeLeft > 0)
+                {
+                    timeLeft--;
+                    SafeUpdateTimerDisplay(timeLeft);
+                    BroadcastTimeToClients(timeLeft);
+                }
+                else
+                {
+                    StopTimer();
+                    foreach (var player in connectedPlayers)
+                    {
+                        string makemsg = "CLEAR_PIC;";
+                        byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
+                        player.playerSocket.Send(buffer);
+                        Console.WriteLine("Sendback: " + makemsg);
+                        Thread.Sleep(100);
+                    }
+                    currentturn++;
+                    if (currentturn > 3)
+                        currentturn = 1;
+                    foreach (var player in connectedPlayers)
+                    {
+                        byte[] buffer = Encoding.UTF8.GetBytes("TURN;" + connectedPlayers[currentturn - 1].name);
+                        player.playerSocket.Send(buffer);
+                    }
+                    Reset_Timer();
+                }
+            }
+        }
+
+        private void SafeUpdateTimerDisplay(int time)
+        {
+            // Cập nhật UI an toàn
+            if (lbTime.InvokeRequired)
+            {
+                lbTime.Invoke(new Action(() => {
+                    lbTime.Text = time.ToString();
+                }));
+            }
+            else
+            {
+                lbTime.Text = time.ToString();
+            }
+        }
+
+        private void BroadcastTimeToClients(int time)
+        {
+            try
+            {
+                byte[] buffer = Encoding.UTF8.GetBytes($"TIME_CHANGE;{time}");
+                foreach (var player in connectedPlayers)
+                {
+                    player.playerSocket.Send(buffer);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error broadcasting time: {ex.Message}");
+            }
+        }
+
+        public void Reset_Timer()
+        {
+            lock (timerLock)
+            {
+                StopTimer();
+                timeLeft = int.Parse(drawTime);
+                SafeUpdateTimerDisplay(timeLeft);
+                StartTimer();
+            }
+        }
+
+        private void StartTimer()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => {
+                    isTimerRunning = true;
+                    turnTimer.Start();
+                }));
+            }
+            else
+            {
+                isTimerRunning = true;
+                turnTimer.Start();
+            }
+        }
+
+        private void StopTimer()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => {
+                    isTimerRunning = false;
+                    turnTimer.Stop();
+                }));
+            }
+            else
+            {
+                isTimerRunning = false;
+                turnTimer.Stop();
+            }
+        }
+
         public void recvfromClientsocket(Socket client)
         {
 
@@ -162,7 +291,7 @@ namespace Server
                         }
                         catch (Exception)
                         {
-                            MessageBox.Show("Vui lòng chọn file gói câu hỏi trước khi bắt đầu trò chơi !", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Vui lòng chọn file gói từ trước khi bắt đầu trò chơi !", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
                         foreach (var player in connectedPlayers)
@@ -206,14 +335,12 @@ namespace Server
                             Console.WriteLine("Sendback: " + makemsg);
                             Thread.Sleep(100);
                         }
-
+                        Reset_Timer();
                         foreach (var player in connectedPlayers)
                         {
                             string makemsg_ = "TURN;" + connectedPlayers[currentturn - 1].name;
                             byte[] buffer_ = Encoding.UTF8.GetBytes(makemsg_);
                             player.playerSocket.Send(buffer_);
-                            Console.WriteLine("Sendback: " + makemsg_);
-                            Thread.Sleep(100);
                         }
                     }
                     break;
@@ -229,6 +356,7 @@ namespace Server
                         }
                     }
                     break;
+
                 case "GUESS_RIGHT":
                     {
                         foreach (var player in connectedPlayers)
@@ -256,18 +384,7 @@ namespace Server
                         }
                     }
                     break;
-                case "ENDTURN":
-                    {
-                        currentturn++;
-                        if (currentturn > 3)
-                            currentturn = 1;
-                        foreach (var player in connectedPlayers)
-                        {
-                            byte[] buffer = Encoding.UTF8.GetBytes("TURN;" + connectedPlayers[currentturn - 1].name);
-                            player.playerSocket.Send(buffer);
-                        }
-                    }
-                    break;
+
                 case "SCORE_CHANGED":
                     {
                         foreach (var player in connectedPlayers)
@@ -278,94 +395,6 @@ namespace Server
                         }
                     }
                     break;
-                /*case "TOTAL_SCORE":
-                    {
-                        foreach (var player in connectedPlayers)
-                        {
-                            if (player.name == arrPayload[1])
-                                player.totalscore = int.Parse(arrPayload[2]);
-                        }
-                    }
-                    break;
-                case "WIN_ROUND":
-                    {
-                        // Tuong tu buoc set up tuy nhien phai cap nhat them vong choi tiep theo
-                        currentround++;
-                        if (currentround > 3)
-                        {
-                            connectedPlayers.Sort((x, y) => x.totalscore.CompareTo(y.totalscore));
-                            string WinnerName = connectedPlayers[connectedPlayers.Count - 1].name;
-                            foreach (var player in connectedPlayers)
-                            {
-                                string makemsg = "ENDGAME;" + WinnerName;
-                                byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
-                                player.playerSocket.Send(buffer);
-                            }
-                            break;
-                        }
-                        foreach (var player in connectedPlayers)
-                        {
-                            if (player.name == arrPayload[1])
-                                player.totalscore = int.Parse(arrPayload[2]);
-                        }
-                        RandomWords();
-                        foreach (var player in connectedPlayers)
-                        {
-                            string makemsg = "NEW_ROUND;" + currentround.ToString();
-                            byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
-                            player.playerSocket.Send(buffer);
-                            Thread.Sleep(100);
-                        }
-                        foreach (var player in connectedPlayers)
-                        {
-                            string makemsg = "LOAD_WORD;" + word;
-                            byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
-                            player.playerSocket.Send(buffer);
-                            Thread.Sleep(100);
-                        }
-                        SetUpPlayerTurn();
-                        connectedPlayers.Sort((x, y) => x.turn.CompareTo(y.turn));
-                        foreach (var player in connectedPlayers)
-                        {
-                            string makemsg = "INGAME;" + player.name + ";" + player.turn + ";" + player.score;
-                            byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
-                            player.playerSocket.Send(buffer);
-                            Thread.Sleep(100);
-                        }
-                        foreach (var player in connectedPlayers)
-                        {
-                            foreach (var player_ in connectedPlayers)
-                            {
-                                if (player.name != player_.name)
-                                {
-                                    string makemsg = "OTHERINFO;" + player_.name + ";" + player_.turn + ";" + player.score;
-                                    byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
-                                    player.playerSocket.Send(buffer);
-                                    Console.WriteLine("Sendback: " + makemsg);
-                                    Thread.Sleep(100);
-                                }
-                            }
-                        }
-
-                        foreach (var player in connectedPlayers)
-                        {
-                            string makemsg = "SETUP;" + player.name;
-                            byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
-                            player.playerSocket.Send(buffer);
-                            Console.WriteLine("Sendback: " + makemsg);
-                            Thread.Sleep(100);
-                        }
-
-                        foreach (var player in connectedPlayers)
-                        {
-                            string makemsg_ = "TURN;" + connectedPlayers[currentturn - 1].name;
-                            byte[] buffer_ = Encoding.UTF8.GetBytes(makemsg_);
-                            player.playerSocket.Send(buffer_);
-                            Console.WriteLine("Sendback: " + makemsg_);
-                            Thread.Sleep(100);
-                        }
-                    }
-                    break;*/
                 default:
                     break;
 
