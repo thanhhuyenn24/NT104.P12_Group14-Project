@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServerForm));
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.btnLoadWords = new System.Windows.Forms.Button();
-            this.Serverlb = new System.Windows.Forms.Label();
             this.lbTime = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -45,41 +45,30 @@
             // btnLoadWords
             // 
             this.btnLoadWords.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.btnLoadWords.Location = new System.Drawing.Point(449, 28);
+            this.btnLoadWords.Location = new System.Drawing.Point(438, 28);
             this.btnLoadWords.Name = "btnLoadWords";
-            this.btnLoadWords.Size = new System.Drawing.Size(134, 46);
+            this.btnLoadWords.Size = new System.Drawing.Size(188, 46);
             this.btnLoadWords.TabIndex = 1;
-            this.btnLoadWords.Text = "Load Words";
+            this.btnLoadWords.Text = "  ";
             this.btnLoadWords.UseVisualStyleBackColor = true;
             this.btnLoadWords.Click += new System.EventHandler(this.btnLoadWords_Click);
-            // 
-            // Serverlb
-            // 
-            this.Serverlb.AutoSize = true;
-            this.Serverlb.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.Serverlb.Location = new System.Drawing.Point(52, 28);
-            this.Serverlb.Name = "Serverlb";
-            this.Serverlb.Size = new System.Drawing.Size(186, 46);
-            this.Serverlb.TabIndex = 2;
-            this.Serverlb.Text = "SERVER";
             // 
             // lbTime
             // 
             this.lbTime.AutoSize = true;
-            this.lbTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.lbTime.Location = new System.Drawing.Point(295, 39);
+            this.lbTime.Location = new System.Drawing.Point(322, 44);
             this.lbTime.Name = "lbTime";
-            this.lbTime.Size = new System.Drawing.Size(50, 22);
-            this.lbTime.TabIndex = 3;
-            this.lbTime.Text = "Time";
+            this.lbTime.Size = new System.Drawing.Size(13, 16);
+            this.lbTime.TabIndex = 2;
+            this.lbTime.Text = "  ";
+            this.lbTime.Click += new System.EventHandler(this.lbTime_Click_1);
             // 
             // ServerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(654, 450);
             this.Controls.Add(this.lbTime);
-            this.Controls.Add(this.Serverlb);
             this.Controls.Add(this.btnLoadWords);
             this.Controls.Add(this.richTextBox1);
             this.Name = "ServerForm";
@@ -95,7 +84,6 @@
 
         public System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button btnLoadWords;
-        private System.Windows.Forms.Label Serverlb;
         private System.Windows.Forms.Label lbTime;
     }
 }

@@ -47,6 +47,15 @@ namespace Server
             InitializeComponent();
             InitializeServer();
             InitializeTimer();
+
+            btnLoadWords.FlatStyle = FlatStyle.Flat;
+            btnLoadWords.BackColor = Color.Transparent;
+            btnLoadWords.FlatAppearance.BorderSize = 0;
+            btnLoadWords.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btnLoadWords.FlatAppearance.MouseDownBackColor = Color.Transparent;
+
+            lbTime.FlatStyle = FlatStyle.Flat;
+            lbTime.BackColor = Color.Transparent;
         }
         private void InitializeServer()
         {
@@ -527,5 +536,14 @@ namespace Server
 
         #endregion
 
+        private void Serverlb_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbTime_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

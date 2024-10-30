@@ -109,6 +109,7 @@ namespace Client
                 }
             }
         }
+
         public static GiaoDienNguoiChoi GamePlay;
         public static List<OtherPlayers> otherPlayers;
 
