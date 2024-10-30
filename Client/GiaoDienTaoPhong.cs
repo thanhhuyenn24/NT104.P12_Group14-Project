@@ -36,6 +36,24 @@ namespace Client
             comboBoxPlayers.SelectedIndex = 0;
             comboBoxDrawTime.SelectedIndex = 0;
             comboBoxRounds.SelectedIndex = 0;
+
+            btnOK.FlatStyle = FlatStyle.Flat;
+            btnOK.BackColor = Color.Transparent;
+            btnOK.FlatAppearance.BorderSize = 0;
+            btnOK.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btnOK.FlatAppearance.MouseDownBackColor = Color.Transparent;
+
+            btnStart.FlatStyle = FlatStyle.Flat;
+            btnStart.BackColor = Color.Transparent;
+            btnStart.FlatAppearance.BorderSize = 0;
+            btnStart.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btnStart.FlatAppearance.MouseDownBackColor = Color.Transparent;
+
+            btnLeave.FlatStyle = FlatStyle.Flat;
+            btnLeave.BackColor = Color.Transparent;
+            btnLeave.FlatAppearance.BorderSize = 0;
+            btnLeave.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btnLeave.FlatAppearance.MouseDownBackColor = Color.Transparent;
         }
 
         public void Disable_Enable_Start(bool check)
@@ -100,5 +118,19 @@ namespace Client
             Client_Socket.SendMessage(" "); // Gửi thông điệp khởi động game
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

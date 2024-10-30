@@ -30,6 +30,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GiaoDienNguoiChoi));
             this.labelTimer = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_undo = new System.Windows.Forms.Button();
@@ -388,8 +389,8 @@
             // 
             // GiaoDienNguoiChoi
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(800, 505);
             this.Controls.Add(this.status);
             this.Controls.Add(this.pnlWORD);
