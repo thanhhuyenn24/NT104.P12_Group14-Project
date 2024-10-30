@@ -85,9 +85,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(637, 19);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 16);
+            this.label2.Size = new System.Drawing.Size(60, 16);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Round";
+            this.label2.Text = "Round: 1";
             // 
             // btn_undo
             // 
@@ -433,7 +433,7 @@
 
         #endregion
         public System.Windows.Forms.Label labelTimer;
-        private System.Windows.Forms.Label label2;
+        public System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_pen;
         public System.Windows.Forms.Button btn_eraser;
         public System.Windows.Forms.Button btn_undo;

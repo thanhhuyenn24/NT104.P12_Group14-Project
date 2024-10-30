@@ -109,9 +109,7 @@ namespace Client
                 }
             }
         }
-        //public static GiaoDienTaoPhong Lobby;
         public static GiaoDienNguoiChoi GamePlay;
-        //public static Winner WinnerForm;
         public static List<OtherPlayers> otherPlayers;
 
         public static void AnalyzingReturnMessage(string msg)
@@ -262,6 +260,11 @@ namespace Client
                         GamePlay.Clear_pic();
                     }
                     break;
+                case "ROUND_CHANGE":
+                    {
+                        GamePlay.label2.Text = "Round: " + Payload[1];
+                    }
+                    break;
                 case "GR":
                     {
                         if (Payload[1]==Player.name)
@@ -318,30 +321,9 @@ namespace Client
                        );
                     }
                     break;
-                case "NEW_ROUND":
-                    {
-                        Playerround = int.Parse(Payload[1]);
-                        GamePlay.Invoke((MethodInvoker)delegate ()
-                        {
-                            GamePlay.Close();
-                        }
-                        );
-                    }
-                    break;
                 case "ENDGAME":
                     {
-                        GamePlay.Invoke((MethodInvoker)delegate ()
-                        {
-                            GamePlay.Close();
-                        }
-                        );
-                        /*WinnerForm = new Winner();
-                        Login_view.lobby.Invoke((MethodInvoker)delegate ()
-                        {
-                            WinnerForm.Show();
-                            WinnerForm.UpdateWinner(Payload[1]);
-                        }
-                        );*/
+                        MessageBox.Show(Payload[1] + " is WIN");
                     }
                     break;
                 default:

@@ -36,8 +36,8 @@ namespace Server
         private static string wordPath;
         public static int maxPlayers = 2;
         public static string players = "2";
-        public static string drawTime = "50";
-        public static string rounds = "2";
+        public static string drawTime = "30";
+        public static string rounds = "1";
         private Timer turnTimer;
         private int timeLeft;
         private readonly object timerLock = new object();
@@ -82,7 +82,7 @@ namespace Server
                 else
                 {
                     StopTimer();
-                    
+
                     foreach (var player in connectedPlayers)
                     {
                         string makemsg = "CLEAR_PIC;";
@@ -106,7 +106,33 @@ namespace Server
                     }
                     currentturn++;
                     if (currentturn > maxPlayers)
+                    {
                         currentturn = 1;
+                        currentround++;
+                        foreach (var player in connectedPlayers)
+                        {
+                            string roundmsg = "ROUND_CHANGE;" + currentround.ToString();
+                            byte[] buffer = Encoding.UTF8.GetBytes(roundmsg);
+                            player.playerSocket.Send(buffer);
+                            Console.WriteLine("Sendback: " + roundmsg);
+                            Thread.Sleep(100);
+                        }
+                        // Kiểm tra nếu đã vượt quá số vòng chơi
+                        if (currentround > int.Parse(rounds))
+                        {
+                            connectedPlayers.Sort((x, y) => x.score.CompareTo(y.score));
+                            string WinnerName = connectedPlayers[connectedPlayers.Count - 1].name;
+                            foreach (var player in connectedPlayers)
+                            {
+                                string makemsg = "ENDGAME;" + WinnerName;
+                                byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
+                                player.playerSocket.Send(buffer);
+                                Console.WriteLine("Sendback: " + makemsg);
+                                Thread.Sleep(100);
+                            }
+                            return; // Kết thúc hàm và không gửi thêm thông điệp nào nữa
+                        }
+                    }
                     word = RandomWords();
                     foreach (var player in connectedPlayers)
                     {
