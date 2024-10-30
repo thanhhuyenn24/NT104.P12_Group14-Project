@@ -20,6 +20,20 @@ namespace Client
         public GiaoDienChinh()
         {
             InitializeComponent();
+
+            // Thiết lập cho nút btnPlay
+            btnPlay.FlatStyle = FlatStyle.Flat;
+            btnPlay.BackColor = Color.Transparent;
+            btnPlay.FlatAppearance.BorderSize = 0;
+            btnPlay.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btnPlay.FlatAppearance.MouseDownBackColor = Color.Transparent;
+
+            // Thiết lập cho nút btnCreate
+            btnCreate.FlatStyle = FlatStyle.Flat;
+            btnCreate.BackColor = Color.Transparent;
+            btnCreate.FlatAppearance.BorderSize = 0;
+            btnCreate.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btnCreate.FlatAppearance.MouseDownBackColor = Color.Transparent;
         }
 
         void lobby_FormClosed(object sender, EventArgs e)
@@ -91,6 +105,11 @@ namespace Client
             {
                 MessageBox.Show("Lỗi kết nối: " + ex.Message);
             }
+        }
+
+        private void GiaoDienChinh_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
