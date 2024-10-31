@@ -73,7 +73,6 @@
             this.Controls.Add(this.btnCreate);
             this.Name = "GiaoDienChinh";
             this.Text = "LOGIN";
-            this.Load += new System.EventHandler(this.GiaoDienChinh_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

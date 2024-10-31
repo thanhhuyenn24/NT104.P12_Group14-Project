@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -120,11 +121,9 @@ namespace Client
 
             Client_Socket.datatype = "PIC_CHANGE";
 
-            // Chuyển đổi Bitmap thành mảng byte
-            byte[] imageBytes = BitmapToBytes(bm);
 
-            // Chuyển đổi mảng byte thành chuỗi Base64
-            string base64Image = Convert.ToBase64String(imageBytes);
+            // Chuyển đổi bitmap thành chuỗi Base64
+            string base64Image = BitmapToString(bm);
 
             // Gửi chuỗi Base64 đến server
             Client_Socket.SendMessage(base64Image);
@@ -146,11 +145,8 @@ namespace Client
             Clear_pic();
             Client_Socket.datatype = "PIC_CHANGE";
 
-            // Chuyển đổi Bitmap thành mảng byte
-            byte[] imageBytes = BitmapToBytes(bm);
-
-            // Chuyển đổi mảng byte thành chuỗi Base64
-            string base64Image = Convert.ToBase64String(imageBytes);
+            // Chuyển đổi bitmap thành chuỗi Base64
+            string base64Image = BitmapToString(bm);
 
             // Gửi chuỗi Base64 đến server
             Client_Socket.SendMessage(base64Image);
@@ -165,12 +161,22 @@ namespace Client
         }
         #endregion
         // Serial hóa Bitmap thành mảng byte
-        public byte[] BitmapToBytes(Bitmap bitmap)
+        public static string BitmapToString(Bitmap bitmap)
         {
-            using (var ms = new MemoryStream())
+            try
             {
-                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                return ms.ToArray();
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    // Sử dụng định dạng PNG để đảm bảo chất lượng
+                    bitmap.Save(ms, ImageFormat.Png);
+                    byte[] bytes = ms.ToArray();
+                    return Convert.ToBase64String(bytes);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in BitmapToString: {ex.Message}");
+                return null;
             }
         }
 
@@ -276,11 +282,9 @@ namespace Client
                 }
                 Client_Socket.datatype = "PIC_CHANGE";
 
-                // Chuyển đổi Bitmap thành mảng byte
-                byte[] imageBytes = BitmapToBytes(bm);
 
-                // Chuyển đổi mảng byte thành chuỗi Base64
-                string base64Image = Convert.ToBase64String(imageBytes);
+                // Chuyển đổi bitmap thành chuỗi Base64
+                string base64Image = BitmapToString(bm);
 
                 // Gửi chuỗi Base64 đến server
                 Client_Socket.SendMessage(base64Image);

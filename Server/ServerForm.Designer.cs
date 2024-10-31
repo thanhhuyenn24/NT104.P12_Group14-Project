@@ -61,7 +61,6 @@
             this.lbTime.Size = new System.Drawing.Size(13, 16);
             this.lbTime.TabIndex = 2;
             this.lbTime.Text = "  ";
-            this.lbTime.Click += new System.EventHandler(this.lbTime_Click_1);
             // 
             // ServerForm
             // 

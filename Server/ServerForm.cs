@@ -536,14 +536,5 @@ namespace Server
 
         #endregion
 
-        private void Serverlb_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lbTime_Click_1(object sender, EventArgs e)
-        {
-
-        }
     }
 }

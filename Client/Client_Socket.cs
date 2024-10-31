@@ -246,12 +246,8 @@ namespace Client
                     break;
                 case "PIC_UPDATE":
                     {
-                        byte[] imageBytes = Convert.FromBase64String(Payload[1]);
                         Bitmap newBitmap;
-                        using (var ms = new MemoryStream(imageBytes))
-                        {
-                            newBitmap = new Bitmap(ms);
-                        }
+                        newBitmap = StringToBitmap( Payload[1] );
                         GamePlay.pic.Image = newBitmap;
                         GamePlay.pic.Refresh();
                     }
@@ -331,6 +327,22 @@ namespace Client
                     break;
             }
 
+        }
+        public static Bitmap StringToBitmap(string base64String)
+        {
+            try
+            {
+                byte[] bytes = Convert.FromBase64String(base64String);
+                using (MemoryStream ms = new MemoryStream(bytes))
+                {
+                    return new Bitmap(ms);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in StringToBitmap: {ex.Message}");
+                return null;
+            }
         }
     }
 }

@@ -107,9 +107,5 @@ namespace Client
             }
         }
 
-        private void GiaoDienChinh_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
