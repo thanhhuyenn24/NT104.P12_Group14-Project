@@ -21,14 +21,14 @@ namespace Client
         {
             InitializeComponent();
 
-            // Thiết lập cho nút btnPlay
+            //Thiet lap nut btnPlay
             btnPlay.FlatStyle = FlatStyle.Flat;
             btnPlay.BackColor = Color.Transparent;
             btnPlay.FlatAppearance.BorderSize = 0;
             btnPlay.FlatAppearance.MouseOverBackColor = Color.Transparent;
             btnPlay.FlatAppearance.MouseDownBackColor = Color.Transparent;
 
-            // Thiết lập cho nút btnCreate
+            //Thiet lap nut btnCreate
             btnCreate.FlatStyle = FlatStyle.Flat;
             btnCreate.BackColor = Color.Transparent;
             btnCreate.FlatAppearance.BorderSize = 0;
@@ -55,14 +55,14 @@ namespace Client
                     MessageBox.Show("Vui lòng nhập tên người chơi!");
                     return;
                 }
-                    // Khởi tạo form sảnh chờ trước
+                    //Khoi tao form sanh cho
                     lobby = new GiaoDienTaoPhong();
 
-                    // Thiết lập kết nối
+                    //Thiet lap ket noi
                     IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 11000);
                     Client_Socket.Connect(serverEP);
 
-                    // Gửi thông tin kết nối
+                    //Gui thong diep ket noi
                     Client_Socket.datatype = "CONNECT";
                     Player.name = username.Text;
                     Client_Socket.SendMessage(username.Text);
@@ -86,14 +86,14 @@ namespace Client
                     MessageBox.Show("Vui lòng nhập tên người chơi!");
                     return;
                 }
-                    // Khởi tạo form sảnh chờ trước
+                    //Khoi tao form sanh cho
                     lobby = new GiaoDienTaoPhong();
 
-                    // Thiết lập kết nối
+                    //Thiet lap ket noi
                     IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 11000);
                     Client_Socket.Connect(serverEP);
 
-                    // Gửi thông tin kết nối
+                    //Gui thong diep ket noi
                     Client_Socket.datatype = "CONNECT";
                     Player.name = username.Text;
                     Client_Socket.SendMessage(username.Text);

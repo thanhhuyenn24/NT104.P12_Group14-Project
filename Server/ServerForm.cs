@@ -57,27 +57,19 @@ namespace Server
             lbTime.FlatStyle = FlatStyle.Flat;
             lbTime.BackColor = Color.Transparent;
         }
-        private void InitializeServer()
-        {
-            IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
-            serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint serverEP = new IPEndPoint(ipAddress, 11000);
-            serverSocket.Bind(serverEP);
-            serverSocket.Listen(3);
-            richTextBox1.Text += "Chờ đợi kết nối từ người chơi ... \r\n";
-        }
+        
         #region TIMER
         private void InitializeTimer()
         {
-            // Tạo timer trong UI thread
+            //Tao Timer
             turnTimer = new Timer();
-            turnTimer.Interval = 1000; // 1 giây
+            turnTimer.Interval = 1000; //1 giay
             turnTimer.Tick += new EventHandler(TurnTimer_Tick);
         }
 
         private void TurnTimer_Tick(object sender, EventArgs e)
         {
-            // Đảm bảo chỉ có một thread được cập nhật timer tại một thời điểm
+            //Dam bao chi co 1 thread duoc cap nhat timer trong 1 thoi diem
             lock (timerLock)
             {
                 if (!isTimerRunning) return;
@@ -126,7 +118,7 @@ namespace Server
                             Console.WriteLine("Sendback: " + roundmsg);
                             Thread.Sleep(100);
                         }
-                        // Kiểm tra nếu đã vượt quá số vòng chơi
+                        //Kiem tra neu vuot qua so vong choi
                         if (currentround > int.Parse(rounds))
                         {
                             connectedPlayers.Sort((x, y) => x.score.CompareTo(y.score));
@@ -139,7 +131,7 @@ namespace Server
                                 Console.WriteLine("Sendback: " + makemsg);
                                 Thread.Sleep(100);
                             }
-                            return; // Kết thúc hàm và không gửi thêm thông điệp nào nữa
+                            return; //Ket thuc va khong gui them thong diep nao nua
                         }
                     }
                     word = RandomWords();
@@ -158,7 +150,6 @@ namespace Server
 
         private void SafeUpdateTimerDisplay(int time)
         {
-            // Cập nhật UI an toàn
             if (lbTime.InvokeRequired)
             {
                 lbTime.Invoke(new Action(() => {
@@ -171,6 +162,7 @@ namespace Server
             }
         }
 
+        //Gui thoi gian dem nguoc cho client
         private void BroadcastTimeToClients(int time)
         {
             try
@@ -230,6 +222,17 @@ namespace Server
             }
         }
         #endregion
+
+        #region NETWORK(Connect, read data)
+        private void InitializeServer()
+        {
+            IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
+            serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            IPEndPoint serverEP = new IPEndPoint(ipAddress, 11000);
+            serverSocket.Bind(serverEP);
+            serverSocket.Listen(3);
+            richTextBox1.Text += "Chờ đợi kết nối từ người chơi ... \r\n";
+        }
         public void recvfromClientsocket(Socket client)
         {
 
@@ -260,6 +263,24 @@ namespace Server
             }
 
         }
+
+        private void ServerForm_Load(object sender, EventArgs e)
+        {
+            serverlisten = new Thread(() =>
+            {
+                while (true)
+                {
+                    client = serverSocket.Accept();
+                    UpdateRichTextBox("New connection from " + client.RemoteEndPoint);
+                    clientThread = new Thread(() => recvfromClientsocket(client));
+                    clientThread.Start();
+                }
+            });
+            serverlisten.Start();
+        }
+        #endregion
+
+        //Phan tich thong diep tu client
         public void AnalyzingMess(string mess, Player p)
         {
             string[] arrPayload = mess.Split(';');
@@ -270,7 +291,7 @@ namespace Server
                     {
                         string playerName = arrPayload[1].Trim();
 
-                        // Kiểm tra tên đã tồn tại
+                        //Kiem tra ten da ton tai
                         if (connectedPlayers.Any(player => player.name == playerName))
                         {
                             byte[] errorBuffer = Encoding.UTF8.GetBytes("ERROR;Username already exists");
@@ -280,16 +301,16 @@ namespace Server
 
                         p.name = playerName;
 
-                        // Kiểm tra nếu phòng đã đầy
+                        //Kiem tra phong da day
                         if (connectedPlayers.Count > maxPlayers)
                         {
-                            // Xử lý ngắt kết nối
-                            connectedPlayers.Remove(p); // Loại bỏ player khỏi danh sách
-                            richTextBox1.Text += ($"{p.name} has disconnected.\n"); // Cập nhật log cho server
-                            return; // Kết thúc xử lý cho client này
+                            //Xu li ngat ket noi
+                            connectedPlayers.Remove(p); // Loai bo player khoi danh sach
+                            richTextBox1.Text += ($"{p.name} has disconnected.\n");
+                            return; //Ket thuc xu li cho client nay
                         }
 
-                        // Thông báo cho các người chơi khác về người chơi mới
+                        //Thong bao cho cac nguoi choi  khac ve nguoi choi moi
                         foreach (var player in connectedPlayers)
                         {
                             string makemsg = "LOBBYINFO;" + p.name + ";" + p.turn + ";" + connectedPlayers.Count;
@@ -302,16 +323,16 @@ namespace Server
                     break;
                 case "DISCONNECT":
                     {
-                        // Xử lý ngắt kết nối
-                        connectedPlayers.Remove(p); // Loại bỏ player khỏi danh sách
-                        richTextBox1.Text +=($"{p.name} has disconnected.\n"); // Cập nhật log cho server
-                        // Thông báo cho tất cả người chơi còn lại
+                        //Xu ki ngat ket noi
+                        connectedPlayers.Remove(p); //Loai bo player khoi danh sach
+                        richTextBox1.Text +=($"{p.name} has disconnected.\n");
+                        //Thong bao cho tat ca nguoi choi con lai
                         foreach (var player in connectedPlayers)
                         {
                             byte[] buffer = Encoding.UTF8.GetBytes($"DISCONNECT;{p.name} has left the game.\n");
                             player.playerSocket.Send(buffer);
                         }
-                        // Đóng socket của player
+                        //Dong socket cua player
                         p.playerSocket.Close();
                     }
                     break;
@@ -324,7 +345,7 @@ namespace Server
 
                         string updateMessage = "UPDATE_SETTINGS;" + players + ";" + drawTime + ";" + rounds + ";" + connectedPlayers.Count;
 
-                        // Gửi thông báo cập nhật đến tất cả các client
+                        //Gui thong tin setting da cap nhat cho cac client
                         foreach (var player in connectedPlayers)
                         {
                             if (player.playerSocket.Connected)
@@ -397,7 +418,7 @@ namespace Server
                         {
                             if (player.playerSocket != p.playerSocket)
                             {
-                                byte[] buffer = Encoding.UTF8.GetBytes("PIC_UPDATE;" + arrPayload[1]); //string<-bitmap
+                                byte[] buffer = Encoding.UTF8.GetBytes("PIC_UPDATE;" + arrPayload[1]);
                                 player.playerSocket.Send(buffer);
                             }
                         }
@@ -439,6 +460,10 @@ namespace Server
 
             }
         }
+
+        #region Other Functions
+
+        //Update thong diep client gui cho server
         private void UpdateRichTextBox(string message)
         {
             if (InvokeRequired)
@@ -450,21 +475,8 @@ namespace Server
             richTextBox1.Text += message + Environment.NewLine;
         }
 
-        private void ServerForm_Load(object sender, EventArgs e)
-        {
-            serverlisten = new Thread(() =>
-            {
-                while (true)
-                {
-                    client = serverSocket.Accept();
-                    UpdateRichTextBox("New connection from " + client.RemoteEndPoint);
-                    clientThread = new Thread(() => recvfromClientsocket(client));
-                    clientThread.Start();
-                }
-            });
-            serverlisten.Start();
-        }
 
+        //Setup luot choi
         private static void SetUpPlayerTurn()
         {
             int i = 1;
@@ -474,14 +486,16 @@ namespace Server
                 i++;
             }
         }
+
+        //Gui thong tin cai dat hien tai cho client moi
         private void SendCurrentSettingsToClient(Player player)
         {
-            // Gửi thông tin cài đặt hiện tại cho client mới
             string settingsMessage = "UPDATE_SETTINGS;" + players + ";" + drawTime + ";" + rounds + ";" + connectedPlayers.Count;
             byte[] buffer = Encoding.UTF8.GetBytes(settingsMessage);
             player.playerSocket.Send(buffer);
         }
 
+        //Ngat ket noi khi dong server form
         private void ServerForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             serverSocket.Close();
@@ -489,32 +503,33 @@ namespace Server
             if (clientThread != null)
                 clientThread.Abort();
         }
+        #endregion
 
         #region JSON
         public static string RandomWords()
         {
-            // Đọc nội dung từ tệp JSON
+            //Doc noi dung tu JSON
             string jsonText = File.ReadAllText(wordPath);
 
-            // Phân tích nội dung JSON
+            //Phan tich JSON
             JObject json = JObject.Parse(jsonText);
 
-            // Lấy ra mảng các từ
+            //Lay ra mang cac tu
             JArray wordsArray = (JArray)json["words"];
 
-            // Chọn ngẫu nhiên một từ từ mảng
+            //Chon ngau nhien 1 tu trong mang
             Random random = new Random();
             int randomIndex = random.Next(0, wordsArray.Count);
             string word = (string)wordsArray[randomIndex]["word"];
 
-            // Kiểm tra từ đã được sử dụng hay chưa
+            //Kiem tra tu da duoc su dung chua
             while (UsedWords.Contains(word))
             {
                 randomIndex = random.Next(0, wordsArray.Count);
                 word = (string)wordsArray[randomIndex]["word"];
             }
 
-            // Thêm từ vào danh sách đã sử dụng
+            //Them tu vao danh sach da su dung
             UsedWords.Add(word);
             return word;
         }
@@ -527,7 +542,7 @@ namespace Server
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                // Đường dẫn của file được chọn
+                //Duong dan file duoc chon
                 MessageBox.Show("Nạp từ thành công !", "Thông báo", MessageBoxButtons.OK);
                 wordPath = openFileDialog.FileName;
 

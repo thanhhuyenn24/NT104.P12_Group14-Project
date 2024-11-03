@@ -58,9 +58,10 @@
             // 
             // username
             // 
-            this.username.Location = new System.Drawing.Point(501, 180);
+            this.username.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.username.Location = new System.Drawing.Point(511, 179);
             this.username.Name = "username";
-            this.username.Size = new System.Drawing.Size(206, 22);
+            this.username.Size = new System.Drawing.Size(206, 30);
             this.username.TabIndex = 3;
             // 
             // GiaoDienChinh

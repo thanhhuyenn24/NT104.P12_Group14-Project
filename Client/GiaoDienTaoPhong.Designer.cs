@@ -51,21 +51,25 @@
             // 
             // comboBoxPlayers
             // 
+            this.comboBoxPlayers.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.comboBoxPlayers.Enabled = false;
+            this.comboBoxPlayers.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.comboBoxPlayers.FormattingEnabled = true;
             this.comboBoxPlayers.Items.AddRange(new object[] {
             "2",
             "3",
             "4",
             "5"});
-            this.comboBoxPlayers.Location = new System.Drawing.Point(245, 88);
+            this.comboBoxPlayers.Location = new System.Drawing.Point(245, 83);
             this.comboBoxPlayers.Name = "comboBoxPlayers";
-            this.comboBoxPlayers.Size = new System.Drawing.Size(150, 24);
+            this.comboBoxPlayers.Size = new System.Drawing.Size(150, 37);
             this.comboBoxPlayers.TabIndex = 5;
             // 
             // comboBoxDrawTime
             // 
+            this.comboBoxDrawTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.comboBoxDrawTime.Enabled = false;
+            this.comboBoxDrawTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.comboBoxDrawTime.FormattingEnabled = true;
             this.comboBoxDrawTime.Items.AddRange(new object[] {
             "30",
@@ -75,32 +79,35 @@
             "80",
             "90",
             "100"});
-            this.comboBoxDrawTime.Location = new System.Drawing.Point(245, 162);
+            this.comboBoxDrawTime.Location = new System.Drawing.Point(245, 157);
             this.comboBoxDrawTime.Name = "comboBoxDrawTime";
-            this.comboBoxDrawTime.Size = new System.Drawing.Size(150, 24);
+            this.comboBoxDrawTime.Size = new System.Drawing.Size(150, 37);
             this.comboBoxDrawTime.TabIndex = 6;
             // 
             // comboBoxRounds
             // 
+            this.comboBoxRounds.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.comboBoxRounds.Enabled = false;
+            this.comboBoxRounds.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.comboBoxRounds.FormattingEnabled = true;
             this.comboBoxRounds.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
             "4"});
-            this.comboBoxRounds.Location = new System.Drawing.Point(245, 235);
+            this.comboBoxRounds.Location = new System.Drawing.Point(245, 230);
             this.comboBoxRounds.Name = "comboBoxRounds";
-            this.comboBoxRounds.Size = new System.Drawing.Size(150, 24);
+            this.comboBoxRounds.Size = new System.Drawing.Size(150, 37);
             this.comboBoxRounds.TabIndex = 7;
             // 
             // Status
             // 
             this.Status.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.Status.Location = new System.Drawing.Point(451, 67);
+            this.Status.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.Status.Location = new System.Drawing.Point(451, 86);
             this.Status.Name = "Status";
             this.Status.ReadOnly = true;
-            this.Status.Size = new System.Drawing.Size(269, 192);
+            this.Status.Size = new System.Drawing.Size(269, 288);
             this.Status.TabIndex = 9;
             this.Status.Text = "";
             // 
@@ -137,6 +144,7 @@
             this.Controls.Add(this.comboBoxDrawTime);
             this.Controls.Add(this.comboBoxPlayers);
             this.Controls.Add(this.btnStart);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
             this.Name = "GiaoDienTaoPhong";
             this.Text = "LOBBY";
             this.ResumeLayout(false);

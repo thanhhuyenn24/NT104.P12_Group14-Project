@@ -21,6 +21,7 @@ namespace Client
         public static string datatype = ""; // Kieu du lieu nguoi choi gui cho server        
         public static int Playerround = 1;
 
+        #region NETWORK(Connect, Send, Read Data)
         public static void Connect(IPEndPoint serverEP)
         {
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -109,10 +110,12 @@ namespace Client
                 }
             }
         }
+        #endregion
 
         public static GiaoDienNguoiChoi GamePlay;
         public static List<OtherPlayers> otherPlayers;
 
+        //Phan tich thong diep tu server
         public static void AnalyzingReturnMessage(string msg)
         {
             string[] Payload = msg.Split(';');
@@ -328,6 +331,8 @@ namespace Client
             }
 
         }
+
+        //Chuyen bitmap thanh string de gui cho server
         public static Bitmap StringToBitmap(string base64String)
         {
             try

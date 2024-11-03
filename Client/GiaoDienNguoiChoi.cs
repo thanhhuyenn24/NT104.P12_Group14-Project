@@ -13,20 +13,19 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using Server;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
-using Timer = System.Windows.Forms.Timer; // Thay 'ServerNamespace' bằng namespace thực tế của WordData
+using Timer = System.Windows.Forms.Timer;
 
 
 namespace Client
 {
     public partial class GiaoDienNguoiChoi : Form
     {
-        private int timeLeft = 20;
         public string round { get; set; }
         public string word { get; set; }
         private int score = 0;
         //UNDO
-        private Stack<Bitmap> undoStack;    // Thêm stack để lưu lịch sử các thao tác
-        private const int MAX_UNDO_LEVELS = 20; // Giới hạn số lượng undo để tránh tốn bộ nhớ
+        private Stack<Bitmap> undoStack;    //Stack de luu lich ssu cac thao tac
+        private const int MAX_UNDO_LEVELS = 20; //Gioi han so luong undo tranh ton bo nho
         
         public GiaoDienNguoiChoi()
         {
@@ -51,21 +50,21 @@ namespace Client
             btn_send.FlatAppearance.MouseDownBackColor = Color.Transparent;
 
 
-            //Cài đặt cho phần vẽ
+            //Cai dat phan ve
             bm = new Bitmap(pic.Width, pic.Height);
             g = Graphics.FromImage(bm);
             g.Clear(Color.White);
             pic.Image = bm;
 
             //UNDO
-            // Khởi tạo undoStack
+            //Khoi tao undoStack
             undoStack = new Stack<Bitmap>();
-            // Lưu trạng thái ban đầu
+            //Luu trang thai ban dau
             SaveState();
             try
             {
                 undoStack = new Stack<Bitmap>();
-                ResetCanvas(); // Sử dụng hàm ResetCanvas thay vì khởi tạo trực tiếp
+                ResetCanvas(); //Su dung ham ResetCanvas thay vi khoi tao truc tiep
             }
             catch (Exception ex)
             {
@@ -73,7 +72,7 @@ namespace Client
             }
         }
         #region DRAW
-        //Khai báo phần vẽ 
+        //Khai bao phan ve
         Bitmap bm;
         Graphics g;
         bool paint = false;
@@ -85,7 +84,7 @@ namespace Client
         ColorDialog cd = new ColorDialog();
         Color new_color;
 
-        //HÀM + EVENT ĐỂ VẼ
+        //HAM + EVENT DE VE
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
@@ -117,16 +116,16 @@ namespace Client
         private void pic_MouseUp(object sender, MouseEventArgs e)
         {
             paint = false;
-            SaveState(); // Lưu trạng thái sau khi vẽ xong
+            SaveState(); //Luu trang thai sau khi ve xong
 
             Client_Socket.datatype = "PIC_CHANGE";
 
 
-            // Chuyển đổi bitmap thành chuỗi Base64
-            string base64Image = BitmapToString(bm);
+            //Chuyen doi bitmap thanh string
+            string stringImage = BitmapToString(bm);
 
-            // Gửi chuỗi Base64 đến server
-            Client_Socket.SendMessage(base64Image);
+            //Gui string cho server
+            Client_Socket.SendMessage(stringImage);
         }
 
         private void btn_pen_Click(object sender, EventArgs e)
@@ -141,15 +140,15 @@ namespace Client
 
         private void btn_clear_Click(object sender, EventArgs e)
         {
-            SaveState(); // Lưu trạng thái trước khi xóa
+            SaveState(); //Luu trang thai truoc khi xoa
             Clear_pic();
             Client_Socket.datatype = "PIC_CHANGE";
 
-            // Chuyển đổi bitmap thành chuỗi Base64
-            string base64Image = BitmapToString(bm);
+            //Chuyen bitmap thanh string
+            string stringImage = BitmapToString(bm);
 
-            // Gửi chuỗi Base64 đến server
-            Client_Socket.SendMessage(base64Image);
+            //Gui string cho server
+            Client_Socket.SendMessage(stringImage);
         }
 
         private void btn_color_Click(object sender, EventArgs e)
@@ -160,28 +159,9 @@ namespace Client
             p.Color = cd.Color;
         }
         #endregion
-        // Serial hóa Bitmap thành mảng byte
-        public static string BitmapToString(Bitmap bitmap)
-        {
-            try
-            {
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    // Sử dụng định dạng PNG để đảm bảo chất lượng
-                    bitmap.Save(ms, ImageFormat.Png);
-                    byte[] bytes = ms.ToArray();
-                    return Convert.ToBase64String(bytes);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error in BitmapToString: {ex.Message}");
-                return null;
-            }
-        }
 
         #region UNDO
-        // Hàm sao chép bitmap
+        //Ham sao chep bitmap
         private Bitmap CloneBitmap(Bitmap sourceBitmap)
         {
             if (sourceBitmap == null)
@@ -206,21 +186,21 @@ namespace Client
             }
         }
 
-        // Hàm lưu trạng thái
+        //Ham luu trang thai
         private void SaveState()
         {
             try
             {
                 if (bm == null) return;
 
-                // Tạo bản sao của bitmap hiện tại
+                //Tao ban sao cua bitmap hien tai
                 Bitmap clonedBitmap = CloneBitmap(bm);
 
                 if (clonedBitmap != null)
                 {
                     if (undoStack.Count >= MAX_UNDO_LEVELS)
                     {
-                        // Xóa trạng thái cũ nhất một cách an toàn
+                        //Xoa trang thai cu nhat
                         try
                         {
                             var oldestState = undoStack.Pop();
@@ -241,7 +221,7 @@ namespace Client
             }
         }
 
-        // Thêm hàm để reset canvas khi có lỗi
+        //Ham de reset canvas khi co loi
         private void ResetCanvas()
         {
             try
@@ -265,7 +245,7 @@ namespace Client
                 if (undoStack.Count >= 0)
                 {
 
-                    // Lấy trạng thái trước đó
+                    //Lay trang thai truoc do
                     bm = undoStack.Pop();
 
                     if (bm != null)
@@ -276,18 +256,18 @@ namespace Client
                     }
                     else
                     {
-                        // Tạo bitmap mới nếu có lỗi
+                        //Tao bitmap moi khi co loi
                         ResetCanvas();
                     }
                 }
                 Client_Socket.datatype = "PIC_CHANGE";
 
 
-                // Chuyển đổi bitmap thành chuỗi Base64
-                string base64Image = BitmapToString(bm);
+                //Chuyen bitmap thanh string
+                string stringImage = BitmapToString(bm);
 
-                // Gửi chuỗi Base64 đến server
-                Client_Socket.SendMessage(base64Image);
+                //Gui string cho server
+                Client_Socket.SendMessage(stringImage);
             }
             catch (Exception ex)
             {
@@ -296,37 +276,9 @@ namespace Client
         }
         #endregion
 
-        public void Game_Update_RIGHT(string name) //UPDATE UI 
-        {
-                status.Text += name + " guessed right!\n";
- 
-        }
-        public void Game_Update_WRONG(string name, string w) //UPDATE UI 
-        {
-            status.Text += name + ": " + w + "\n";
-
-        }
-        //Cap nhat diem cua nguoi choi khac khi co thay doi
-        public void Score_Update(string Name, string Score)
-        {
-            foreach (Control control in Controls)
-            {
-                // If the control is a panel, search its child controls
-                if (control is Panel panel)
-                {
-                    foreach (Control panelControl in panel.Controls)
-                    {
-                        if (panelControl is TextBox textBox &&
-                            textBox.Tag != null &&
-                            textBox.Tag.ToString() == Name)
-                        {
-                            textBox.Text = Score;
-                            return;
-                        }
-                    }
-                }
-            }
-        }
+        #region DISPLAY
+        
+        //Hien thi danh sach ten + diem tung nguoi choi
         public void InGameDisplay()
         {
 
@@ -375,6 +327,7 @@ namespace Client
             }
         }
 
+        //Thong bao ai dang ve
         public void Turn_Notify(string Name)
         {
             Thread.Sleep(1500);
@@ -386,7 +339,7 @@ namespace Client
                 tbCmt.Text = Name + "'s turn";
         }
 
-
+        //Nguoi ve duoc ve, khong duoc doan, hien thi tu can ve
         public void Allow_Playing()
         {
             pic.Enabled = true;
@@ -399,6 +352,8 @@ namespace Client
             pnlWORD.Visible = true;
             WORD.Text = word;
         }
+
+        //Nguoi doan khong duoc ve, duoc doan
         public void NotAllowPlaying()
         {
             pic.Enabled=false;
@@ -410,10 +365,58 @@ namespace Client
             btn_send.Enabled = true;
             pnlWORD.Visible=false;
         }
+
+        //Doan dung hien thi Ten nguoi choi + guessed right!
+        public void Game_Update_RIGHT(string name)
+        {
+            status.Text += name + " guessed right!\n";
+
+        }
+
+        //Doan sai hien thi ten nguoi choi + tu nguoi choi da doan
+        public void Game_Update_WRONG(string name, string w)
+        {
+            status.Text += name + ": " + w + "\n";
+
+        }
+        //Cap nhat diem cua nguoi choi khac khi co thay doi
+        public void Score_Update(string Name, string Score)
+        {
+            foreach (Control control in Controls)
+            {
+                //Neu control la panel, tim nhung control con cua no
+                if (control is Panel panel)
+                {
+                    foreach (Control panelControl in panel.Controls)
+                    {
+                        if (panelControl is TextBox textBox &&
+                            textBox.Tag != null &&
+                            textBox.Tag.ToString() == Name)
+                        {
+                            textBox.Text = Score;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        //Xoa hinh ve khi bat dau luot moi
+        public void Clear_pic()
+        {
+            g.Clear(Color.White);
+            pic.Image = bm;
+            index = 0;
+        }
+
+        //Doan dung se khong doan tiep cho toi khi bat dau luot moi
         public void GR()
         {
             btn_send.Enabled = false;
         }
+        #endregion
+
+        //Gui thong diep doan dung/sai
         private void btn_send_Click(object sender, EventArgs e)
         {
             if (tbx_send.Text == word)
@@ -429,11 +432,24 @@ namespace Client
             }
         }
 
-        public void Clear_pic()
+        // Chuyen Bitmap thanh string gui cho server
+        public static string BitmapToString(Bitmap bitmap)
         {
-            g.Clear(Color.White);
-            pic.Image = bm;
-            index = 0;
+            try
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    //Su dung dinh dang PNG dam bao chat luong
+                    bitmap.Save(ms, ImageFormat.Png);
+                    byte[] bytes = ms.ToArray();
+                    return Convert.ToBase64String(bytes);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in BitmapToString: {ex.Message}");
+                return null;
+            }
         }
     }
 }

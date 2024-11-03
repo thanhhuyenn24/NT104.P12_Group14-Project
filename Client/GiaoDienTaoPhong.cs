@@ -56,12 +56,15 @@ namespace Client
             btnLeave.FlatAppearance.MouseDownBackColor = Color.Transparent;
         }
 
+        //Du so luong nguoi choi moi duoc Start
         public void Disable_Enable_Start(bool check)
         {
             if (check == true)
                 btnStart.Enabled = true;
             else btnStart.Enabled = false;
         }
+
+        //Chi nguoi vao phong dau tien duoc cai dat
         public void Enable_All()
         {
             comboBoxPlayers.Enabled = true;
@@ -76,20 +79,23 @@ namespace Client
             comboBoxDrawTime.Text = drawTime;
             comboBoxRounds.Text = rounds;
         }
+
         public void UpdatePlayerCount(int playerCount)
         {
             Status.Text = $"Số lượng người chơi đã vào: {playerCount}\n";
         }
+
         public void UpdateDisconnect(string sentence)
         {
             Status.Text += $"{sentence}";
         }
+
         private void btnOK_Click_1(object sender, EventArgs e)
         {
             Client_Socket.datatype = "UPDATE_SETTINGS";
             string settings = comboBoxPlayers.Text + ";" + comboBoxDrawTime.Text + ";" + comboBoxRounds.Text;
 
-            // Gửi thông tin cài đặt tới server
+            //Gui thong tin cai dat toi server
             Client_Socket.SendMessage(settings);
         }
 
@@ -97,13 +103,13 @@ namespace Client
         {
             try
             {
-                // Gửi thông điệp ngắt kết nối đến server
+                //Gui thong diep ngat ket noi toi server
                 Client_Socket.datatype = "DISCONNECT";
-                Client_Socket.SendMessage(Player.name); // Gửi tên người chơi để server biết ai đang ngắt kết nối
-                                                        // Ngắt kết nối socket
+                Client_Socket.SendMessage(Player.name);
+                //Ngat ket noi socket
                 Client_Socket.clientSocket.Shutdown(SocketShutdown.Both);
                 Client_Socket.clientSocket.Close();
-                // Đóng form sảnh chờ
+                //Dong form sanh cho
                 GiaoDienChinh.lobby.Close();
             }
             catch (Exception ex)
@@ -115,8 +121,7 @@ namespace Client
         private void btnStart_Click(object sender, EventArgs e)
         {
             Client_Socket.datatype = "START";
-            Client_Socket.SendMessage(" "); // Gửi thông điệp khởi động game
+            Client_Socket.SendMessage(" ");
         }
-
     }
 }
