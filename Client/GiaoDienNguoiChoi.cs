@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using Server;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
 using Timer = System.Windows.Forms.Timer;
 
@@ -20,6 +21,7 @@ namespace Client
 {
     public partial class GiaoDienNguoiChoi : Form
     {
+        public static GiaoDienNguoiChoi Instance { get; private set; }
         public string round { get; set; }
         public string word { get; set; }
         private int score = 0;
@@ -30,6 +32,7 @@ namespace Client
         public GiaoDienNguoiChoi()
         {
             InitializeComponent();
+            Instance = this;
 
             btn_undo.FlatStyle = FlatStyle.Flat;
             btn_undo.BackColor = Color.Transparent;
@@ -349,10 +352,14 @@ namespace Client
             btn_pen.Enabled = true;
             btn_undo.Enabled = true;
             btn_send.Enabled = false;
+
             pnlWORD.Visible = true;
+            pnlWORDG.Visible = false;
             WORD.Text = word;
         }
 
+        private WordHintSystem wordHintSystem;
+        public int drawTime;
         //Nguoi doan khong duoc ve, duoc doan
         public void NotAllowPlaying()
         {
@@ -361,9 +368,12 @@ namespace Client
             btn_color.Enabled=false;
             btn_eraser.Enabled=false;
             btn_pen.Enabled=false;
-            btn_undo.Enabled=false;
+            
             btn_send.Enabled = true;
-            pnlWORD.Visible=false;
+            pnlWORD.Visible = false;
+            pnlWORDG.Visible = true;
+            WORDG.Text = word;
+            wordHintSystem = new WordHintSystem(word, WORDG, drawTime);
         }
 
         //Doan dung hien thi Ten nguoi choi + guessed right!
@@ -449,6 +459,17 @@ namespace Client
             {
                 Console.WriteLine($"Error in BitmapToString: {ex.Message}");
                 return null;
+            }
+        }
+
+        //WordHint
+        public int currentTime;
+        //Cap nhat currentTime tu Client_Socket
+        public void UpdateTimeFromServer()
+        {
+            if (wordHintSystem != null)
+            {
+                wordHintSystem.UpdateTime(currentTime);
             }
         }
     }

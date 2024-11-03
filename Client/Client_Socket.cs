@@ -212,6 +212,7 @@ namespace Client
                     break;
                 case "SETUP":
                     {
+                        GamePlay.drawTime = int.Parse(Payload[2]);
                         GamePlay.Invoke((MethodInvoker)delegate ()
                         {
                             GamePlay.InGameDisplay();
@@ -221,7 +222,13 @@ namespace Client
                     break;
                 case "TIME_CHANGE":
                     {
+                        GamePlay.currentTime = int.Parse(Payload[1]);
                         GamePlay.labelTimer.Text = Payload[1];
+                        //WordHint
+                        if (GiaoDienNguoiChoi.Instance != null)
+                        {
+                            GiaoDienNguoiChoi.Instance.UpdateTimeFromServer();
+                        }
                     }
                     break;
                 case "TURN":

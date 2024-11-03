@@ -60,6 +60,8 @@
             this.tbCmt = new System.Windows.Forms.TextBox();
             this.pnlWORD = new System.Windows.Forms.Panel();
             this.WORD = new System.Windows.Forms.Label();
+            this.pnlWORDG = new System.Windows.Forms.Panel();
+            this.WORDG = new System.Windows.Forms.Label();
             this.status = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_color)).BeginInit();
@@ -69,6 +71,7 @@
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
             this.pnlWORD.SuspendLayout();
+            this.pnlWORDG.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelTimer
@@ -368,9 +371,9 @@
             this.pnlWORD.BackColor = System.Drawing.Color.LemonChiffon;
             this.pnlWORD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pnlWORD.Controls.Add(this.WORD);
-            this.pnlWORD.Location = new System.Drawing.Point(213, 19);
+            this.pnlWORD.Location = new System.Drawing.Point(252, 21);
             this.pnlWORD.Name = "pnlWORD";
-            this.pnlWORD.Size = new System.Drawing.Size(336, 48);
+            this.pnlWORD.Size = new System.Drawing.Size(275, 48);
             this.pnlWORD.TabIndex = 24;
             this.pnlWORD.Visible = false;
             // 
@@ -383,6 +386,27 @@
             this.WORD.Size = new System.Drawing.Size(88, 29);
             this.WORD.TabIndex = 0;
             this.WORD.Text = "WORD";
+            // 
+            // pnlWORDG
+            // 
+            this.pnlWORDG.BackColor = System.Drawing.Color.LemonChiffon;
+            this.pnlWORDG.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlWORDG.Controls.Add(this.WORDG);
+            this.pnlWORDG.Location = new System.Drawing.Point(252, 21);
+            this.pnlWORDG.Name = "pnlWORDG";
+            this.pnlWORDG.Size = new System.Drawing.Size(275, 48);
+            this.pnlWORDG.TabIndex = 25;
+            this.pnlWORDG.Visible = false;
+            // 
+            // WORDG
+            // 
+            this.WORDG.AutoSize = true;
+            this.WORDG.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.WORDG.Location = new System.Drawing.Point(8, 9);
+            this.WORDG.Name = "WORDG";
+            this.WORDG.Size = new System.Drawing.Size(79, 29);
+            this.WORDG.TabIndex = 0;
+            this.WORDG.Text = "label1";
             // 
             // status
             // 
@@ -399,6 +423,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(800, 495);
+            this.Controls.Add(this.pnlWORDG);
             this.Controls.Add(this.status);
             this.Controls.Add(this.pnlWORD);
             this.Controls.Add(this.tbCmt);
@@ -434,6 +459,8 @@
             this.panel5.PerformLayout();
             this.pnlWORD.ResumeLayout(false);
             this.pnlWORD.PerformLayout();
+            this.pnlWORDG.ResumeLayout(false);
+            this.pnlWORDG.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -470,5 +497,7 @@
         private System.Windows.Forms.Panel pnlWORD;
         private System.Windows.Forms.Label WORD;
         private System.Windows.Forms.RichTextBox status;
+        private System.Windows.Forms.Panel pnlWORDG;
+        private System.Windows.Forms.Label WORDG;
     }
 }

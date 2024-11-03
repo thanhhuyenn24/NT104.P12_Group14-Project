@@ -397,7 +397,7 @@ namespace Server
 
                         foreach (var player in connectedPlayers)
                         {
-                            string makemsg = "SETUP;" + player.name;
+                            string makemsg = "SETUP;" + player.name + ";" + drawTime; //Gui them drawTime cho WordHint
                             byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
                             player.playerSocket.Send(buffer);
                             Console.WriteLine("Sendback: " + makemsg);
