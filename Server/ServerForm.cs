@@ -171,6 +171,7 @@ namespace Server
                 foreach (var player in connectedPlayers)
                 {
                     player.playerSocket.Send(buffer);
+                    Thread.Sleep(100);
                 }
             }
             catch (Exception ex)
@@ -316,7 +317,7 @@ namespace Server
                             string makemsg = "LOBBYINFO;" + p.name + ";" + p.turn + ";" + connectedPlayers.Count;
                             byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
                             player.playerSocket.Send(buffer);
-                            Thread.Sleep(100);
+                            Thread.Sleep(150);
 
                         }
                     }
@@ -390,7 +391,7 @@ namespace Server
                                     byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
                                     player.playerSocket.Send(buffer);
                                     Console.WriteLine("Sendback: " + makemsg);
-                                    Thread.Sleep(100);
+                                    Thread.Sleep(150);
                                 }
                             }
                         }
@@ -401,7 +402,7 @@ namespace Server
                             byte[] buffer = Encoding.UTF8.GetBytes(makemsg);
                             player.playerSocket.Send(buffer);
                             Console.WriteLine("Sendback: " + makemsg);
-                            Thread.Sleep(100);
+                            Thread.Sleep(150);
                         }
                         Reset_Timer();
                         foreach (var player in connectedPlayers)
@@ -432,6 +433,7 @@ namespace Server
                         {
                             byte[] buffer = Encoding.UTF8.GetBytes("GR;" + arrPayload[1] + ";" + connectedPlayers[currentturn-1].name); //name + name nguoi ve
                             player.playerSocket.Send(buffer);
+                            Thread.Sleep(100);
                         }
                     }
                     break;
@@ -442,6 +444,7 @@ namespace Server
                             if (player.name == arrPayload[1])
                             {
                                 player.score = int.Parse(arrPayload[2]);
+                                Thread.Sleep(100);
                             }
                         }
                     }
@@ -452,6 +455,7 @@ namespace Server
                         {
                             byte[] buffer = Encoding.UTF8.GetBytes("GW;" + arrPayload[1] + ";" + arrPayload[2]); //name + word
                             player.playerSocket.Send(buffer);
+                            Thread.Sleep(100);
                         }
                     }
                     break;
