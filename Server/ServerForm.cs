@@ -292,14 +292,6 @@ namespace Server
                     {
                         string playerName = arrPayload[1].Trim();
 
-                        //Kiem tra ten da ton tai
-                        if (connectedPlayers.Any(player => player.name == playerName))
-                        {
-                            byte[] errorBuffer = Encoding.UTF8.GetBytes("ERROR;Username already exists");
-                            p.playerSocket.Send(errorBuffer);
-                            return;
-                        }
-
                         p.name = playerName;
 
                         //Kiem tra phong da day
@@ -309,6 +301,15 @@ namespace Server
                             connectedPlayers.Remove(p); // Loai bo player khoi danh sach
                             richTextBox1.Text += ($"{p.name} has disconnected.\n");
                             return; //Ket thuc xu li cho client nay
+                        }
+
+                        //Kiem tra ten da ton tai
+                        if (connectedPlayers.Any(player =>
+                        player != p &&
+                        player.name?.Equals(playerName, StringComparison.OrdinalIgnoreCase) == true))
+                        {
+                            connectedPlayers.Remove(p);
+                            return;
                         }
 
                         //Thong bao cho cac nguoi choi  khac ve nguoi choi moi
