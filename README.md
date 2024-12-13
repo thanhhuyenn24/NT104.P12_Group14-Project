@@ -40,9 +40,13 @@
 
 ## Giao diện
 ![image](https://github.com/user-attachments/assets/35541457-83d7-45f9-92fa-27c8db749b1f)
-                     Hình 1: Giao diện người dùng khi tạo phòng
+<div align="center">
+<h1>Căn giữa văn bản</h1>
+</div>Hình 1: Giao diện người dùng khi tạo phòng
+                     
 ![image](https://github.com/user-attachments/assets/2db13e77-0527-48be-8e16-fbeb22fafbdf)
                      Hình 2: Giao diện khi người dùng cài đặt
+                     
 ![image](https://github.com/user-attachments/assets/db182345-4962-4222-9a2f-f5509a09ea34)
                      Hình 3: Giao diện bảng vẽ
 
