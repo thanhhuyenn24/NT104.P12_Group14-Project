@@ -2,7 +2,9 @@
 
 # Game: Tam sao thất bản (Catch the Word!)
 ## Giới thiệu
+- Trò chơi trực tuyến ngày càng trở nên phổ biến nhờ sự phát triển của công nghệ và internet. Các tựa game đơn giản và thu hút nhiều lượt tham gia, tương tác cao, như trò chơi đoán từ: Pictionary, Gartic.io, Doodle Valley… không chỉ mang tính giải trí mà còn giúp kết nối bạn bè, gia đình, và người chơi trên khắp thế giới.
 - **Catch the Word!** là trò chơi vẽ và đoán từ, nơi người chơi thay phiên nhau vẽ các từ khóa để người khác đoán. Với mỗi lượt, một người vẽ sẽ mô tả từ bằng hình ảnh, trong khi những người còn lại cố gắng đoán từ một cách nhanh nhất.
+- Trò chơi này khuyến khích người chơi sáng tạo thông qua vẽ tranh, đồng thời thử thách khả năng suy đoán của những người tham gia. Đề tài "Tam sao thất bản" được chọn để hiện thực hóa ý tưởng xây dựng một nền tảng trò chơi sáng tạo, dễ sử dụng, không cần người chơi tải ứng dụng, và hỗ trợ kết nối nhiều người chơi.
 - Đồ án của môn học **NT106**.
 - **Giảng viên hướng dẫn**: Đặng Lê Bảo Chương.
 
