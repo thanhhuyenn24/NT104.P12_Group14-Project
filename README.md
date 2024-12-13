@@ -38,11 +38,11 @@
 
 ## Giao diện
 ![image](https://github.com/user-attachments/assets/35541457-83d7-45f9-92fa-27c8db749b1f)
-Hình 1: Giao diện người dùng khi tạo phòng
+                     Hình 1: Giao diện người dùng khi tạo phòng
 ![image](https://github.com/user-attachments/assets/2db13e77-0527-48be-8e16-fbeb22fafbdf)
-Hình 2: Giao diện khi người dùng cài đặt
+                     Hình 2: Giao diện khi người dùng cài đặt
 ![image](https://github.com/user-attachments/assets/db182345-4962-4222-9a2f-f5509a09ea34)
-Hình 3: Giao diện bảng vẽ
+                     Hình 3: Giao diện bảng vẽ
 
 ## Mô hình phân rã chức năng
 ![image](https://github.com/user-attachments/assets/ce113fe1-d4b2-4a93-a467-8d5da353ab9c)
