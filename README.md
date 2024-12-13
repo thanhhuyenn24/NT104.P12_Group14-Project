@@ -39,16 +39,24 @@
 -	Vẽ, xóa, thu hồi nét vẽ
 
 ## Giao diện
+
 ![image](https://github.com/user-attachments/assets/35541457-83d7-45f9-92fa-27c8db749b1f)
+
 <div align="center">
-<h1>Căn giữa văn bản</h1>
-</div>Hình 1: Giao diện người dùng khi tạo phòng
+<small>Hình 1: Giao diện người dùng khi tạo phòng</small>
+</div>
                      
 ![image](https://github.com/user-attachments/assets/2db13e77-0527-48be-8e16-fbeb22fafbdf)
-                     Hình 2: Giao diện khi người dùng cài đặt
+
+<div align="center">
+<small>Hình 2: Giao diện khi người dùng cài đặt</small>
+</div>                     
                      
 ![image](https://github.com/user-attachments/assets/db182345-4962-4222-9a2f-f5509a09ea34)
-                     Hình 3: Giao diện bảng vẽ
+
+<div align="center">
+<small>Hình 3: Giao diện bảng vẽ</small>
+</div>     
 
 ## Mô hình phân rã chức năng
 ![image](https://github.com/user-attachments/assets/ce113fe1-d4b2-4a93-a467-8d5da353ab9c)
