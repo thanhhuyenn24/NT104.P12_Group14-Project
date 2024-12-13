@@ -26,5 +26,26 @@
 - Chạy server, chọn file từ (JSON) đã có sẵn trong dự án
 - Chạy client
 
+## Tính năng
+-	Tạo và tham gia phòng chơi công khai (Cài đặt số người chơi, lượt chơi, thời lượng vẽ) 
+-	Giao diện vẽ (bảng vẽ đơn giản, cấp quyền truy cập bảng vẽ cho mỗi lượt đoán và vẽ)
+-	Hiển thị danh sách người dùng trong cùng một phòng 
+-	Tính năng chat 
+-	Điểm số và hiển thị người thắng cuộc
+-	Gợi ý và hỗ trợ.
+-	Đồng bộ nét vẽ khi người dùng mới tham gia vào phòng có sẵn - Xuất bản vẽ 
+-	Vẽ, xóa, thu hồi nét vẽ
+
+## Giao diện
+![image](https://github.com/user-attachments/assets/35541457-83d7-45f9-92fa-27c8db749b1f)
+Hình 1: Giao diện người dùng khi tạo phòng
+![image](https://github.com/user-attachments/assets/2db13e77-0527-48be-8e16-fbeb22fafbdf)
+Hình 2: Giao diện khi người dùng cài đặt
+![image](https://github.com/user-attachments/assets/db182345-4962-4222-9a2f-f5509a09ea34)
+Hình 3: Giao diện bảng vẽ
+
+## Mô hình phân rã chức năng
+![image](https://github.com/user-attachments/assets/ce113fe1-d4b2-4a93-a467-8d5da353ab9c)
+
 ## DEMO
 [Demo Catch the Word!](https://drive.google.com/file/d/1O4LcK-0G7ahz3BnV4a7E-qQeaD0xd_Sg/view?fbclid=IwZXh0bgNhZW0CMTEAAR0yhhujmkKaMlqOfpoV1D-LNCDidIL8GsopOAky4Uu1Y7Jny2BQ8AwFqGk_aem_Rqwgw0GPI19DKjnWtkRGOg)
