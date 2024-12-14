@@ -9,11 +9,11 @@
 - **Giảng viên hướng dẫn**: Đặng Lê Bảo Chương.
 
 ## Thành viên
-| MSSV       | Họ và Tên              |
-|------------|------------------------|
-| 23521466   | Đoàn Thanh Thảo        |
-| 23520659   | Dương Thanh Huyền      |
-| 23521038   | Đỗ Ngọc Thảo Nguyên    |
+| MSSV       | Họ và Tên                             |
+|------------|---------------------------------------|
+| 23521466   | Đoàn Thanh Thảo (ThanhThao013)        |
+| 23520659   | Dương Thanh Huyền (thanhhuyen24)      |
+| 23521038   | Đỗ Ngọc Thảo Nguyên (DoNgocThaoNguyen)|
 
 ## Cách chơi
 1. **Tạo phòng**: Người chơi đầu tiên (chủ phòng) sẽ chọn số lượng người tham gia, thời gian vẽ, và số vòng chơi.
